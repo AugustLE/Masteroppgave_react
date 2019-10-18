@@ -1,25 +1,12 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { StartRouter } from './screens/start/StartRouter';
 
-function Home() {
-    return (
-        <div className="App">
-            <header className="App-header">
-            <p>
-                Project thesis frontend. 
-            </p>
-            
-            </header>
-        </div>
-    );
-}
 
-export default function MainRouter() {
-    return (
+export const MainRouter = () => (
       <Router>
         <Switch>
-          <Route exact path='/' component={Home}/>
+          <Route path='/login' component={StartRouter}/>
         </Switch>
       </Router>
-    );
-  }
+);

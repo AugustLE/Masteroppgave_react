@@ -4,7 +4,7 @@ import ReduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import './App.css';
-import MainRouter from './Router';
+import { MainRouter } from './Router';
 
 function App() {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
