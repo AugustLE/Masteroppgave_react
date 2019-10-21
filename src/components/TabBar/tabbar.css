@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 80px;
+    background-color: white;
+    width: 100%;
+    flex-direction: row;
+    position: fixed;
+    bottom: 0;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #a7a7a7;
+}
+
+.tabButton {
+    flex: 1;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    height: 80px;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+    font-size: 20px;
+    vertical-align: middle;
+    align-self: center;
+    margin: 1px;
+    outline: none;
+    background-color: white;
+}
+
+.tabButton:hover {
+    box-shadow: 0 4px 8px 0 rgba(247, 247, 247, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.tabIcon {
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 8px;
+}
+
+.tabText {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 3px;
+    font-weight: 600;
+    font-size: 14px;
+}

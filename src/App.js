@@ -10,7 +10,7 @@ function App() {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
   return (
     <Provider store={store}>
-        <MainRouter />;
+        <MainRouter />
     </Provider>
   );
 }

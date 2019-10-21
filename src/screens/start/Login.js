@@ -1,45 +1,57 @@
-import React from 'react';
-import { JSO, Popup } from 'jso';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { clientJSO } from '../../GlobalVars';
+import { setAccessToken } from '../../actions/MainActions';
+import './start.css';
 
+const Login = (props) => {
 
-export default function Login() {
+    const [ redirect, setRedirect ] = useState(false);
+
+    useEffect(() => {
+        try {
+            clientJSO.callback().then(response => {
+                props.setAccessToken(response.access_token);
+                setRedirect(true);
+            })
+        } catch { }
+        //console.log(props.access_token);
+        //clientJSO.wipeTokens();
+    })
+    
     const feideLogin = () => {
-        
-        let client = new JSO({
-            
-            client_id: "d6bae5a0-6dd1-4df4-b572-653c16c71ec6",
-            redirect_uri: "http://localhost:3000/selectcourse",
-            authorization: "https://auth.dataporten.no/oauth/authorization",
-            scopes: { request: ["profile"]},
-            response_type: 'code',
-            client_secret: "6f6df49d-4272-47f2-abec-b0b373e737a2",
-            token: "https://auth.dataporten.no/oauth/token", 
-        });
-        
-        client.getToken().then((token) => {
-            console.log(token);
-        });
-        //client.wipeTokens();
 
-        // Denne skal være der brukeren redirigeres etter login
-        /*client.callback().then(response => {
-            console.log(response);
-        });*/
+        clientJSO.getToken().then((response) => { 
+            if (response.access_token) {
+                props.setAccessToken(response.access_token);
+                setRedirect(true);
+            }
+        });
         
     }
 
+    if (redirect) {
+        return (<Redirect to='/selectcourse'/>)
+    }
 
     return (
         <div className="App">
             <header className="App-header">
-            <p>
-                TeamDoctor
-            </p>
-            <button onClick={feideLogin}>
-                FEIDE LOGIN
-            </button>
+                <p>
+                    TeamDoctor
+                </p>
+                <button onClick={feideLogin}>
+                    FEIDE LOGIN
+                </button>
             </header>
         </div>
     );
 }
 
+const mapStateToProps = (state) => {
+    const { access_token } = state.main;
+    return { access_token };
+};
+
+export default connect(mapStateToProps, { setAccessToken })(Login);

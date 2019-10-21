@@ -1,3 +1,5 @@
+import { SET_ACCESS_TOKEN } from './types';
+
 export function itemsHasErrored(bool) {
     return {
         type: 'ITEMS_HAS_ERRORED',
@@ -11,4 +13,11 @@ export function errorAfterFiveSeconds() {
             dispatch(itemsHasErrored(true));
         }, 5000);
     };
+}
+
+export const setAccessToken = (token) => {
+    return {
+        type: SET_ACCESS_TOKEN,
+        payload: token
+    }
 }
