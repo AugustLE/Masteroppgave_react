@@ -4,7 +4,7 @@ import { setActiveTab } from '../../actions/MainActions';
 import { TabButton } from './TabButton';
 import './tabbar.css';
 
-const TabBar = (props) => {
+const TabBarStudent = (props) => {
 
     const tabClick = (tab_number, path) => {
         props.setActiveTab(tab_number);
@@ -39,4 +39,4 @@ const mapDispatchToProps = {
     setActiveTab
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
+export default connect(mapStateToProps, mapDispatchToProps)(TabBarStudent);

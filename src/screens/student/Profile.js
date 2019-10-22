@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import TabBar from '../../components/TabBar/TabBar';
+import { setActiveTab } from '../../actions/MainActions';
+import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { Box } from '../../components/common';
 
 const Profile = (props) => {
+
+    useEffect(() => {
+        if (props.active_tab !== 2) {
+            props.setActiveTab(2);
+        }
+    });
 
     return (
         <div>
@@ -12,7 +19,7 @@ const Profile = (props) => {
             <Box>
                 <h2>Profile</h2>
             </Box>
-            <TabBar history={props.history} />
+            <TabBarStudent history={props.history} />
         </div>
     );
 }
@@ -22,4 +29,4 @@ const mapStateToProps = (state) => {
     return { access_token, active_tab };
 }
 
-export default connect(mapStateToProps, { })(Profile);
+export default connect(mapStateToProps, { setActiveTab })(Profile);
