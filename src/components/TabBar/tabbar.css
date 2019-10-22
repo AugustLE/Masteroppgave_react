@@ -31,7 +31,27 @@
     background-color: white;
 }
 
-.tabButton:hover {
+/* Should implement css sass or less to avoid duplicating styles here */
+.tabButtonActive {
+    flex: 1;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    height: 80px;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+    font-size: 20px;
+    vertical-align: middle;
+    align-self: center;
+    margin: 1px;
+    outline: none;
+    background-color: #f5f9ff;
+    box-shadow: 0 4px 8px 0 rgba(247, 247, 247, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.tabButton:hover, .tabButtonActive:hover {
     box-shadow: 0 4px 8px 0 rgba(247, 247, 247, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 

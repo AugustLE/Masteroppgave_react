@@ -1,0 +1,7 @@
+.boxContainer {
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    width: 100%;
+}

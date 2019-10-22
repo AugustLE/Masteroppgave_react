@@ -6,3 +6,7 @@
   height: 40vmin;
 }
 
+body {
+  --theme-color: #3E9DE2;
+}
+
