@@ -1,10 +1,10 @@
 import React from 'react';
 import './common.css';
 
-export const Box = (props) => {
+export const Row = (props) => {
     return (
-        <div className="boxContainer">
+        <div className='rowContainer'>
             {props.children}
         </div>
-    )
+    );
 }

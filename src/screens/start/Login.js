@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { clientJSO } from '../../GlobalVars';
 import { setAccessToken } from '../../actions/MainActions';
+import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
+import { Box } from '../../components/common';
 import './start.css';
 
 const Login = (props) => {
 
-    const [ redirect, setRedirect ] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
         try {
@@ -18,7 +20,7 @@ const Login = (props) => {
         } catch { }
         //console.log(props.access_token);
         //clientJSO.wipeTokens();
-    })
+    }, [])
     
     const feideLogin = () => {
 
@@ -32,20 +34,16 @@ const Login = (props) => {
     }
 
     if (redirect) {
-        return (<Redirect to='/selectcourse'/>)
+        return (<Redirect to='/selectrole'/>)
     }
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <p>
-                    TeamDoctor
-                </p>
-                <button onClick={feideLogin}>
-                    FEIDE LOGIN
-                </button>
-            </header>
-        </div>
+        <Box>
+            <TopbarLogin />
+            <button className='loginButton' onClick={feideLogin}>
+                Login with feide
+            </button>
+        </Box>
     );
 }
 
