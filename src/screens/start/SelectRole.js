@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getUserFeide, loginAndCreateUserIfNecessary } from '../../actions/AuthActions';
 import { changeRole } from '../../actions/AccountActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Box, Row } from '../../components/common';
 import { RoleButton } from '../../components/RoleButton/RoleButton';
+import { clientJSO } from '../../GlobalVars';
 
 
 const SelectRole = (props) => {
@@ -13,6 +14,7 @@ const SelectRole = (props) => {
 
     useEffect(() => {
         props.getUserFeide(props.access_token);
+        // clientJSO.wipeTokens();
     }, [])
 
     return (
@@ -29,6 +31,12 @@ const SelectRole = (props) => {
                     <Link to='/student/status'>Status page</Link>
                 </Box>
             )}
+
+            {(props.feide_user && props.api_user && props.api_user.role) && (
+                <Redirect to='/selectsubject'/>
+            )}
+
+            <a href='https://auth.dataporten.no/logout'>Logout</a>
             
         </Box>
     );
@@ -38,7 +46,7 @@ const SelectRole = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { loading, feide_user, api_user } = state.auth
+    const { loading, feide_user, api_user } = state.account;
     return { access_token, loading, feide_user, api_user };
 };
 

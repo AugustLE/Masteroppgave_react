@@ -3,14 +3,16 @@ import {
     LOGIN_SUCCESS, 
     FETCH_FEIDE_USER_SUCCESS,
     CHANGE_ROLE,
-    EDIT_PROFILE_LOADING 
+    EDIT_PROFILE_LOADING,
+    SUBJECT_LIST 
 } from '../actions/types';
 
 const INITIAL_STATE = {
     loading: false,
     feide_user: null,
     api_user: null,
-    edit_account_loading: false
+    edit_account_loading: false,
+    enrolled_subjects: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -30,6 +32,9 @@ export default (state = INITIAL_STATE, action) => {
         
         case EDIT_PROFILE_LOADING:
             return { ...state, edit_account_loading: action.payload };
+
+        case SUBJECT_LIST:
+            return { ...state, enrolled_subjects: action.payload };
          
         default:
             return state;
