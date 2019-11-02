@@ -7,6 +7,7 @@ import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Box, Row } from '../../components/common';
 import { RoleButton } from '../../components/RoleButton/RoleButton';
 import { clientJSO } from '../../GlobalVars';
+import Loader from 'react-loader';
 
 
 const SelectRole = (props) => {
@@ -24,11 +25,15 @@ const SelectRole = (props) => {
                 <Box>
                     <h3>{props.feide_user.name}</h3>
                     <h4>Select your role:</h4>
-                    <Row>
-                        <RoleButton role='student' text='Student' onClick={() => props.changeRole(props.access_token, 'SD')} />
-                        <RoleButton role='instructor' text='Instructor' onClick={() => props.changeRole(props.access_token, 'IN')} />
-                    </Row>
-                    <Link to='/student/status'>Status page</Link>
+                    {props.account_loading ? (
+                        <Loader />
+                    ): (
+                        <Row>
+                            <RoleButton role='student' text='Student' onClick={() => props.changeRole(props.access_token, 'SD')} />
+                            <RoleButton role='instructor' text='Instructor' onClick={() => props.changeRole(props.access_token, 'IN')} />
+                        </Row>
+                    )}
+            
                 </Box>
             )}
 
@@ -46,8 +51,8 @@ const SelectRole = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { loading, feide_user, api_user } = state.account;
-    return { access_token, loading, feide_user, api_user };
+    const { loading, feide_user, api_user, account_loading } = state.account;
+    return { access_token, loading, feide_user, api_user, account_loading };
 };
 
 export default connect(mapStateToProps, { getUserFeide, loginAndCreateUserIfNecessary, changeRole })(SelectRole);

@@ -8,8 +8,6 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'ITEMS_HAS_ERRORED':
-            return { ...state, error: true };
         
         case SET_ACCESS_TOKEN:
             return { ...state, access_token: action.payload }

@@ -3,15 +3,16 @@ import {
     LOGIN_SUCCESS, 
     FETCH_FEIDE_USER_SUCCESS,
     CHANGE_ROLE,
-    EDIT_PROFILE_LOADING,
-    SUBJECT_LIST 
+    ACCOUNT_LOADING,
+    SUBJECT_LIST, 
+    CHANGE_SUBJECT
 } from '../actions/types';
 
 const INITIAL_STATE = {
     loading: false,
     feide_user: null,
     api_user: null,
-    edit_account_loading: false,
+    account_loading: false,
     enrolled_subjects: null
 }
 
@@ -25,16 +26,19 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, feide_user: action.payload };
         
         case LOGIN_SUCCESS:
-            return { ...state, api_user: action.payload };
+            return { ...state, api_user: action.payload, account_loading: false };
         
         case CHANGE_ROLE:
-            return { ...state, api_user: action.payload };
+            return { ...state, api_user: action.payload, account_loading: false  };
         
-        case EDIT_PROFILE_LOADING:
-            return { ...state, edit_account_loading: action.payload };
+        case ACCOUNT_LOADING:
+            return { ...state, account_loading: action.payload };
 
         case SUBJECT_LIST:
-            return { ...state, enrolled_subjects: action.payload };
+            return { ...state, enrolled_subjects: action.payload, account_loading: false };
+
+        case CHANGE_SUBJECT:
+                return { ...state, api_user: action.payload, account_loading: false };
          
         default:
             return state;
