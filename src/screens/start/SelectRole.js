@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { getUserFeide, loginAndCreateUserIfNecessary } from '../../actions/AuthActions';
+import { getUserFeide } from '../../actions/AuthActions';
 import { changeRole } from '../../actions/AccountActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Box, Row } from '../../components/common';
@@ -51,8 +51,8 @@ const SelectRole = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { loading, feide_user, api_user, account_loading } = state.account;
-    return { access_token, loading, feide_user, api_user, account_loading };
+    const { feide_user, api_user, account_loading } = state.account;
+    return { access_token, feide_user, api_user, account_loading };
 };
 
-export default connect(mapStateToProps, { getUserFeide, loginAndCreateUserIfNecessary, changeRole })(SelectRole);
+export default connect(mapStateToProps, { getUserFeide, changeRole })(SelectRole);

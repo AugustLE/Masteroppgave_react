@@ -42,11 +42,10 @@ export const loginAndCreateUserIfNecessary = (user, token) => {
                 password: TEMP_PASSWORD,
             }
         }).then(response => {
-            dispatch({ type: LOGIN_LOADING, payload: false });
             dispatch({ type: LOGIN_SUCCESS, payload: response.data });
-            console.log(response.data);
         }).catch(error => {
             console.log(error);
+            dispatch({ type: LOGIN_LOADING, payload: false });
         });
     }
 

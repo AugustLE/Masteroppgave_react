@@ -9,7 +9,6 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-    loading: false,
     feide_user: null,
     api_user: null,
     account_loading: false,
@@ -20,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         
         case LOGIN_LOADING:
-            return { ...state, loading: action.payload };
+            return { ...state, account_loading: action.payload };
         
         case FETCH_FEIDE_USER_SUCCESS:
             return { ...state, feide_user: action.payload };

@@ -1,23 +1,52 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Redirect } from 'react-router-dom';
+import Modal from 'react-modal';
 import { Box, VerticalContainer } from '../../components/common';
 import { getEnrolledSubjects, selectSubject } from '../../actions/AccountActions';
-import { fetchTeamList } from '../../actions/StudentActions';
+import { fetchTeamList, selectTeam } from '../../actions/StudentActions';
 import Loader from 'react-loader';
 import './start.css';
 
+const modalStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
+
 const SelectSubject = (props) => {
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [teamId, setSelectedTeamId] = useState(null);
+    const [teamName, setSelectedTeamName] = useState(null);
+    const [teamPassword, setTeamPassword] = useState('');
 
     useEffect(() => {
         props.getEnrolledSubjects(props.access_token);
         if (props.api_user.selected_subject_id) {
             props.fetchTeamList(props.access_token, props.api_user.selected_subject_id);
         }
+
+        console.log(props.api_user);
         
     }, [])
+
+    const openTeamModal = (team_id, team_name) => {
+        setModalOpen(true);
+        setSelectedTeamId(team_id);
+        setSelectedTeamName(team_name);
+    }
+
+    const onSubmitSelectTeam = (event) => {
+        event.preventDefault();
+        props.selectTeam(props.access_token, teamId, teamPassword);
+    }
 
     const SubjectList = () => {
         if (props.enrolled_subjects) {
@@ -41,7 +70,7 @@ const SelectSubject = (props) => {
         if (props.team_list) {
             const team_list = props.team_list.map((team) => (
                 <div 
-                    onClick={() => console.log('select_team')} 
+                    onClick={() => openTeamModal(team.pk, team.name)} 
                     className='subjectListElement' 
                     key={team.pk}>
                     {team.name}
@@ -60,6 +89,10 @@ const SelectSubject = (props) => {
 
         if (props.account_loading || props.loading_fetch) {
             return <Loader />;
+        }
+
+        if (props.api_user && props.team) {
+            return (<Redirect to='/student/status/'/>);
         }
 
         if (props.api_user) {
@@ -86,20 +119,61 @@ const SelectSubject = (props) => {
         <Box>
             <TopbarLogin />
             <BottomSection />
-            
+            <Modal 
+                isOpen={modalOpen}
+                style={modalStyles}>
+                
+                <h3>{teamName} password:</h3>
+                {props.loading_action ? (
+                    <Loader />
+                ): (
+                    <form onSubmit={onSubmitSelectTeam}>
+                        <label>
+                            Password:
+                            
+                            <input placeholder=' password...' type='text' value={teamPassword} onChange={(e) => setTeamPassword(e.target.value)} />
+                        </label>
+                        <p>{props.error_message}</p>
+                        <br />
+                        <input type='submit' value='Register' />
+
+                    </form>
+                )}
+
+                <button onClick={() => setModalOpen(false)}>Close</button>
+                
+            </Modal>    
         </Box>
     )
 } 
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { loading, feide_user, api_user, enrolled_subjects, account_loading } = state.account;
-    const { team_list, loading_fetch } = state.student;
+    const { feide_user, api_user, enrolled_subjects, account_loading } = state.account;
+    const { team_list, loading_fetch, team, error_message, loading_action } = state.student;
 
-    return { access_token, loading, feide_user, api_user, enrolled_subjects, account_loading, team_list, loading_fetch };
+    const return_state = {
+        access_token,  
+        feide_user, 
+        api_user, 
+        enrolled_subjects, 
+        account_loading, 
+        team_list, 
+        loading_fetch,
+        team,
+        error_message,
+        loading_action
+    }
+
+    return return_state;
 }
 
-export default connect(mapStateToProps, { getEnrolledSubjects, selectSubject, fetchTeamList })(SelectSubject)
+export default connect(mapStateToProps, { 
+    getEnrolledSubjects, 
+    selectSubject, 
+    fetchTeamList,
+    selectTeam 
+})(SelectSubject)
 
 
 
