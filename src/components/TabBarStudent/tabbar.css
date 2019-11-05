@@ -1,4 +1,4 @@
-.container {
+.tabBarContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +11,7 @@
     bottom: 0;
     border-top-style: solid;
     border-top-width: 1px;
-    border-top-color: #a7a7a7;
+    border-top-color: #d2d2d2;
 }
 
 .tabButton {

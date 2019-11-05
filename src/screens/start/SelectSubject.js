@@ -98,7 +98,7 @@ const SelectSubject = (props) => {
         if (props.api_user) {
             if (!props.api_user.selected_subject_id) {
                 return (
-                    <VerticalContainer>
+                    <VerticalContainer style={{ width: '100%' }}>
                         <h2>Select subject</h2>
                         <SubjectList />
                     </VerticalContainer>
@@ -106,7 +106,7 @@ const SelectSubject = (props) => {
             }
             
             return (
-                <VerticalContainer>
+                <VerticalContainer style={{ width: '100%' }}>
                     <h2>Select team</h2>
                     <TeamList />
                 </VerticalContainer>

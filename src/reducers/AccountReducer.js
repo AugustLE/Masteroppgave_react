@@ -5,7 +5,8 @@ import {
     CHANGE_ROLE,
     ACCOUNT_LOADING,
     SUBJECT_LIST, 
-    CHANGE_SUBJECT
+    CHANGE_SUBJECT,
+    LOGOUT
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -38,7 +39,10 @@ export default (state = INITIAL_STATE, action) => {
 
         case CHANGE_SUBJECT:
                 return { ...state, api_user: action.payload, account_loading: false };
-         
+        
+        case LOGOUT:
+            return INITIAL_STATE;
+              
         default:
             return state;
     }

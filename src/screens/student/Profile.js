@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setActiveTab } from '../../actions/MainActions';
+import { logout } from '../../actions/AuthActions';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { Box } from '../../components/common';
@@ -18,6 +19,7 @@ const Profile = (props) => {
             <NavBar />
             <Box>
                 <h2>Profile</h2>
+                <button onClick={props.logout}>Logout</button>
             </Box>
             <TabBarStudent history={props.history} />
         </div>
@@ -29,4 +31,4 @@ const mapStateToProps = (state) => {
     return { access_token, active_tab };
 }
 
-export default connect(mapStateToProps, { setActiveTab })(Profile);
+export default connect(mapStateToProps, { setActiveTab, logout })(Profile);

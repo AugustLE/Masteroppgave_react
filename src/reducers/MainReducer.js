@@ -1,4 +1,4 @@
-import { SET_ACCESS_TOKEN, SET_ACTIVE_TAB } from '../actions/types';
+import { SET_ACCESS_TOKEN, SET_ACTIVE_TAB, LOGOUT } from '../actions/types';
 
 const INITIAL_STATE = {
     error: false,
@@ -14,6 +14,9 @@ export default (state = INITIAL_STATE, action) => {
         
         case SET_ACTIVE_TAB:
             return { ...state, active_tab: action.payload }
+
+        case LOGOUT:
+            return { ...state, access_token: null }
          
         default:
             return state;

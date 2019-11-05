@@ -1,0 +1,113 @@
+.topSection {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100px;
+    
+}
+
+.topSectionPart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #c1c1c1;
+}
+
+.middleLine {
+    height: 70px;
+    width: 1px;
+    background-color: #c1c1c1;
+    margin-top: 15px;
+}
+
+.infoTextBold {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 2px;
+}
+
+.slider {
+    width: 80%;
+    margin-top: 10px;
+}
+
+.questionText {
+    font-weight: 300;
+    font-size: 16px;
+    margin-top: 80px;
+}
+
+.submitScoreButton {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: #3E9DE2;
+    border-style: none;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 8px 0 rgba(247, 247, 247, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 40px;
+    outline: none;
+}
+
+.submitScoreButton:active {
+    box-shadow: 0 8px 16px 0 rgba(247, 247, 247, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+/* ------------ AFTER RATING ------------- */
+
+.topSectionAfter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    margin-top: 5px;
+}
+.middleLineAfter {
+    height: 80px;
+    width: 1px;
+    background-color: #c1c1c1;
+    
+}
+
+.topSectionPartAfter {
+    display: flex;
+    height: 60px;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5px;
+    flex: 1
+}
+
+.topSectionAfterHeader {
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.topSectionAfterText {
+    font-weight: 400;
+    font-size: 13px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.midSectionAfter {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.afterRateText {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 5px;
+}

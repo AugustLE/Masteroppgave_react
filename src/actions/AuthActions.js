@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { clientJSO } from '../GlobalVars';
 import { 
     LOGIN_LOADING,
     LOGIN_SUCCESS,
-    FETCH_FEIDE_USER_SUCCESS 
+    FETCH_FEIDE_USER_SUCCESS,
+    LOGOUT 
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -49,4 +51,12 @@ export const loginAndCreateUserIfNecessary = (user, token) => {
         });
     }
 
+}
+
+export const logout = () => {
+    clientJSO.wipeTokens();
+    return {
+        type: LOGOUT,
+        payload: null
+    }
 }

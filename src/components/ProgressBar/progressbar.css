@@ -1,0 +1,16 @@
+.progressBarContainer {
+    display: flex;
+    border-style: solid;
+    border-radius: 2px;
+    border-width: 2px;
+    width: 40px;
+    height: 10px;
+    align-items: center;
+    
+}
+
+.progressBar {
+    height: 8px;
+    background-color: black;
+    margin-left: 1px;
+}

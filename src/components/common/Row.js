@@ -1,10 +1,12 @@
 import React from 'react';
 import './common.css';
 
-export const Row = (props) => {
+const Row = (props) => {
     return (
-        <div className='rowContainer'>
+        <div style={props.style} className='rowContainer'>
             {props.children}
         </div>
     );
 }
+
+export { Row };

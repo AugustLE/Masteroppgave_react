@@ -1,0 +1,27 @@
+.scoreImage {
+    height: 120px;
+    width: 120px;
+    margin: 20px;
+}
+
+.scoreTextContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+   
+}
+
+.scoreTextBig {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0px;
+    margin-right: 7px;
+}
+
+.scoreTextSmall {
+    font-size: 13px;
+    font-weight: 400;
+    margin: 0px;
+    margin-bottom: 4px;
+}
+

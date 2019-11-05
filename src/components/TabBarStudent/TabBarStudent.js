@@ -16,7 +16,7 @@ const TabBarStudent = (props) => {
     }
 
     return (
-        <div className='container'>
+        <div className='tabBarContainer'>
             <TabButton isActive={checkActive(0)} icon={require('./icons/status-bar.png')} onClick={() => tabClick(0, '/student/status')}> 
                 Group status
             </TabButton>
