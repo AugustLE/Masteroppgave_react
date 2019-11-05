@@ -15,4 +15,3 @@ export const URLS = {
     feide_profile_info: 'https://auth.dataporten.no/userinfo',
     api_url: 'http://127.0.0.1:8000'
 }
-

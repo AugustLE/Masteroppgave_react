@@ -3,18 +3,25 @@ import React from 'react';
 const ImageButton = (props) => {
 
     let flex_direction = 'column';
-    let image_margin_right = '0px';
     let margin_top_text = '4px';
+    let extra_styles = {}
+    let extra_image_styles = {}
     if (props.horizontal) {
         flex_direction = 'row';
-        image_margin_right = '5px';
         margin_top_text = '0px';
+        extra_image_styles = { width: '15px', height: '15px', marginRight: '5px' };
+    }
+
+    extra_styles = { flexDirection: flex_direction };
+
+    if (props.styles) {
+        extra_styles = { ...props.styles, flexDirection: flex_direction };
     }
 
     return (
-        <button onClick={props.onClick} className='imageButton' style={{ flexDirection: flex_direction }}>
-            <img style={{ marginRight: image_margin_right, width: '15px', height: '15px' }} className='imageButtonImage' src={props.image} />
-            <p style={{ marginTop: margin_top_text }} className='imageButtonText'>{props.children}</p>
+        <button onClick={props.onClick} className='imageButton' style={extra_styles}>
+            <img style={extra_image_styles} className='imageButtonImage' src={props.image} />
+            <p className='imageButtonText' style={{ marginTop: margin_top_text }}>{props.children}</p>
         </button>
     )
 }

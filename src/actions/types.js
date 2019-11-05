@@ -13,6 +13,7 @@ export const CHANGE_ROLE = 'CHANGE_ROLE';
 export const ACCOUNT_LOADING = 'ACCOUNT_LOADING';
 export const SUBJECT_LIST = 'SUBJECT_LIST';
 export const CHANGE_SUBJECT = 'CHANGE_SUBJECT';
+export const GET_USER = 'GET_USER';
 
 // STUDENT ACTIONS 
 export const FETCH_TEAM_LIST = 'FETCH_TEAM_LIST';

@@ -11,7 +11,7 @@ const Messages = (props) => {
         if (props.active_tab !== 1) {
             props.setActiveTab(1);
         }
-    });
+    }, []);
 
     return (
         <div>

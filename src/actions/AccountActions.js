@@ -3,7 +3,9 @@ import {
     CHANGE_ROLE,
     SUBJECT_LIST,
     CHANGE_SUBJECT,
-    ACCOUNT_LOADING
+    ACCOUNT_LOADING,
+    GET_USER,
+    FETCH_LOADING
 } from './types';
 import { URLS } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
@@ -73,6 +75,28 @@ export const selectSubject = (auth_token, subject_id) => {
         }).catch(error => {
             console.log(error);
             dispatch({ type: ACCOUNT_LOADING, payload: false });
+        })
+    }
+}
+
+export const getApiUser = (auth_token) => {
+    const url = URLS.api_url + '/user/';
+
+    return (dispatch) => {
+        dispatch({ type: ACCOUNT_LOADING, payload: true });
+        dispatch({ type: FETCH_LOADING, payload: true });
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + auth_token
+            },
+        }).then(response => {
+            dispatch({ type: GET_USER, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: ACCOUNT_LOADING, payload: false });
+            dispatch({ type: FETCH_LOADING, payload: false });
         })
     }
 }

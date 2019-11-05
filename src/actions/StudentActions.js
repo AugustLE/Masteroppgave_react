@@ -11,8 +11,8 @@ import {
 import { URLS } from '../GlobalVars';
 
 
-export const fetchTeamList = (access_token, subject_id) => {
-    const url = URLS.api_url + `/subject/${subject_id}/teams`;
+export const fetchTeamList = (access_token) => {
+    const url = URLS.api_url + `/subject/teams/`;
     return (dispatch) => {
 
         dispatch({ type: FETCH_LOADING, payload: true });

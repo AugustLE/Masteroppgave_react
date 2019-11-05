@@ -1,3 +1,5 @@
+@import url('../../App.css');
+
 .boxContainer {
     display: flex;
     flex-direction: column;
@@ -43,13 +45,54 @@
 }
 
 .imageButtonText {
+    font-weight: 500;
     font-size: 13px;
-    font-weight: 400;
     margin-bottom: 0px;
 }
 
 .line {
     border-top-style: solid;
     border-top-width: 1px;
-    border-top-color: #d2d2d2;
+    border-top-color: #e3e3e3;
+}
+
+.primaryButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--theme-color);
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(247, 247, 247, 0.2), 0 2px 4px 1px rgba(0, 0, 0, 0.19);
+}
+
+.primaryButton:active {
+    box-shadow: 0 2px 4px 0 rgba(247, 247, 247, 0.2), 0 2px 4px 3px rgba(0, 0, 0, 0.19);
+}
+
+.secondaryButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    color: var(--theme-color);
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(247, 247, 247, 0.2), 0 2px 4px 1px rgba(0, 0, 0, 0.19);
+}
+
+.secondaryButton:active {
+    box-shadow: 0 2px 4px 0 rgba(247, 247, 247, 0.2), 0 2px 4px 3px rgba(0, 0, 0, 0.19);
+}
+
+.buttonImage {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
 }

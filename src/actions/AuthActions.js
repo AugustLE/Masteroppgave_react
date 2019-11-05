@@ -55,6 +55,7 @@ export const loginAndCreateUserIfNecessary = (user, token) => {
 
 export const logout = () => {
     clientJSO.wipeTokens();
+    localStorage.clear();
     return {
         type: LOGOUT,
         payload: null

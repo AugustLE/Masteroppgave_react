@@ -6,14 +6,17 @@ import {
     ACCOUNT_LOADING,
     SUBJECT_LIST, 
     CHANGE_SUBJECT,
-    LOGOUT
+    LOGOUT,
+    GET_USER,
+    FETCH_TEAM_STATUS
 } from '../actions/types';
 
 const INITIAL_STATE = {
     feide_user: null,
     api_user: null,
     account_loading: false,
-    enrolled_subjects: null
+    enrolled_subjects: null,
+    subject: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -39,6 +42,20 @@ export default (state = INITIAL_STATE, action) => {
 
         case CHANGE_SUBJECT:
                 return { ...state, api_user: action.payload, account_loading: false };
+
+        case GET_USER:
+            return { 
+                ...state, 
+                api_user: action.payload.api_user, 
+                subject: action.payload.subject,
+                account_loading: false 
+            };
+        
+        case FETCH_TEAM_STATUS:
+            return {
+                ...state,
+                subject: action.payload.subject
+            }
         
         case LOGOUT:
             return INITIAL_STATE;

@@ -5,11 +5,13 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { setActiveTab } from '../../actions/MainActions';
 import { getTeamStatus, registerScore } from '../../actions/StudentActions';
+import { setAccessToken } from '../../actions/MainActions';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { VerticalContainer, Row, ImageButton, Line } from '../../components/common';
 import { ScoreView } from '../../components/ScoreView/ScoreView';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import { getAccessToken } from '../../GlobalMethods';
 import './group_status.css';
 
 
@@ -18,10 +20,17 @@ const GroupStatus = (props) => {
     const [score, setScore] = useState(2);
 
     useEffect(() => {
+        getAccessToken().then(token => {
+            if (!token) {
+                props.history.push('/')
+            } else {
+                props.setAccessToken(token);
+                props.getTeamStatus(token);
+            }
+        });
         if (props.active_tab !== 0) {
             props.setActiveTab(0);
         }
-        props.getTeamStatus(props.access_token);
     }, []);
 
     const onSliderChange = (value) => {
@@ -43,7 +52,7 @@ const GroupStatus = (props) => {
                 return (
                     <VerticalContainer>
                         <h2 style={{ marginBottom: '1px' }}>Group status</h2>
-                        <p>{props.team.name}</p>
+                        <p className='teamNameText'>{props.team.name}</p>
                         <div className='topSectionAfter'>
                             <div className='topSectionPartAfter'>
                                 <p className='topSectionAfterHeader'>Average score</p>
@@ -133,7 +142,8 @@ const GroupStatus = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token, active_tab } = state.main;
-    const { team, subject, last_score, loading_fetch, loading_action, has_rated_this_week } = state.student;
+    const { team, last_score, loading_fetch, loading_action, has_rated_this_week } = state.student;
+    const { subject } = state.account;
     return { 
         access_token, 
         active_tab,  
@@ -146,4 +156,9 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { setActiveTab, getTeamStatus, registerScore })(GroupStatus);
+export default connect(mapStateToProps, { 
+    setActiveTab, 
+    getTeamStatus, 
+    registerScore, 
+    setAccessToken 
+})(GroupStatus);

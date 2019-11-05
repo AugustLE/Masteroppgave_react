@@ -5,6 +5,7 @@ import { clientJSO } from '../../GlobalVars';
 import { setAccessToken } from '../../actions/MainActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Box } from '../../components/common';
+import { setAccessTokenPersistent } from '../../GlobalMethods';
 import './start.css';
 
 const Login = (props) => {
@@ -15,6 +16,7 @@ const Login = (props) => {
         try {
             clientJSO.callback().then(response => {
                 props.setAccessToken(response.access_token);
+                setAccessTokenPersistent(response.access_token);
                 setRedirect(true);
             })
         } catch { }
@@ -27,6 +29,7 @@ const Login = (props) => {
         clientJSO.getToken().then((response) => { 
             if (response.access_token) {
                 props.setAccessToken(response.access_token);
+                setAccessTokenPersistent(response.access_token);
                 setRedirect(true);
             }
         });

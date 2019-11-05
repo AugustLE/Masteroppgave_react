@@ -5,7 +5,8 @@ import {
     SELECT_TEAM_OK,
     WRONG_PASSWORD,
     FETCH_TEAM_STATUS,
-    REGISTER_SCORE
+    REGISTER_SCORE,
+    GET_USER
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -14,7 +15,6 @@ const INITIAL_STATE = {
     loading_action: false,
     team: null,
     error_message: null,
-    subject: null,
     last_score: null,
     has_rated_this_week: false
 }
@@ -38,13 +38,11 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, error_message: action.payload, loading_action: false };
         
         case FETCH_TEAM_STATUS:
-            const { team, subject, last_score, has_rated_this_week } = action.payload;
             return { 
                 ...state, 
-                team: team, 
-                subject: subject, 
-                last_score: last_score, 
-                has_rated_this_week: has_rated_this_week,
+                team: action.payload.team, 
+                last_score: action.payload.last_score, 
+                has_rated_this_week: action.payload.has_rated_this_week,
                 loading_fetch: false  
             }
         
@@ -57,6 +55,13 @@ export default (state = INITIAL_STATE, action) => {
                 has_rated_this_week: action.payload.has_rated_this_week,
                 loading_action: false 
             };
+
+        case GET_USER:
+            return {
+                ...state,
+                team: action.payload.team,
+                loading_fetch: false
+            }
 
         default:
             return state;

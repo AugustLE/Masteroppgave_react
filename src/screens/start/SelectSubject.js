@@ -4,9 +4,11 @@ import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Redirect } from 'react-router-dom';
 import Modal from 'react-modal';
 import { Box, VerticalContainer } from '../../components/common';
-import { getEnrolledSubjects, selectSubject } from '../../actions/AccountActions';
+import { getEnrolledSubjects, selectSubject, getApiUser } from '../../actions/AccountActions';
 import { fetchTeamList, selectTeam } from '../../actions/StudentActions';
+import { setAccessToken } from '../../actions/MainActions';
 import Loader from 'react-loader';
+import { getAccessToken } from '../../GlobalMethods';
 import './start.css';
 
 const modalStyles = {
@@ -28,13 +30,19 @@ const SelectSubject = (props) => {
     const [teamPassword, setTeamPassword] = useState('');
 
     useEffect(() => {
-        props.getEnrolledSubjects(props.access_token);
-        if (props.api_user.selected_subject_id) {
-            props.fetchTeamList(props.access_token, props.api_user.selected_subject_id);
-        }
 
-        console.log(props.api_user);
-        
+        getAccessToken().then(token => {
+            if (!token) {
+                props.history.push('/')
+            } else { 
+                props.setAccessToken(token);
+                props.getEnrolledSubjects(token);
+                if (!props.api_user) {
+                    props.getApiUser(token);
+                }
+                props.fetchTeamList(token);
+            }
+        });
     }, [])
 
     const openTeamModal = (team_id, team_name) => {
@@ -172,7 +180,9 @@ export default connect(mapStateToProps, {
     getEnrolledSubjects, 
     selectSubject, 
     fetchTeamList,
-    selectTeam 
+    selectTeam,
+    setAccessToken,
+    getApiUser
 })(SelectSubject)
 
 

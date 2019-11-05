@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { getUserFeide } from '../../actions/AuthActions';
 import { changeRole } from '../../actions/AccountActions';
+import { setAccessToken } from '../../actions/MainActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Box, Row } from '../../components/common';
 import { RoleButton } from '../../components/RoleButton/RoleButton';
-import { clientJSO } from '../../GlobalVars';
+import { getAccessToken } from '../../GlobalMethods';
 import Loader from 'react-loader';
 
 
@@ -14,8 +15,15 @@ const SelectRole = (props) => {
 
 
     useEffect(() => {
-        props.getUserFeide(props.access_token);
-        // clientJSO.wipeTokens();
+
+        getAccessToken().then(token => {
+            if (!token) {
+                props.history.push('/')
+            } else { 
+                props.setAccessToken(token);
+                props.getUserFeide(token);
+            }
+        })
     }, [])
 
     return (
@@ -55,4 +63,4 @@ const mapStateToProps = (state) => {
     return { access_token, feide_user, api_user, account_loading };
 };
 
-export default connect(mapStateToProps, { getUserFeide, changeRole })(SelectRole);
+export default connect(mapStateToProps, { getUserFeide, changeRole, setAccessToken })(SelectRole);

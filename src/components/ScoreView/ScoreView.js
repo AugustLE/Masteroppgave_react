@@ -24,7 +24,7 @@ export const ScoreView = (props) => {
         if (props.text) {
             return (
                 <div className='scoreTextContainer'>
-                    <p className='scoreTextBig'>{props.score}</p>
+                    <p className='scoreTextBig'>{props.score + 1}</p>
                     <p className='scoreTextSmall'> out of 5</p>
                 </div>
             );
