@@ -3,13 +3,21 @@ import './progressbar.css';
 
 export const ProgressBar = (props) => {
 
-    const bar_width = (props.score*20)/2.5
+    let bar_width = (props.score*20)/2.5
+    if (props.big) {
+        bar_width = (props.score*20)*1.4;
+    }
+    let classNameContainer = 'progressBarContainer';
+    let classNameBar = 'progressBar';
+
+    if (props.big) {
+        classNameContainer = 'progressBarContainerBig';
+        classNameBar = 'progressBarBig';
+    }
 
     return (
-        <div className='progressBarContainer'>
-            <div className='progressBar' style={{ width: bar_width }}>
-
-            </div>
+        <div className={classNameContainer}>
+            <div className={classNameBar} style={{ width: bar_width }} />
         </div>
     );
 }

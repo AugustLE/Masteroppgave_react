@@ -25,7 +25,7 @@ const SelectRole = (props) => {
             }
         })
     }, [])
-
+    console.log(props.feide_user);
     return (
         <Box>
             <TopbarLogin />

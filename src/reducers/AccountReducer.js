@@ -8,7 +8,8 @@ import {
     CHANGE_SUBJECT,
     LOGOUT,
     GET_USER,
-    FETCH_TEAM_STATUS
+    FETCH_TEAM_STATUS,
+    STAFF_OVERVIEW
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -57,6 +58,12 @@ export default (state = INITIAL_STATE, action) => {
                 subject: action.payload.subject
             }
         
+        case STAFF_OVERVIEW:
+            return {
+                ...state,
+                subject: action.payload.subject
+            }
+
         case LOGOUT:
             return INITIAL_STATE;
               

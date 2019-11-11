@@ -27,7 +27,7 @@ const Profile = (props) => {
     }, []);
 
     const logOut = () => {
-        props.logOut();
+        props.logout();
         props.history.push('/');
     }
 

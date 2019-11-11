@@ -14,3 +14,19 @@
     background-color: black;
     margin-left: 1px;
 }
+
+.progressBarContainerBig {
+    display: flex;
+    border-style: solid;
+    border-radius: 2px;
+    border-width: 3px;
+    width: 140px;
+    height: 30px;
+    align-items: center;
+}
+
+.progressBarBig {
+    height: 26px;
+    background-color: black;
+    margin-left: 2px;
+}

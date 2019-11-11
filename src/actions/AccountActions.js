@@ -9,6 +9,7 @@ import {
 } from './types';
 import { URLS } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
+import { getStaffSubjects } from './StaffActions';
 
 
 export const changeRole = (auth_token, role) => {
@@ -79,7 +80,7 @@ export const selectSubject = (auth_token, subject_id) => {
     }
 }
 
-export const getApiUser = (auth_token) => {
+export const getApiUser = (auth_token, start=false) => {
     const url = URLS.api_url + '/user/';
 
     return (dispatch) => {
@@ -93,6 +94,15 @@ export const getApiUser = (auth_token) => {
             },
         }).then(response => {
             dispatch({ type: GET_USER, payload: response.data });
+            const { role } = response.data.api_user;
+            if(start){
+                if(role === 'SD') {
+                    dispatch(getEnrolledSubjects(auth_token));
+                    dispatch(fetchTeamList(auth_token, response.data.api_user.selected_subject_id));
+                } else if (role === 'IN' || role === 'TA') {
+                    dispatch(getStaffSubjects(auth_token));
+                }
+            }
         }).catch(err => {
             console.log(err);
             dispatch({ type: ACCOUNT_LOADING, payload: false });

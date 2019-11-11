@@ -26,12 +26,15 @@ export const getUserFeide = (token) => {
         }).then(response => {
             dispatch({ type: FETCH_FEIDE_USER_SUCCESS, payload: response.data.user });
             dispatch(loginAndCreateUserIfNecessary(response.data.user, token));
-        })
+        }).catch(error => {
+            console.log(error);
+        });
     }
 }
 
 export const loginAndCreateUserIfNecessary = (user, token) => {
     const url = URLS.api_url + '/user/feidelogin/';
+    const username = user.userid_sec[0].split(':')[1].split('@')[0];
     return (dispatch) => {
         dispatch({ type: LOGIN_LOADING, payload: true });
         axios({
@@ -41,7 +44,7 @@ export const loginAndCreateUserIfNecessary = (user, token) => {
                 userid: user.userid,
                 name: user.name,
                 auth_token: token,
-                password: TEMP_PASSWORD,
+                username: username
             }
         }).then(response => {
             dispatch({ type: LOGIN_SUCCESS, payload: response.data });

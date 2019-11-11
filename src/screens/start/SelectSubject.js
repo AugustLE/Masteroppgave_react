@@ -35,12 +35,12 @@ const SelectSubject = (props) => {
             if (!token) {
                 props.history.push('/')
             } else { 
+                
+                props.getApiUser(token, true);
                 props.setAccessToken(token);
-                props.getEnrolledSubjects(token);
-                if (!props.api_user) {
-                    props.getApiUser(token);
-                }
-                props.fetchTeamList(token);
+
+                //props.getEnrolledSubjects(token);
+                //props.fetchTeamList(token);
             }
         });
     }, [])
@@ -57,7 +57,7 @@ const SelectSubject = (props) => {
     }
 
     const SubjectList = () => {
-        if (props.enrolled_subjects) {
+        if (props.api_user.role === 'SD' && props.enrolled_subjects) {
          
             const subject_list = props.enrolled_subjects.map((subject) => (
                 <div 
@@ -66,7 +66,21 @@ const SelectSubject = (props) => {
                     key={subject.subject_pk}>
                     {subject.subject_code} - {subject.subject_name}
                 </div>
-            ))
+            ));
+            return (
+                <div className='subjectList'>{subject_list}</div>
+            );
+        }
+        else if (props.staff_subjects && (props.api_user.role === 'IN' || props.api_user.role === 'TA')) {
+
+            const subject_list = props.staff_subjects.map((subject) => (
+                <div 
+                    onClick={() => props.selectSubject(props.access_token, subject.pk)} 
+                    className='subjectListElement' 
+                    key={subject.pk}>
+                    {subject.code} - {subject.name}
+                </div>
+            ));
             return (
                 <div className='subjectList'>{subject_list}</div>
             );
@@ -99,8 +113,11 @@ const SelectSubject = (props) => {
             return <Loader />;
         }
 
-        if (props.api_user && props.team) {
+        if (props.api_user && props.api_user.role ==='SD' && props.team) {
             return (<Redirect to='/student/status/'/>);
+        }
+        if (props.api_user && props.api_user.role ==='IN' && props.api_user.selected_subject_id) {
+            return (<Redirect to='/staff/overview/'/>);
         }
 
         if (props.api_user) {
@@ -159,6 +176,7 @@ const mapStateToProps = (state) => {
     const { access_token } = state.main;
     const { feide_user, api_user, enrolled_subjects, account_loading } = state.account;
     const { team_list, loading_fetch, team, error_message, loading_action } = state.student;
+    const { staff_subjects } = state.staff;
 
     const return_state = {
         access_token,  
@@ -170,7 +188,8 @@ const mapStateToProps = (state) => {
         loading_fetch,
         team,
         error_message,
-        loading_action
+        loading_action,
+        staff_subjects
     }
 
     return return_state;

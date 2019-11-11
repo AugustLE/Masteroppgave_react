@@ -4,7 +4,7 @@ import { setActiveTab } from '../../actions/MainActions';
 import { TabButton } from '../TabBar/TabButton';
 import '../TabBar/tabbar.css';
 
-const TabBarStudent = (props) => {
+const TabBarStaff = (props) => {
 
     const tabClick = (tab_number, path) => {
         props.setActiveTab(tab_number);
@@ -17,13 +17,16 @@ const TabBarStudent = (props) => {
 
     return (
         <div className='tabBarContainer'>
-            <TabButton isActive={checkActive(0)} icon={require('./icons/status-bar.png')} onClick={() => tabClick(0, '/student/status')}> 
-                Group status
+            <TabButton isActive={checkActive(0)} icon={require('./icons/pie-chart.png')} onClick={() => tabClick(0, '/staff/overview')}> 
+                Overview
             </TabButton>
-            <TabButton isActive={checkActive(1)} icon={require('./icons/mail.png')} onClick={() => tabClick(1, '/student/messages')}>
+            <TabButton isActive={checkActive(1)} icon={require('./icons/list.png')} onClick={() => tabClick(1, '/staff/groups')}>
+                Groups
+            </TabButton>
+            <TabButton isActive={checkActive(2)} icon={require('./icons/email.png')} onClick={() => tabClick(2, '/staff/messages')}>
                 Messages
             </TabButton>
-            <TabButton isActive={checkActive(2)} icon={require('./icons/avatar.png')} onClick={() => tabClick(2, '/student/profile')}>
+            <TabButton isActive={checkActive(3)} icon={require('./icons/avatar.png')} onClick={() => tabClick(3, '/staff/profile')}>
                 Profile
             </TabButton>
         </div>
@@ -39,4 +42,4 @@ const mapDispatchToProps = {
     setActiveTab
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabBarStudent);
+export default connect(mapStateToProps, mapDispatchToProps)(TabBarStaff);

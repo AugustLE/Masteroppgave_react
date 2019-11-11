@@ -20,7 +20,6 @@ const Login = (props) => {
                 setRedirect(true);
             })
         } catch { }
-        //console.log(props.access_token);
         //clientJSO.wipeTokens();
     }, [])
     

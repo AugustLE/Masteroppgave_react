@@ -7,6 +7,14 @@
     align-items: center;
 }
 
+.boxContainerShadow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px 0 rgba(247, 247, 247, 0.2), 0 2px 4px 3px rgba(0, 0, 0, 0.19);
+}
+
 .rowContainer {
     display: flex;
     flex-direction: row;
@@ -95,4 +103,10 @@
     width: 18px;
     height: 18px;
     margin-right: 5px;
+}
+
+.basicText {
+    font-size: 14px;
+    font-weight: 400;
+    margin: 2px;
 }
