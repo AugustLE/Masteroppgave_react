@@ -9,7 +9,6 @@ import {
     LOGOUT,
     GET_USER,
     FETCH_TEAM_STATUS,
-    STAFF_OVERVIEW
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -53,12 +52,6 @@ export default (state = INITIAL_STATE, action) => {
             };
         
         case FETCH_TEAM_STATUS:
-            return {
-                ...state,
-                subject: action.payload.subject
-            }
-        
-        case STAFF_OVERVIEW:
             return {
                 ...state,
                 subject: action.payload.subject

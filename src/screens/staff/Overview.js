@@ -6,7 +6,7 @@ import { getOverviewStatistics } from '../../actions/StaffActions';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getAccessToken } from '../../GlobalMethods';
-import { setAccessToken } from '../../actions/MainActions';
+import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
  
 const OverView = (props) => {
@@ -21,6 +21,9 @@ const OverView = (props) => {
                 props.getOverviewStatistics(token);
             }
         });
+        if (props.active_tab !== 0) {
+            props.setActiveTab(0);
+        }
     }, [])
 
     const TeamList = () => {
@@ -73,9 +76,8 @@ const OverView = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { subject } = state.account;
-    const { total_average, number_teams_below, responsible_teams, loading_fetch } = state.staff;
+    const { total_average, number_teams_below, responsible_teams, loading_fetch, subject } = state.staff;
     return { access_token, total_average, number_teams_below, responsible_teams, subject, loading_fetch };
 }
 
-export default connect(mapStateToProps, { getOverviewStatistics, setAccessToken })(OverView);
+export default connect(mapStateToProps, { getOverviewStatistics, setAccessToken, setActiveTab })(OverView);

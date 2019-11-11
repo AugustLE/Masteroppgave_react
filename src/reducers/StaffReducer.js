@@ -1,7 +1,8 @@
 import { 
     FETCH_STAFF_SUBJECTS, 
     STAFF_FETCH_LOADING,
-    STAFF_OVERVIEW
+    STAFF_OVERVIEW,
+    STAFF_FETCH_TEAMS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -9,7 +10,9 @@ const INITIAL_STATE = {
     loading_fetch: false,
     total_average: null,
     number_teams_below: null,
-    responsible_teams: null
+    responsible_teams: null,
+    staff_team_list: null,
+    subject: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,6 +30,15 @@ export default (state = INITIAL_STATE, action) => {
                 total_average: action.payload.total_average,
                 number_teams_below: action.payload.number_teams_below,
                 responsible_teams: action.payload.responsible_teams,
+                subject: action.payload.subject,
+                loading_fetch: false
+            }
+        
+        case STAFF_FETCH_TEAMS:
+            return {
+                ...state,
+                staff_team_list: action.payload.teams,
+                subject: action.payload.subject,
                 loading_fetch: false
             }
          

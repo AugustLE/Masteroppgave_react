@@ -7,8 +7,8 @@ import { getApiUser } from '../../actions/AccountActions';
 import { getAccessToken } from '../../GlobalMethods';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { Row, Button, VerticalContainer, Line, ImageButton } from '../../components/common';
-import './profile.css';
+import { Line } from '../../components/common';
+import { ProfileSectionTop, ProfileSectionBottom } from '../../components/ProfileSection';
 
 const Profile = (props) => {
 
@@ -31,70 +31,26 @@ const Profile = (props) => {
         props.history.push('/');
     }
 
-    const TopSection = () => {
-        if (props.account_loading) {
-            return <Loader />;
-        }
-
-        if (props.api_user) {
-            return (
-                <Row>
-                    <VerticalContainer style={{ flex: 4 }}>
-                        <img className='studentImage' src={require('../../images/student/mortarboard.png')} />
-                    </VerticalContainer>
-                    <VerticalContainer style={{ flex: 7, alignItems: 'flex-start' }}>
-                        <p className='nameText'>{props.api_user.name}</p>
-                        <Button image={require('../../images/logout_white.png')} onClick={() => logOut()}>Log out</Button>
-                    </VerticalContainer>
-                </Row>
-            );
-        }
-        return <div />;
-    }
-
-    const BottomSection = () => {
-        if (props.loading_fetch) {
-            return <Loader />
-        }
-        if (props.team && props.subject) {
-            return (
-              
-                <VerticalContainer style={{ alignItems: 'flex-start' }}>
-                    <Row style={{ marginLeft: '30px' }}>
-                        <p className='profileInfoLabel'>Current subject: </p>
-                        <p className='profileInfoText'>{props.subject.code} - {props.subject.name}</p>
-                    </Row>
-                    <Row style={{ marginLeft: '30px' }}>
-                        <p className='profileInfoLabel'>Your team: </p>
-                        <p className='profileInfoText'>{props.team.name}</p>
-                    </Row>
-
-                    <ImageButton 
-                        onClick={() => console.log('onClick')} 
-                        image={require('../../images/book.png')}
-                        styles={{ marginLeft: '30px', marginTop: '20px', paddingLeft: '20px', paddingRight: '20px' }}
-                    >
-                        Change subject
-                    </ImageButton>
-
-                    <Line style={{ width: '100%', marginTop: '20px' }} />
-                    
-                </VerticalContainer>
-                    
-            );
-        }
-        return <div />;
-    }
-
-
-
     return (
         <div>
             <NavBar />
-            <TopSection />
-            <TabBarStudent history={props.history} />
+            {(!props.account_loading && props.api_user) ? (
+                <ProfileSectionTop api_user={props.api_user} logOut={() => logOut()}/>
+            ): (
+                <Loader />
+            )}
             <Line style={{ marginTop: '10px', marginBottom: '10px' }}/>
-            <BottomSection />
+            {(!props.loading_fetch && props.team && props.subject) ? (
+                <ProfileSectionBottom 
+                    subject={props.subject} 
+                    team={props.team} 
+                    student 
+                    onChangeSubject={() => console.log('PRint subj')} 
+                />
+            ): (
+                <Loader />
+            )}
+            <TabBarStudent history={props.history} />
         </div>
     );
 }

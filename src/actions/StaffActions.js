@@ -3,9 +3,11 @@ import axios from 'axios';
 import { 
     FETCH_STAFF_SUBJECTS,
     STAFF_FETCH_LOADING,
-    STAFF_OVERVIEW
+    STAFF_OVERVIEW,
+    STAFF_FETCH_TEAMS
 } from './types';
 import { URLS } from '../GlobalVars';
+
 
 export const getStaffSubjects = (access_token) => {
 
@@ -49,3 +51,23 @@ export const getOverviewStatistics = (access_token) => {
         });
     }
 }
+
+export const getTeamList = (access_token) => {
+    const url = URLS.api_url + '/staff/teams/';
+
+    return (dispatch) => {
+        dispatch({ type: STAFF_FETCH_LOADING, payload: true });
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            }
+        }).then(response => {
+            dispatch({ type: STAFF_FETCH_TEAMS, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: STAFF_FETCH_LOADING, payload: false });
+        })
+    }
+} 

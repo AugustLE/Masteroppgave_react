@@ -23,10 +23,11 @@
     width: 140px;
     height: 30px;
     align-items: center;
+    border-color: #006CBB;
 }
 
 .progressBarBig {
     height: 26px;
-    background-color: black;
+    background-color: #006CBB;
     margin-left: 2px;
 }
