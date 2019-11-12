@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import Modal from 'react-modal';
-import { VerticalContainer, Text, Row, Box, Button } from '../../components/common';
+import { VerticalContainer, Text, Row, Box, Button, Line } from '../../components/common';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getTeamList, getTeamInfo } from '../../actions/StaffActions';
@@ -73,8 +73,9 @@ const TeamView = (props) => {
 
         return (
             <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
-                <Text style={{ marginTop: '20px', marginBottom: '10px' }} size='16px' bold>Team members</Text>
+                <Text style={{ marginTop: '10px', marginBottom: '10px' }} size='16px' bold>Team members</Text>
                 {list}
+                <Line style={{ width: '100%', marginTop: '10px' }} />
                 <Text style={{ marginTop: '10px', marginBottom: '10px' }} size='16px' bold>Responsible for this team</Text>
                 <Text>{props.modal_responsible}</Text>
             </VerticalContainer>
@@ -100,6 +101,14 @@ const TeamView = (props) => {
                 {(!props.modal_loading && props.modal_team) ? (
                     <VerticalContainer>
                         <Text bold size='20px'>{props.modal_team.name}</Text>
+                        <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
+                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
+                            <Row style={{ jusifyContent: 'flex-start' }}>
+                                <Text style={{ marginRight: '5px' }} bold>{props.modal_team.last_average_score}</Text>
+                                <ProgressBar score={props.modal_team.last_average_score} />
+                            </Row>
+                        </VerticalContainer>
+                        <Line style={{ width: '90%', marginTop: '10px' }} />
                         <TeamMemberList />
                     </VerticalContainer>
                 ): (
