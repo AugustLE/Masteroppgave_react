@@ -2,21 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import Slider from 'rc-slider';
+import Modal from 'react-modal';
 import 'rc-slider/assets/index.css';
 import { setActiveTab, setAccessToken } from '../../actions/MainActions';
 import { getTeamStatus, registerScore } from '../../actions/StudentActions';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { VerticalContainer, Row, ImageButton, Line } from '../../components/common';
+import { VerticalContainer, Row, ImageButton, Line, Text, Button, Box } from '../../components/common';
 import { ScoreView } from '../../components/ScoreView/ScoreView';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import { getAccessToken } from '../../GlobalMethods';
 import './team_status.css';
 
+const modalStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)',
+      width: '80%',
+      border: 'none',
+      boxShadow: '1px 1px 2px 2px #d5d5d5'
+
+    }
+  };
 
 const TeamStatus = (props) => {
 
     const [score, setScore] = useState(2);
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         getAccessToken().then(token => {
@@ -39,6 +55,56 @@ const TeamStatus = (props) => {
     const onSubmitScore = (event) => {
         event.preventDefault();
         props.registerScore(props.access_token, props.team.pk, score + 1);
+    }
+
+    const TeamMemberList = () => {
+        const list = props.team_members.map((member) => (
+            <Row style={{ width: '100%', marginTop: '5px' }} key={member}>
+                <Text style={{ flex: 3 }}>{member}</Text>
+            </Row>
+        ));
+
+        return (
+            <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
+                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members</Text>
+                {list}
+                <Line style={{ width: '100%', marginTop: '10px' }} />
+                <Text style={{ marginTop: '10px', marginBottom: '5px' }} size='16px' bold>Responsible for this team</Text>
+                <Text>{props.team_responsible}</Text>
+            </VerticalContainer>
+        );
+    }
+
+    const TeamInfoModal = () => {
+        return (
+            <Modal 
+                isOpen={modalOpen}
+                style={modalStyles}
+                ariaHideApp={false}
+                >
+                {props.team && (
+                    <VerticalContainer>
+                        <Text bold size='20px'>{props.team.name}</Text>
+                        <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
+                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
+                            <Row style={{ jusifyContent: 'flex-start' }}>
+                                <Text style={{ marginRight: '5px' }} bold>{props.team.last_average_score}</Text>
+                                <ProgressBar score={props.team.last_average_score} />
+                            </Row>
+                        </VerticalContainer>
+                        <Line style={{ width: '90%', marginTop: '10px' }} />
+                        <TeamMemberList />
+                    </VerticalContainer>
+                )}
+                
+                <VerticalContainer>
+                    <Button style={{ marginTop: '25px' }} secondary onClick={() => setModalOpen(false)}>
+                        Close
+                    </Button>
+                </VerticalContainer>
+                
+            </Modal>
+        );
     }
 
     const ScorePage = () => {
@@ -75,7 +141,7 @@ const TeamStatus = (props) => {
                             {/*}<ImageButton image={require('../../images/student/meeting.png')}>
                                 Request assistance
                             </ImageButton>*/}
-                            <ImageButton horizontal image={require('../../images/student/info_button.png')}>
+                            <ImageButton onClick={() => setModalOpen(true)} horizontal image={require('../../images/student/info_button.png')}>
                                 Team info
                             </ImageButton>
                         </div>
@@ -134,6 +200,7 @@ const TeamStatus = (props) => {
         <div>
             <NavBar />
             <ScorePage />
+            <TeamInfoModal />
             <TabBarStudent history={props.history} />
         </div>
     );
@@ -141,7 +208,15 @@ const TeamStatus = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token, active_tab } = state.main;
-    const { team, last_score, loading_fetch, loading_action, has_rated_this_week } = state.student;
+    const { 
+        team, 
+        last_score, 
+        loading_fetch, 
+        loading_action, 
+        has_rated_this_week,
+        team_responsible,
+        team_members
+    } = state.student;
     const { subject } = state.account;
     return { 
         access_token, 
@@ -151,13 +226,17 @@ const mapStateToProps = (state) => {
         subject, 
         has_rated_this_week,
         loading_fetch,
-        loading_action 
+        loading_action,
+        team_responsible,
+        team_members 
     };
 };
 
-export default connect(mapStateToProps, { 
+const mapDispatchToProps = {
     setActiveTab, 
     getTeamStatus, 
     registerScore, 
     setAccessToken 
-})(TeamStatus);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamStatus);

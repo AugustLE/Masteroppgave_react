@@ -16,7 +16,9 @@ const INITIAL_STATE = {
     team: null,
     error_message: null,
     last_score: null,
-    has_rated_this_week: false
+    has_rated_this_week: false,
+    team_responsible: null,
+    team_members: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -43,6 +45,8 @@ export default (state = INITIAL_STATE, action) => {
                 team: action.payload.team, 
                 last_score: action.payload.last_score, 
                 has_rated_this_week: action.payload.has_rated_this_week,
+                team_responsible: action.payload.team_responsible,
+                team_members: action.payload.team_members,
                 loading_fetch: false  
             }
         

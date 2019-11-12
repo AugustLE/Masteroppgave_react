@@ -55,7 +55,7 @@ const TeamView = (props) => {
 
     const TeamMemberList = () => {
         const list = props.modal_team_members.map((member) => (
-            <Row style={{ width: '100%', marginTop: '8px' }} key={member.name}>
+            <Row style={{ width: '100%', marginTop: '5px' }} key={member.name}>
                 <Text style={{ flex: 3 }}>{member.name}</Text>
                 {member.average_score ? (
                     <Row style={{ flex: 1 }}>
@@ -73,10 +73,10 @@ const TeamView = (props) => {
 
         return (
             <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
-                <Text style={{ marginTop: '10px', marginBottom: '10px' }} size='16px' bold>Team members</Text>
+                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members</Text>
                 {list}
                 <Line style={{ width: '100%', marginTop: '10px' }} />
-                <Text style={{ marginTop: '10px', marginBottom: '10px' }} size='16px' bold>Responsible for this team</Text>
+                <Text style={{ marginTop: '10px', marginBottom: '5px' }} size='16px' bold>Responsible for this team</Text>
                 <Text>{props.modal_responsible}</Text>
             </VerticalContainer>
         );
