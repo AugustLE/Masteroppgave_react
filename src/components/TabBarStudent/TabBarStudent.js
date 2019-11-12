@@ -18,7 +18,7 @@ const TabBarStudent = (props) => {
     return (
         <div className='tabBarContainer'>
             <TabButton isActive={checkActive(0)} icon={require('./icons/status-bar.png')} onClick={() => tabClick(0, '/student/status')}> 
-                Group status
+                Team status
             </TabButton>
             <TabButton isActive={checkActive(1)} icon={require('./icons/mail.png')} onClick={() => tabClick(1, '/student/messages')}>
                 Messages

@@ -3,7 +3,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import Login from './screens/start/Login';
 import SelectRole from './screens/start/SelectRole';
 import SelectSubject from './screens/start/SelectSubject';
-import GroupStatus from './screens/student/GroupStatus';
+import TeamStatus from './screens/student/TeamStatus';
 import Messages from './screens/student/Messages';
 import Profile from './screens/student/Profile';
 import Overview from './screens/staff/Overview';
@@ -21,13 +21,13 @@ export const MainRouter = () => (
           
         </Switch>
         <Switch>
-          <Route exact path='/student/status' component={GroupStatus}/>
+          <Route exact path='/student/status' component={TeamStatus}/>
           <Route exact path='/student/messages' component={Messages} />
           <Route exact path='/student/profile' component={Profile} />
         </Switch>
         <Switch>
           <Route exact path='/staff/overview' component={Overview}/>
-          <Route exact path='/staff/groups' component={TeamView}/>
+          <Route exact path='/staff/teams' component={TeamView}/>
           <Route exact path='/staff/messages' component={StaffMessages}/>
           <Route exact path='/staff/profile' component={StaffProfile}/>
         </Switch>

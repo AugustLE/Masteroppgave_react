@@ -44,7 +44,7 @@ const OverView = (props) => {
                 <VerticalContainer style={{ width: '95%' }}>
                     <Text bold size='22px' style={{ margin: '20px' }}>{props.subject.code} - Overview</Text>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%' }}>
-                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all groups</Text>
+                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all teams</Text>
                         <ProgressBar big score={props.total_average} />
                         <Row style={{ marginTop: '15px', alignItems: 'flex-end' }}>
                             <Text bold size='20px'>{props.total_average}</Text>
@@ -52,11 +52,11 @@ const OverView = (props) => {
                         </Row>
                     </Box>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
-                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Number of groups below score 2.5</Text>
+                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Number of teams below score 2.5</Text>
                         <Text bold size='20px'>{props.number_teams_below}</Text>
                     </Box>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
-                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Groups you are responsible for</Text>
+                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams you are responsible for</Text>
                         <TeamList />
                     </Box>
                 </VerticalContainer>

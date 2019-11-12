@@ -11,10 +11,10 @@ import { VerticalContainer, Row, ImageButton, Line } from '../../components/comm
 import { ScoreView } from '../../components/ScoreView/ScoreView';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import { getAccessToken } from '../../GlobalMethods';
-import './group_status.css';
+import './team_status.css';
 
 
-const GroupStatus = (props) => {
+const TeamStatus = (props) => {
 
     const [score, setScore] = useState(2);
 
@@ -50,7 +50,7 @@ const GroupStatus = (props) => {
             if (props.has_rated_this_week) {
                 return (
                     <VerticalContainer>
-                        <h2 style={{ marginBottom: '1px' }}>Group status</h2>
+                        <h2 style={{ marginBottom: '1px' }}>Team status</h2>
                         <p className='teamNameText'>{props.team.name}</p>
                         <div className='topSectionAfter'>
                             <div className='topSectionPartAfter'>
@@ -72,9 +72,9 @@ const GroupStatus = (props) => {
                             </div>
                         </div>
                         <div className='midSectionAfter'>
-                            <ImageButton image={require('../../images/student/meeting.png')}>
+                            {/*}<ImageButton image={require('../../images/student/meeting.png')}>
                                 Request assistance
-                            </ImageButton>
+                            </ImageButton>*/}
                             <ImageButton horizontal image={require('../../images/student/info_button.png')}>
                                 Team info
                             </ImageButton>
@@ -104,7 +104,7 @@ const GroupStatus = (props) => {
                                 </div>
                             </div>
 
-                            <p className='questionText'>How happy are you with your group this week?</p>
+                            <p className='questionText'>How happy are you with your team this week?</p>
 
                             <ScoreView score={score} />
 
@@ -160,4 +160,4 @@ export default connect(mapStateToProps, {
     getTeamStatus, 
     registerScore, 
     setAccessToken 
-})(GroupStatus);
+})(TeamStatus);

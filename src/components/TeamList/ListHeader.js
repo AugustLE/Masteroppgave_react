@@ -7,7 +7,7 @@ export const ListHeader = () => {
  return ( 
         <div className='listRowHeader'>
             
-            <Text bold style={{ width: '80px' }}>Group</Text>
+            <Text bold style={{ width: '80px' }}>Team</Text>
             
             <Row style={{ width: '100px', height: '30px', justifyContent: 'flex-start' }}>
                 <Text bold style={{ marginRight: '10px' }}>Status(1-5)</Text>
