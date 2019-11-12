@@ -10,13 +10,13 @@ const Button = (props) => {
     const renderImage = () => {
         if (props.image) {
             return (
-                <img className='buttonImage' src={props.image}/>
+                <img alt={''} className='buttonImage' src={props.image}/>
             );
         }
     }
 
     return (
-        <button onClick={props.onClick} className={button_class}>
+        <button onClick={props.onClick} className={button_class} style={props.style}>
             {renderImage()}
             {props.children}
         </button>

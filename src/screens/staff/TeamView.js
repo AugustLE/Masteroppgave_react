@@ -1,16 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import { VerticalContainer, Text } from '../../components/common';
+import Modal from 'react-modal';
+import { VerticalContainer, Text, Row, Box, Button } from '../../components/common';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { getTeamList } from '../../actions/StaffActions';
+import { getTeamList, getTeamInfo } from '../../actions/StaffActions';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { getAccessToken } from '../../GlobalMethods';
 import { TeamList } from '../../components/TeamList/TeamList';
+import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 
+const modalStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)',
+      width: '80%',
+      border: 'none',
+      boxShadow: '1px 1px 2px 2px #d5d5d5'
+
+    }
+  };
  
 const TeamView = (props) => {
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [teamId, setSelectedTeamId] = useState(null);
 
     useEffect(() => {
 
@@ -21,12 +40,46 @@ const TeamView = (props) => {
                 props.setAccessToken(token);
                 props.getTeamList(token);
             }
+            
         });
         if (props.active_tab !== 1) {
             props.setActiveTab(1);
         }
     }, [])
 
+    const onTeamClick = (team_id) => {
+        setSelectedTeamId(team_id);
+        setModalOpen(true);
+        props.getTeamInfo(props.access_token, team_id);
+    }
+
+    const TeamMemberList = () => {
+        const list = props.modal_team_members.map((member) => (
+            <Row style={{ width: '100%', marginTop: '8px' }} key={member.name}>
+                <Text style={{ flex: 3 }}>{member.name}</Text>
+                {member.average_score ? (
+                    <Row style={{ flex: 1 }}>
+                        <Text bold style={{ flex: 1 }}>{member.average_score}</Text>
+                        <Box style={{ flex: 1, marginLeft: '5px' }}>
+                            <ProgressBar score={member.average_score} />
+                        </Box>
+                    </Row>
+                ): (
+                    <Text size='12px' bold style={{ flex: 1 }}>No scores</Text>
+                )}
+                
+            </Row>
+        ));
+
+        return (
+            <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
+                <Text style={{ marginTop: '20px', marginBottom: '10px' }} size='16px' bold>Team members</Text>
+                {list}
+                <Text style={{ marginTop: '10px', marginBottom: '10px' }} size='16px' bold>Responsible for this team</Text>
+                <Text>{props.modal_responsible}</Text>
+            </VerticalContainer>
+        );
+    }
 
     return (
         <VerticalContainer>
@@ -35,10 +88,30 @@ const TeamView = (props) => {
                 <Text bold size='22px' style={{ margin: '15px' }}>{props.subject.code} - Overview</Text>
             )}
             {(!props.loading_fetch && props.staff_team_list) ?  (
-                <TeamList teams={props.staff_team_list} />
+                <TeamList onClick={(team_id) => onTeamClick(team_id)} teams={props.staff_team_list} />
             ): (
                 <Loader />
             )}
+            <Modal 
+                isOpen={modalOpen}
+                style={modalStyles}
+                ariaHideApp={false}
+                >
+                {(!props.modal_loading && props.modal_team) ? (
+                    <VerticalContainer>
+                        <Text bold size='20px'>{props.modal_team.name}</Text>
+                        <TeamMemberList />
+                    </VerticalContainer>
+                ): (
+                    <Loader />
+                )}
+                <VerticalContainer>
+                    <Button style={{ marginTop: '25px' }} secondary onClick={() => setModalOpen(false)}>
+                        Close
+                    </Button>
+                </VerticalContainer>
+                
+            </Modal>
             <TabBarStaff history={props.history}/>
         </VerticalContainer>
     );
@@ -46,8 +119,33 @@ const TeamView = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { staff_team_list, loading_fetch, subject } = state.staff;
-    return { access_token, staff_team_list, loading_fetch, subject };
+    const { 
+        staff_team_list, 
+        loading_fetch, 
+        subject, 
+        modal_responsible, 
+        modal_team_members,
+        modal_team,
+        modal_loading
+    } = state.staff;
+
+    return { 
+        access_token, 
+        staff_team_list, 
+        loading_fetch, 
+        subject, 
+        modal_responsible, 
+        modal_team_members, 
+        modal_team,
+        modal_loading
+    };
 }
 
-export default connect(mapStateToProps, { getTeamList, setAccessToken, setActiveTab })(TeamView);
+const mapDispatchToProps = {
+    getTeamList,
+    setAccessToken,
+    setActiveTab,
+    getTeamInfo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamView);

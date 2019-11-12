@@ -4,7 +4,9 @@ import {
     FETCH_STAFF_SUBJECTS,
     STAFF_FETCH_LOADING,
     STAFF_OVERVIEW,
-    STAFF_FETCH_TEAMS
+    STAFF_FETCH_TEAMS,
+    GET_TEAM_INFO,
+    MODAL_LOADER
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -71,3 +73,24 @@ export const getTeamList = (access_token) => {
         })
     }
 } 
+
+export const getTeamInfo = (access_token, team_id) => {
+    const url = URLS.api_url + `/staff/teams/${team_id}/`
+
+    return dispatch => {
+        dispatch({ type: MODAL_LOADER, payload: true });
+
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            }
+        }).then(response => {
+            dispatch({ type: GET_TEAM_INFO, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: MODAL_LOADER, payload: false });
+        })
+    }
+}

@@ -14,7 +14,7 @@ export const ListRow = (props) => {
     }
 
     return ( 
-        <div className='listRowContainer'>
+        <div onClick={props.onClick} className='listRowContainer'>
             
             <Text style={{ width: '80px' }}>{props.team.name}</Text>
             

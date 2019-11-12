@@ -13,6 +13,7 @@
     height: 8px;
     background-color: black;
     margin-left: 1px;
+    margin-right: 1px;
 }
 
 .progressBarContainerBig {
@@ -30,4 +31,5 @@
     height: 26px;
     background-color: #006CBB;
     margin-left: 2px;
+    margin-right: 2px;
 }

@@ -9,7 +9,7 @@ export const TeamList = (props) => {
 
     const List = () => {
         const team_list = props.teams.map((team) => (
-            <ListRow key={team.pk} team={team} />
+            <ListRow onClick={() => props.onClick(team.pk)} key={team.pk} team={team} />
         ));
         return (
             <div className='listContainer'>
