@@ -16,7 +16,7 @@ export const ProfileSectionBottom = (props) => {
                     <p className='profileInfoText'>{props.team.name}</p>
                 </Row>
             )}
-
+            {/*
             <ImageButton 
                 onClick={props.onChangeSubject} 
                 image={require('../../images/book.png')}
@@ -24,6 +24,7 @@ export const ProfileSectionBottom = (props) => {
             >
                 Change subject
             </ImageButton>
+            */}
 
             <Line style={{ width: '100%', marginTop: '20px' }} />
             
