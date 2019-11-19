@@ -13,6 +13,7 @@ const INITIAL_STATE = {
     total_average: null,
     number_teams_below: null,
     responsible_teams: null,
+    number_of_teams: null,
     staff_team_list: null,
     subject: null,
     modal_responsible: null,
@@ -37,6 +38,7 @@ export default (state = INITIAL_STATE, action) => {
                 number_teams_below: action.payload.number_teams_below,
                 responsible_teams: action.payload.responsible_teams,
                 subject: action.payload.subject,
+                number_of_teams: action.payload.number_of_teams,
                 loading_fetch: false
             }
         

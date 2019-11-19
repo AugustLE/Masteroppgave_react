@@ -52,6 +52,10 @@ const OverView = (props) => {
                         </Row>
                     </Box>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
+                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Total number of teams</Text>
+                        <Text bold size='20px'>{props.number_of_teams}</Text>
+                    </Box>
+                    <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Number of teams below score 2.5</Text>
                         <Text bold size='20px'>{props.number_teams_below}</Text>
                     </Box>
@@ -76,8 +80,14 @@ const OverView = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { total_average, number_teams_below, responsible_teams, loading_fetch, subject } = state.staff;
-    return { access_token, total_average, number_teams_below, responsible_teams, subject, loading_fetch };
+    const { 
+        total_average, 
+        number_teams_below, 
+        responsible_teams, 
+        loading_fetch, subject, 
+        number_of_teams 
+    } = state.staff;
+    return { access_token, total_average, number_teams_below, responsible_teams, subject, loading_fetch, number_of_teams };
 }
 
 export default connect(mapStateToProps, { getOverviewStatistics, setAccessToken, setActiveTab })(OverView);
