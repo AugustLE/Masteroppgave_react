@@ -48,8 +48,6 @@ const SelectRole = (props) => {
             {(props.feide_user && props.api_user && props.api_user.role) && (
                 <Redirect to='/selectsubject'/>
             )}
-
-            <a href='https://auth.dataporten.no/logout'>Logout</a>
             
         </Box>
     );
