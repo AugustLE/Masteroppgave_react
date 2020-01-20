@@ -12,7 +12,7 @@ import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 const OverView = (props) => {
 
     useEffect(() => {
-
+        ////
         getAccessToken().then(token => {
             if (!token) {
                 props.history.push('/')
