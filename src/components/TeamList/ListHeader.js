@@ -14,7 +14,6 @@ export const ListHeader = () => {
             </Row>
             
             <Text bold style={{ width: '100px', marginLeft: '35px' }}>Responsible</Text>
-            
         </div>
     );
 }

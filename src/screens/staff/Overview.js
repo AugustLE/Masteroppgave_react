@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import { VerticalContainer, Box, Text, Row } from '../../components/common';
+import { VerticalContainer, Box, Text, Row, Button } from '../../components/common';
 import { getOverviewStatistics } from '../../actions/StaffActions';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
@@ -73,6 +73,11 @@ const OverView = (props) => {
         <VerticalContainer>
             <NavBar />
             <OverviewSection />
+            <Button 
+                style={{ 'marginTop': '30px' }}
+                onClick={() => props.history.push('/admin/uploader')}>
+                Manage course
+            </Button>
             <TabBarStaff history={props.history}/>
         </VerticalContainer>
     );

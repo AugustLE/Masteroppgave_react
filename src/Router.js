@@ -10,6 +10,7 @@ import Overview from './screens/staff/Overview';
 import TeamView from './screens/staff/TeamView';
 import StaffMessages from './screens/staff/StaffMessages';
 import StaffProfile from './screens/staff/StaffProfile';
+import Uploader from './screens/admin/Uploader';
 
 
 export const MainRouter = () => (
@@ -30,6 +31,9 @@ export const MainRouter = () => (
           <Route exact path='/staff/teams' component={TeamView}/>
           <Route exact path='/staff/messages' component={StaffMessages}/>
           <Route exact path='/staff/profile' component={StaffProfile}/>
+        </Switch>
+        <Switch>
+          <Route exact path='/admin/uploader' component={Uploader} />
         </Switch>
       </Router>
 );
