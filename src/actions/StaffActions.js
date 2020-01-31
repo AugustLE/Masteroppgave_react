@@ -6,7 +6,8 @@ import {
     STAFF_OVERVIEW,
     STAFF_FETCH_TEAMS,
     GET_TEAM_INFO,
-    MODAL_LOADER
+    MODAL_LOADER,
+    STAFF_ACTION_LOADING
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -75,7 +76,7 @@ export const getTeamList = (access_token) => {
 } 
 
 export const getTeamInfo = (access_token, team_id) => {
-    const url = URLS.api_url + `/staff/teams/${team_id}/`
+    const url = URLS.api_url + `/staff/teams/${team_id}/`;
 
     return dispatch => {
         dispatch({ type: MODAL_LOADER, payload: true });
@@ -91,6 +92,30 @@ export const getTeamInfo = (access_token, team_id) => {
         }).catch(err => {
             console.log(err);
             dispatch({ type: MODAL_LOADER, payload: false });
+        })
+    }
+}
+
+export const uploadTeamList = (access_token, teamJson) => {
+    const url = URLS.api_url + '/staff/teams/upload/';
+
+    return dispatch => {
+        dispatch({ type: STAFF_ACTION_LOADING, payload: true });
+
+        axios({
+            method: 'post',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            },
+            data: {
+                team_json: teamJson
+            }
+        }).then(() => {
+            dispatch({ type: STAFF_ACTION_LOADING, payload: false });
+        }).catch(err => {
+            dispatch({ type: STAFF_ACTION_LOADING, payload: false });
+            console.log(err);
         })
     }
 }

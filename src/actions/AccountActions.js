@@ -98,7 +98,7 @@ export const getApiUser = (auth_token, start=false) => {
             if(start){
                 if(role === 'SD') {
                     dispatch(getEnrolledSubjects(auth_token));
-                    dispatch(fetchTeamList(auth_token, response.data.api_user.selected_subject_id));
+                    //dispatch(fetchTeamList(auth_token, response.data.api_user.selected_subject_id));
                 } else if (role === 'IN' || role === 'TA') {
                     dispatch(getStaffSubjects(auth_token));
                 }

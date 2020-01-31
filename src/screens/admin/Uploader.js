@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { getAccessToken } from '../../GlobalMethods';
 import { setAccessToken } from '../../actions/MainActions';
-import { VerticalContainer, Text, Button } from '../../components/common';
+import { VerticalContainer, Text, Button, Line } from '../../components/common';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getApiUser } from '../../actions/AccountActions';
+import { uploadTeamList } from '../../actions/StaffActions';
+import { TeamJsonList } from './TeamJsonList/TeamJsonList';
 
 const Uploader = (props) => {
 
-    const [textResult, setTextResult] = useState(null);
+    ///const [textResult, setTextResult] = useState(null);
+    const [jsonTeams, setJsonTeams] = useState(null);
+    // const [fileName, setFileName] = useState('');
 
     useEffect(() => {
         getAccessToken().then(token => {
@@ -23,10 +27,10 @@ const Uploader = (props) => {
     }, []);
 
     const showFile = () => {
-        console.log('Action');
         if(window.File && window.FileReader && window.FileList && window.Blob) {
             ///var preview = document.getElementById('show-text');
             var file = document.querySelector('input[type=file]').files[0];
+            // setFileName(file.name);
             var reader = new FileReader();
 
             var textFile = /text.*/;
@@ -39,8 +43,10 @@ const Uploader = (props) => {
                     }
                     text_array.forEach(element => {
                         const one_team = element.trim().split('\n');
+                        const teamName = one_team[0];
+                        const responsible = one_team[1];
                         one_team.shift();
-                        const teamName = element.trim().split('\n')[0];
+                        one_team.shift();
                         const team_list = [];
                         one_team.forEach(member => {
                             team_list.push(member);
@@ -48,12 +54,14 @@ const Uploader = (props) => {
                         });
                         const team_object = {
                             name: teamName,
-                            members: team_list
+                            members: team_list,
+                            responsible: responsible
                         }
                         json_teams.push(team_object);
                     }) 
+                    // setTextResult(event.target.result);
+                    setJsonTeams(json_teams);
                     console.log(json_teams);
-                    setTextResult(event.target.result);
                 }
             } else {
                 //preview.innerHTML = "<span class='error'>The file is not a txt file</span>";
@@ -62,16 +70,33 @@ const Uploader = (props) => {
         }
     }
 
+    const onSubmitTeamlist = (event) => {
+        event.preventDefault();
+        props.uploadTeamList(props.access_token, jsonTeams);
+    }
+    
     return (
         <VerticalContainer>
             <NavBar />
-            <Text bold size='24px' style={{ marginTop: '20px' }}>Register teams</Text>
-            <Text bold size='18px' style={{ margin: '5px', marginBottom: '20px' }}>Select subject</Text>
-            <input type="file" onChange={showFile} value="" />
-            {textResult && (
-                <Text>{textResult}</Text>
+            <Text bold size='24px' style={{ marginTop: '20px', marginBottom: '20px' }}>Register teams</Text>
+            <Button secondary>
+                <input type="file" onChange={showFile} onClick={e => e.target.value = null} />
+            </Button>
+            {jsonTeams && (
+                <TeamJsonList jsonTeams={jsonTeams} />
             )}
-            
+            {jsonTeams && (
+                <form onSubmit={onSubmitTeamlist}>
+                    <Button style={{ marginTop: '20px' }}>Submit teamlist</Button>
+                </form>
+            )}
+            <Line style={{ width: '100%', marginTop: '20px' }} />
+            <Button 
+                style={{ 'marginTop': '30px' }}
+                secondary
+                onClick={() => props.history.push('/staff/overview')}>
+                Back to overview
+            </Button>
         </VerticalContainer>
     );
 }
@@ -83,4 +108,4 @@ const mapStateToProps = (state) => {
     return { access_token, enrolled_subjects };
 }
 
-export default connect(mapStateToProps, { setAccessToken, getApiUser })(Uploader);
+export default connect(mapStateToProps, { setAccessToken, getApiUser, uploadTeamList })(Uploader);
