@@ -5,14 +5,13 @@ import { getUserFeide } from '../../actions/AuthActions';
 import { changeRole } from '../../actions/AccountActions';
 import { setAccessToken } from '../../actions/MainActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
-import { Box, Row } from '../../components/common';
+import { Box, Row, Text } from '../../components/common';
 import { RoleButton } from '../../components/RoleButton/RoleButton';
 import { getAccessToken } from '../../GlobalMethods';
 import Loader from 'react-loader';
 
 
 const SelectRole = (props) => {
-
 
     useEffect(() => {
 
@@ -25,7 +24,8 @@ const SelectRole = (props) => {
             }
         })
     }, [])
-    console.log(props.feide_user);
+    // console.log(props.feide_user);
+    // console.log(props.api_user)
     return (
         <Box>
             <TopbarLogin />
@@ -41,7 +41,9 @@ const SelectRole = (props) => {
                             <RoleButton role='instructor' text='Instructor' onClick={() => props.changeRole(props.access_token, 'IN')} />
                         </Row>
                     )}
-            
+                    {props.role_error && (
+                        <Text error>{props.role_error}</Text>
+                    )}
                 </Box>
             )}
 
@@ -57,8 +59,8 @@ const SelectRole = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { feide_user, api_user, account_loading } = state.account;
-    return { access_token, feide_user, api_user, account_loading };
+    const { feide_user, api_user, account_loading, role_error } = state.account;
+    return { access_token, feide_user, api_user, account_loading, role_error };
 };
 
 export default connect(mapStateToProps, { getUserFeide, changeRole, setAccessToken })(SelectRole);

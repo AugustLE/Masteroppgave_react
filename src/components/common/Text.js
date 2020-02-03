@@ -12,6 +12,9 @@ const Text = (props) => {
     if (props.center){
         extraStyles = { ...extraStyles, textAlign: 'center' };
     }
+    if (props.error) {
+        extraStyles = { ...extraStyles, color: 'red', fontSize: '16px' };
+    }
     extraStyles = { ...extraStyles, ...props.style };
     return ( 
         <p className='basicText' style={extraStyles}>{props.children}</p>

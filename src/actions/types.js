@@ -14,6 +14,7 @@ export const ACCOUNT_LOADING = 'ACCOUNT_LOADING';
 export const SUBJECT_LIST = 'SUBJECT_LIST';
 export const CHANGE_SUBJECT = 'CHANGE_SUBJECT';
 export const GET_USER = 'GET_USER';
+export const ROLE_ERROR = 'ROLE_ERROR';
 
 // STUDENT ACTIONS 
 export const FETCH_TEAM_LIST = 'FETCH_TEAM_LIST';

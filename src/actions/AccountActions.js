@@ -5,7 +5,8 @@ import {
     CHANGE_SUBJECT,
     ACCOUNT_LOADING,
     GET_USER,
-    FETCH_LOADING
+    FETCH_LOADING,
+    ROLE_ERROR
 } from './types';
 import { URLS } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
@@ -28,7 +29,11 @@ export const changeRole = (auth_token, role) => {
                 role
             }
         }).then(response => {
-            dispatch({ type: CHANGE_ROLE, payload: response.data });
+            if (response.data.error) {
+                dispatch({ type: ROLE_ERROR, payload: response.data.error });
+            } else {
+                dispatch({ type: CHANGE_ROLE, payload: response.data });
+            }
         }).catch(error => {
             console.log(error);
             dispatch({ type: ACCOUNT_LOADING, payload: false });

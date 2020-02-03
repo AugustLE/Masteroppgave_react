@@ -9,6 +9,7 @@ import {
     LOGOUT,
     GET_USER,
     FETCH_TEAM_STATUS,
+    ROLE_ERROR
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,7 +17,8 @@ const INITIAL_STATE = {
     api_user: null,
     account_loading: false,
     enrolled_subjects: null,
-    subject: null
+    subject: null,
+    role_error: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,7 +34,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, api_user: action.payload, account_loading: false };
         
         case CHANGE_ROLE:
-            return { ...state, api_user: action.payload, account_loading: false  };
+            return { ...state, api_user: action.payload, account_loading: false, role_error: null };
         
         case ACCOUNT_LOADING:
             return { ...state, account_loading: action.payload };
@@ -55,7 +57,14 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 subject: action.payload.subject
-            }
+            };
+
+        case ROLE_ERROR:
+            return {
+                ...state,
+                role_error: action.payload,
+                account_loading: false
+            };
 
         case LOGOUT:
             return INITIAL_STATE;
