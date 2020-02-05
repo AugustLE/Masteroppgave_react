@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Redirect } from 'react-router-dom';
-import Modal from 'react-modal';
 import { Box, VerticalContainer } from '../../components/common';
 import { getEnrolledSubjects, selectSubject, getApiUser } from '../../actions/AccountActions';
+import { getUserFeide } from '../../actions/AuthActions';
 import { fetchTeamList, selectTeam } from '../../actions/StudentActions';
 import { setAccessToken } from '../../actions/MainActions';
 import Loader from 'react-loader';
 import { getAccessToken } from '../../GlobalMethods';
+import { clientJSO } from '../../GlobalVars';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import { setAccessTokenPersistent } from '../../GlobalMethods';
 import './start.css';
 
 
@@ -16,20 +19,20 @@ const SelectSubject = (props) => {
 
     useEffect(() => {
 
+        clientJSO.getToken();
+       
         getAccessToken().then(token => {
             if (!token) {
-                props.history.push('/')
+                props.history.push('/');
             } else { 
                 
+                props.getUserFeide(token);
                 props.getApiUser(token, true);
                 props.setAccessToken(token);
-
-                //props.getEnrolledSubjects(token);
-                //props.fetchTeamList(token);
+                
             }
         });
     }, [])
-
     const SubjectList = () => {
         if (props.api_user.role === 'SD' && props.enrolled_subjects) {
          
@@ -107,6 +110,9 @@ const SelectSubject = (props) => {
         <Box>
             <TopbarLogin />
             <BottomSection />
+            {props.feide_user && (
+                <PrivacyModal feide_user={props.feide_user}/>
+            )}
                 
         </Box>
     )
@@ -141,7 +147,8 @@ export default connect(mapStateToProps, {
     fetchTeamList,
     selectTeam,
     setAccessToken,
-    getApiUser
+    getApiUser,
+    getUserFeide
 })(SelectSubject)
 
 

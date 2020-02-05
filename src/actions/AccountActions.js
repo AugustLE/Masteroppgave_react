@@ -101,8 +101,15 @@ export const getApiUser = (auth_token, start=false) => {
             dispatch({ type: GET_USER, payload: response.data });
             const { role } = response.data.api_user;
             if(start){
+                
                 if(role === 'SD') {
                     dispatch(getEnrolledSubjects(auth_token));
+                    // har ikke noe rolle enda må registrere
+                    // Lag en ny funksjon for å hente fag, som kun krever at man er autentisert for å hente fagene
+                    // Hent fagene og display dem i en liste. 
+                    // Når faget velges, vil det sjekkes i preEnrollment og authorized om brukeren er der
+                    // deretter assignes fag og rolle
+                    // så sendes man videre
                     //dispatch(fetchTeamList(auth_token, response.data.api_user.selected_subject_id));
                 } else if (role === 'IN' || role === 'TA') {
                     dispatch(getStaffSubjects(auth_token));

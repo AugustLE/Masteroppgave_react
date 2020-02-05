@@ -20,7 +20,7 @@ const Login = (props) => {
                 setRedirect(true);
             })
         } catch { }
-        //clientJSO.wipeTokens();
+        // clientJSO.wipeTokens();
     }, [])
     
     const feideLogin = () => {
@@ -36,7 +36,7 @@ const Login = (props) => {
     }
 
     if (redirect) {
-        return (<Redirect to='/selectrole'/>)
+        return (<Redirect to='/selectsubject'/>)
     }
 
     return (

@@ -4,13 +4,61 @@ import {
     LOGIN_LOADING,
     LOGIN_SUCCESS,
     FETCH_FEIDE_USER_SUCCESS,
-    LOGOUT 
+    LOGOUT ,
+    PRIVACY_CONSENT_RETURN,
+    PRIVACY_CONSENT_LOADING
 } from './types';
 import { URLS } from '../GlobalVars';
 
 const TEMP_PASSWORD = '094huersgifu3h';
+const SECRET_KEY = '!hi%8z+!0sd*ijv9a__nx*+dm)f0b86h&!(49cbq*x)oq&^$b#';
 
-export const getUserFeide = (token) => {
+export const getPrivacyConsent = (feide_username) => {
+
+    const url = URLS.api_url + `/privacyconsent/${feide_username}/`;
+
+    return (dispatch) => {
+        dispatch({ type: PRIVACY_CONSENT_LOADING, payload: true });
+
+        axios({
+            method: 'get',
+            url: url,
+        }).then(response => {
+            dispatch({ type: PRIVACY_CONSENT_RETURN, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: PRIVACY_CONSENT_LOADING, payload: false });
+        })
+        
+    }
+}
+
+export const acceptPrivacyConsent = (feide_user, token) => {
+
+    const url = URLS.api_url + '/privacyconsent/';
+    const username = feide_user.userid_sec[0].split(':')[1].split('@')[0];
+    console.log(username);
+    return (dispatch) => {
+        dispatch({ type: PRIVACY_CONSENT_LOADING, payload: true });
+
+        axios({
+            method: 'post',
+            url: url,
+            data: {
+                feide_username: username,
+                has_accepted: true,
+            }
+        }).then((response) => {
+            dispatch({ type: PRIVACY_CONSENT_RETURN, payload: response.data });
+            dispatch(loginAndCreateUserIfNecessary(feide_user, token));
+        }).catch(err => {
+            dispatch({ type: PRIVACY_CONSENT_LOADING, payload: false });
+            console.log(err);
+        })
+    }
+}
+
+export const getUserFeide = (token, withPrivacyConsent=false) => {
     const url = URLS.feide_profile_info;
 
     return (dispatch) => {
@@ -26,6 +74,10 @@ export const getUserFeide = (token) => {
         }).then(response => {
             dispatch({ type: FETCH_FEIDE_USER_SUCCESS, payload: response.data.user });
             dispatch(loginAndCreateUserIfNecessary(response.data.user, token));
+            if (withPrivacyConsent) {
+                const username = response.data.user.userid_sec[0].split(':')[1].split('@')[0];
+                dispatch(getPrivacyConsent(username));
+            }
         }).catch(error => {
             console.log(error);
         });
@@ -55,6 +107,7 @@ export const loginAndCreateUserIfNecessary = (user, token) => {
     }
 
 }
+
 
 export const logout = () => {
     clientJSO.wipeTokens();

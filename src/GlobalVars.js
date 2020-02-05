@@ -15,3 +15,5 @@ export const URLS = {
     feide_profile_info: 'https://auth.dataporten.no/userinfo',
     api_url: 'http://127.0.0.1:8000'
 }
+
+export const PRIVACY_POLICY = 'The application will collect your Feide username, email and full name in order for you to participate in the study. In addition to this information, the application will store the feedback given by you related to your group work experience. The feedback will be available to the relevant course staff (e.g. researchers, teaching, assistants, lecturers and professors) This information will be used to understand if TeamAccelerator is an approach that can be used to diagnose and solve group work issues. The data collection within the project will only last and be active throughout this spring semester.';

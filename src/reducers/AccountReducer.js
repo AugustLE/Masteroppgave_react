@@ -9,7 +9,9 @@ import {
     LOGOUT,
     GET_USER,
     FETCH_TEAM_STATUS,
-    ROLE_ERROR
+    ROLE_ERROR,
+    PRIVACY_CONSENT_RETURN,
+    PRIVACY_CONSENT_LOADING
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -18,7 +20,9 @@ const INITIAL_STATE = {
     account_loading: false,
     enrolled_subjects: null,
     subject: null,
-    role_error: null
+    role_error: null,
+    privacy_consent: null,
+    loading_privacy_consent: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -68,6 +72,19 @@ export default (state = INITIAL_STATE, action) => {
 
         case LOGOUT:
             return INITIAL_STATE;
+
+        case PRIVACY_CONSENT_RETURN:
+            return {
+                ...state,
+                privacy_consent: action.payload,
+                loading_privacy_consent: false
+            }
+
+        case PRIVACY_CONSENT_LOADING:
+            return {
+                ...state,
+                loading_privacy_consent: action.payload
+            }
               
         default:
             return state;
