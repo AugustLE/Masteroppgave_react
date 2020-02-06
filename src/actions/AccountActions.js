@@ -10,7 +10,7 @@ import {
 } from './types';
 import { URLS } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
-import { getStaffSubjects } from './StaffActions';
+//import { getStaffSubjects } from './StaffActions';
 
 
 export const changeRole = (auth_token, role) => {
@@ -85,6 +85,28 @@ export const selectSubject = (auth_token, subject_id) => {
     }
 }
 
+export const getSubjectList = (auth_token) => {
+
+    const url = URLS.api_url + '/subjectlist/';
+
+    return (dispatch) => {
+        dispatch({ type: ACCOUNT_LOADING, payload: true });
+
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + auth_token
+            }
+        }).then(response => {
+            dispatch({ type: SUBJECT_LIST, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: ACCOUNT_LOADING, payload: false });
+        })
+    }
+}
+
 export const getApiUser = (auth_token, start=false) => {
     const url = URLS.api_url + '/user/';
 
@@ -99,10 +121,12 @@ export const getApiUser = (auth_token, start=false) => {
             },
         }).then(response => {
             dispatch({ type: GET_USER, payload: response.data });
-            const { role } = response.data.api_user;
+            // const { role } = response.data.api_user;
             if(start){
                 
-                if(role === 'SD') {
+
+                dispatch(getSubjectList(auth_token));
+                /*if(role === 'SD') {
                     dispatch(getEnrolledSubjects(auth_token));
                     // har ikke noe rolle enda må registrere
                     // Lag en ny funksjon for å hente fag, som kun krever at man er autentisert for å hente fagene
@@ -113,7 +137,7 @@ export const getApiUser = (auth_token, start=false) => {
                     //dispatch(fetchTeamList(auth_token, response.data.api_user.selected_subject_id));
                 } else if (role === 'IN' || role === 'TA') {
                     dispatch(getStaffSubjects(auth_token));
-                }
+                }*/
             }
         }).catch(err => {
             console.log(err);

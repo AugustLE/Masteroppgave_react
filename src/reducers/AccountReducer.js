@@ -18,7 +18,7 @@ const INITIAL_STATE = {
     feide_user: null,
     api_user: null,
     account_loading: false,
-    enrolled_subjects: null,
+    subject_list: null,
     subject: null,
     role_error: null,
     privacy_consent: null,
@@ -44,7 +44,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, account_loading: action.payload };
 
         case SUBJECT_LIST:
-            return { ...state, enrolled_subjects: action.payload, account_loading: false };
+            return { ...state, subject_list: action.payload, account_loading: false };
 
         case CHANGE_SUBJECT:
                 return { ...state, api_user: action.payload, account_loading: false };

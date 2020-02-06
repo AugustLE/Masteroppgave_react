@@ -27,12 +27,15 @@ const OverView = (props) => {
     }, [])
 
     const TeamList = () => {
-        const team_list = props.responsible_teams.map((team) => (
-            <Text key={team.pk}>{team.name}, </Text>  
-        ));
-        return (
-            <Row>{team_list}</Row>
-        );
+        if (props.responsible_teams) {
+            const team_list = props.responsible_teams.map((team) => (
+                <Text key={team.pk}>{team.name}, </Text>  
+            ));
+            return (
+                <Row>{team_list}</Row>
+            );
+        }
+        return <div />;
     }
     
     const OverviewSection = () => {

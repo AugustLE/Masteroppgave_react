@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { getAccessToken } from '../../GlobalMethods';
 import { setAccessToken } from '../../actions/MainActions';
-import { VerticalContainer, Text, Button, Line } from '../../components/common';
+import { VerticalContainer, Text, Button, Line, Box } from '../../components/common';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getApiUser } from '../../actions/AccountActions';
 import { uploadTeamList } from '../../actions/StaffActions';
@@ -74,6 +74,15 @@ const Uploader = (props) => {
         event.preventDefault();
         props.uploadTeamList(props.access_token, jsonTeams);
     }
+
+    if (props.admin_loading) {
+        return (
+            <Box>
+                <Loader />
+                <Text bold>Uploading teams...</Text>
+            </Box>
+        );
+    }
     
     return (
         <VerticalContainer>
@@ -90,6 +99,9 @@ const Uploader = (props) => {
                     <Button style={{ marginTop: '20px' }}>Submit teamlist</Button>
                 </form>
             )}
+            {props.team_upload_success && (
+                <Text style={{ margin: '10px', color: 'green' }} bold size='16px'>Success! Teams registered</Text>
+            )}
             <Line style={{ width: '100%', marginTop: '20px' }} />
             <Button 
                 style={{ 'marginTop': '30px' }}
@@ -104,8 +116,9 @@ const Uploader = (props) => {
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
     const { enrolled_subjects } = state.account;
+    const { admin_loading, team_upload_success } = state.staff;
 
-    return { access_token, enrolled_subjects };
+    return { access_token, enrolled_subjects, admin_loading, team_upload_success };
 }
 
 export default connect(mapStateToProps, { setAccessToken, getApiUser, uploadTeamList })(Uploader);

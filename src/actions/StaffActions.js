@@ -7,7 +7,8 @@ import {
     STAFF_FETCH_TEAMS,
     GET_TEAM_INFO,
     MODAL_LOADER,
-    STAFF_ACTION_LOADING
+    ADMIN_ACTION_LOADING,
+    TEAM_UPLOAD_SUCCESS
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -100,7 +101,7 @@ export const uploadTeamList = (access_token, teamJson) => {
     const url = URLS.api_url + '/staff/teams/upload/';
 
     return dispatch => {
-        dispatch({ type: STAFF_ACTION_LOADING, payload: true });
+        dispatch({ type: ADMIN_ACTION_LOADING, payload: true });
 
         axios({
             method: 'post',
@@ -112,9 +113,9 @@ export const uploadTeamList = (access_token, teamJson) => {
                 team_json: teamJson
             }
         }).then(() => {
-            dispatch({ type: STAFF_ACTION_LOADING, payload: false });
+            dispatch({ type: TEAM_UPLOAD_SUCCESS, payload: false });
         }).catch(err => {
-            dispatch({ type: STAFF_ACTION_LOADING, payload: false });
+            dispatch({ type: ADMIN_ACTION_LOADING, payload: false });
             console.log(err);
         })
     }

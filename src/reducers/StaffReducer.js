@@ -4,7 +4,9 @@ import {
     STAFF_OVERVIEW,
     STAFF_FETCH_TEAMS,
     GET_TEAM_INFO,
-    MODAL_LOADER
+    MODAL_LOADER,
+    TEAM_UPLOAD_SUCCESS,
+    ADMIN_ACTION_LOADING
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -19,7 +21,9 @@ const INITIAL_STATE = {
     modal_responsible: null,
     modal_team_members: null,
     modal_team: null,
-    modal_loading: false
+    modal_loading: false,
+    team_upload_success: false,
+    admin_loading: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -63,6 +67,18 @@ export default (state = INITIAL_STATE, action) => {
                 modal_team_members: action.payload.members,
                 modal_team: action.payload.team,
                 modal_loading: false
+            }
+
+        case TEAM_UPLOAD_SUCCESS:
+            return {
+                ...state,
+                team_upload_success: true,
+                admin_loading: false,
+            }
+        case ADMIN_ACTION_LOADING:
+            return {
+                ...state,
+                admin_loading: action.payload
             }
          
         default:

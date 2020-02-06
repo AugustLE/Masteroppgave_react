@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Redirect } from 'react-router-dom';
 import { Box, VerticalContainer } from '../../components/common';
-import { getEnrolledSubjects, selectSubject, getApiUser } from '../../actions/AccountActions';
+import { selectSubject, getApiUser } from '../../actions/AccountActions';
 import { getUserFeide } from '../../actions/AuthActions';
 import { fetchTeamList, selectTeam } from '../../actions/StudentActions';
 import { setAccessToken } from '../../actions/MainActions';
@@ -11,7 +11,7 @@ import Loader from 'react-loader';
 import { getAccessToken } from '../../GlobalMethods';
 import { clientJSO } from '../../GlobalVars';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
-import { setAccessTokenPersistent } from '../../GlobalMethods';
+// import { setAccessTokenPersistent } from '../../GlobalMethods';
 import './start.css';
 
 
@@ -34,7 +34,7 @@ const SelectSubject = (props) => {
         });
     }, [])
     const SubjectList = () => {
-        if (props.api_user.role === 'SD' && props.enrolled_subjects) {
+        /*if (props.api_user.role === 'SD' && props.enrolled_subjects) {
          
             const subject_list = props.enrolled_subjects.map((subject) => (
                 <div 
@@ -61,6 +61,19 @@ const SelectSubject = (props) => {
             return (
                 <div className='subjectList'>{subject_list}</div>
             );
+        } */
+        if (props.subject_list) {
+            const subject_list = props.subject_list.map((subject) => (
+                <div 
+                    onClick={() => props.selectSubject(props.access_token, subject.pk)} 
+                    className='subjectListElement' 
+                    key={subject.code}>
+                    {subject.code} - {subject.name}
+                </div>
+            ));
+            return (
+                <div className='subjectList'>{subject_list}</div>
+            );
         }
         return <div />;
     }
@@ -80,22 +93,7 @@ const SelectSubject = (props) => {
         }
 
         if (props.api_user) {
-            /*if (!props.api_user.selected_subject_id) {
-                return (
-                    <VerticalContainer style={{ width: '100%' }}>
-                        <h2>Select subject</h2>
-                        <SubjectList />
-                    </VerticalContainer>
-                );
-            }*/
-
-            /*return (
-                <VerticalContainer style={{ width: '100%' }}>
-                    <h2>Select team</h2>
-                    <TeamList />
-                </VerticalContainer>
-            );*/
-
+            
             return (
                 <VerticalContainer style={{ width: '100%' }}>
                     <h2>Select subject</h2>
@@ -120,29 +118,26 @@ const SelectSubject = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { feide_user, api_user, enrolled_subjects, account_loading } = state.account;
+    const { feide_user, api_user, subject_list, account_loading } = state.account;
     const { team_list, loading_fetch, team, error_message, loading_action } = state.student;
-    const { staff_subjects } = state.staff;
 
     const return_state = {
         access_token,  
         feide_user, 
         api_user, 
-        enrolled_subjects, 
+        subject_list, 
         account_loading, 
         team_list, 
         loading_fetch,
         team,
         error_message,
         loading_action,
-        staff_subjects
     }
 
     return return_state;
 }
 
-export default connect(mapStateToProps, { 
-    getEnrolledSubjects, 
+export default connect(mapStateToProps, {  
     selectSubject, 
     fetchTeamList,
     selectTeam,
