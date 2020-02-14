@@ -8,7 +8,8 @@ import {
     GET_TEAM_INFO,
     MODAL_LOADER,
     ADMIN_ACTION_LOADING,
-    TEAM_UPLOAD_SUCCESS
+    TEAM_UPLOAD_SUCCESS,
+    SET_STAFF_FIELD
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -120,3 +121,12 @@ export const uploadTeamList = (access_token, teamJson) => {
         })
     }
 }
+
+export const setStaffField = ({ prop, value }) => {
+    console.log(prop);
+    console.log(value);
+    return {
+        type: SET_STAFF_FIELD,
+        payload: { prop, value }
+    };
+};

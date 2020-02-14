@@ -6,7 +6,7 @@ import { setAccessToken } from '../../actions/MainActions';
 import { VerticalContainer, Text, Button, Line, Box } from '../../components/common';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getApiUser } from '../../actions/AccountActions';
-import { uploadTeamList } from '../../actions/StaffActions';
+import { uploadTeamList, setStaffField } from '../../actions/StaffActions';
 import { TeamJsonList } from './TeamJsonList/TeamJsonList';
 
 const Uploader = (props) => {
@@ -44,7 +44,13 @@ const Uploader = (props) => {
                     text_array.forEach(element => {
                         const one_team = element.trim().split('\n');
                         const teamName = one_team[0];
-                        const responsible = one_team[1];
+                        let responsible = one_team[1];
+                        let instructor = null;
+                        if (responsible.split(':')[0] === 'IN') {
+                            console.log('INSTRUCT');
+                            instructor = responsible.split(':')[1];
+                            responsible = null;
+                        }
                         one_team.shift();
                         one_team.shift();
                         const team_list = [];
@@ -55,7 +61,8 @@ const Uploader = (props) => {
                         const team_object = {
                             name: teamName,
                             members: team_list,
-                            responsible: responsible
+                            responsible: responsible,
+                            instructor: instructor
                         }
                         json_teams.push(team_object);
                     }) 
@@ -106,7 +113,10 @@ const Uploader = (props) => {
             <Button 
                 style={{ 'marginTop': '30px' }}
                 secondary
-                onClick={() => props.history.push('/staff/overview')}>
+                onClick={() => { 
+                    props.history.push('/staff/overview');
+                    props.setStaffField({ prop: 'team_upload_success', value: false }); 
+                }}>
                 Back to overview
             </Button>
         </VerticalContainer>
@@ -121,4 +131,9 @@ const mapStateToProps = (state) => {
     return { access_token, enrolled_subjects, admin_loading, team_upload_success };
 }
 
-export default connect(mapStateToProps, { setAccessToken, getApiUser, uploadTeamList })(Uploader);
+export default connect(mapStateToProps, { 
+    setAccessToken, 
+    getApiUser, 
+    uploadTeamList,
+    setStaffField 
+})(Uploader);

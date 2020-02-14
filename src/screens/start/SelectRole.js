@@ -52,10 +52,9 @@ const SelectRole = (props) => {
                     <h3>{props.feide_user.name}</h3>
                 </Box>
             )}
-            {props.feide_user && (
-                <PrivacyModal feide_user={props.feide_user}/>
-            )}
-
+            
+            <PrivacyModal />
+            
             {(props.feide_user && props.api_user && !props.api_user.role) && (
                 <Box>
                     <h4>Select your role:</h4>

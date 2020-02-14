@@ -3,22 +3,30 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { VerticalContainer, Box, Text, Row, Button } from '../../components/common';
 import { getOverviewStatistics } from '../../actions/StaffActions';
+import { getApiUser } from '../../actions/AccountActions';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getAccessToken } from '../../GlobalMethods';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
+import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
+import { clientJSO } from '../../GlobalVars';
  
+
 const OverView = (props) => {
 
     useEffect(() => {
         ////
+        clientJSO.getToken();
         getAccessToken().then(token => {
             if (!token) {
                 props.history.push('/')
             } else {
+
                 props.setAccessToken(token);
                 props.getOverviewStatistics(token);
+                props.getApiUser(token);
             }
         });
         if (props.active_tab !== 0) {
@@ -76,18 +84,24 @@ const OverView = (props) => {
         <VerticalContainer>
             <NavBar />
             <OverviewSection />
-            <Button 
-                style={{ 'marginTop': '30px' }}
-                onClick={() => props.history.push('/admin/uploader')}>
-                Manage course
-            </Button>
+            {props.api_user && props.api_user.role === 'IN' && (
+                <Button 
+                    style={{ 'marginTop': '30px' }}
+                    onClick={() => props.history.push('/admin/uploader')}>
+                    Manage course
+                </Button>
+            )}
             <TabBarStaff history={props.history}/>
+            {props.api_user && (
+                <PermissionCheck api_user={props.api_user} history={props.history}/>
+            )}
         </VerticalContainer>
     );
 }
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
+    const { api_user } = state.account;
     const { 
         total_average, 
         number_teams_below, 
@@ -95,7 +109,22 @@ const mapStateToProps = (state) => {
         loading_fetch, subject, 
         number_of_teams 
     } = state.staff;
-    return { access_token, total_average, number_teams_below, responsible_teams, subject, loading_fetch, number_of_teams };
+    return { 
+        access_token, 
+        total_average, 
+        number_teams_below, 
+        responsible_teams, 
+        subject, 
+        loading_fetch, 
+        number_of_teams,
+        api_user 
+    };
 }
 
-export default connect(mapStateToProps, { getOverviewStatistics, setAccessToken, setActiveTab })(OverView);
+export default connect(mapStateToProps, 
+    { 
+        getOverviewStatistics, 
+        setAccessToken, 
+        setActiveTab,
+        getApiUser 
+    })(OverView);

@@ -3,8 +3,11 @@ import Modal from 'react-modal';
 import Loader from 'react-loader';
 import { connect } from 'react-redux';
 import { setAccessToken } from '../../actions/MainActions';
-import { getPrivacyConsent, acceptPrivacyConsent } from '../../actions/AuthActions';
+import { acceptPrivacyConsent, getUserFeide } from '../../actions/AuthActions';
 import { Text, Button, Row, Line } from '../common';
+import { getAccessToken } from '../../GlobalMethods';
+import { clientJSO } from '../../GlobalVars';
+import { setAccessTokenPersistent } from '../../GlobalMethods';
 
 
 const modalStyles = {
@@ -28,54 +31,75 @@ const PrivacyModal = (props) => {
     const [accepted, setAccepted] = useState(false);
 
     useEffect(() => {
-        const username = props.feide_user.userid_sec[0].split(':')[1].split('@')[0];
-        props.getPrivacyConsent(username);
+        // const username = props.feide_user.userid_sec[0].split(':')[1].split('@')[0];
+        //props.getUserFeide(props.access_token, true);
+
+        clientJSO.getToken().then((response) => { 
+            if (response.access_token) {
+                props.setAccessToken(response.access_token);
+                setAccessTokenPersistent(response.access_token);
+                props.getUserFeide(response.access_token, true);
+            }
+        });
+
+
+        getAccessToken().then(token => {
+            if (!token) {
+                props.history.push('/');
+            } else { 
+                // props.getUserFeide(token, true);
+            }
+        });
     }, [])
 
     const onSubmitPrivacyConsent = (event) => {
         event.preventDefault();
-        props.acceptPrivacyConsent(props.feide_user, props.access_token);
+        props.acceptPrivacyConsent(props.feide_user, props.access_token, true);
     }
-    
-    if (props.privacy_consent) {
-    
-        return (
-            <Modal 
-                isOpen={!props.privacy_consent.has_accepted}
-                style={modalStyles}
-                ariaHideApp={false}
-                >
-                
-                <Text bold size='18px' centered>Privacy policy</Text>
-                <Text style={{ marginTop: '10px', marginBottom: '10px' }} size='16px'>{privacy_text}</Text>
-                {props.loading_action ? (
-                    <Loader />
-                ): (
-                    <form onSubmit={onSubmitPrivacyConsent}>
-                        <Line style={{ width: '100%' }} />
-                        <Row style={{ marginTop: '15px', marginBottom: '15px', width: '100%', justifyContent: 'flex-start' }}>
-                            <input onChange={() => setAccepted(!accepted)} checked={accepted} value={accepted} type='checkbox' />
-                            <Text size='15px' bold>I accept and would like to create a profile</Text>
-                        </Row>
-                        {accepted && (
-                            <Button >Create profile</Button>
-                        )}
+    const modal_open = () => {
+        if (props.privacy_consent) {
+            console.log(props.privacy_consent);
+            return !props.privacy_consent.has_accepted;
+        }
+        return false;
+    }
+   
+    return (
+        <Modal 
+            isOpen={modal_open()}
+            style={modalStyles}
+            ariaHideApp={false}
+            >
+            
+            <Text bold size='18px' centered>Privacy policy</Text>
+            <Text style={{ marginTop: '10px', marginBottom: '10px' }} size='16px'>{privacy_text}</Text>
+            {props.loading_action ? (
+                <Loader />
+            ): (
+                <form onSubmit={onSubmitPrivacyConsent}>
+                    <Line style={{ width: '100%' }} />
+                    <Row style={{ marginTop: '15px', marginBottom: '15px', width: '100%', justifyContent: 'flex-start' }}>
+                        <input onChange={() => setAccepted(!accepted)} checked={accepted} value={accepted} type='checkbox' />
+                        <Text size='15px' bold>I accept and would like to create a profile</Text>
+                    </Row>
+                    {accepted && (
+                        <Button >Create profile</Button>
+                    )}
 
-                    </form>
-                )}
-            
-            
-            </Modal>
-            );
-    }
-    return <div />
+                </form>
+            )}
+        
+        
+        </Modal>
+        );
+    
 }
 
 const mapStateToProps = (state) => {
 
     const { access_token } = state.main;
-    const { privacy_consent } = state.account;
-    return { access_token, privacy_consent };
+    const { privacy_consent, feide_user } = state.account;
+    return { access_token, privacy_consent, feide_user };
 };
 
-export default connect(mapStateToProps, { setAccessToken, getPrivacyConsent, acceptPrivacyConsent })(PrivacyModal)
+export default connect(mapStateToProps, { setAccessToken, getUserFeide, acceptPrivacyConsent })(PrivacyModal)

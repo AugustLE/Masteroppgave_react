@@ -6,7 +6,8 @@ import {
     GET_TEAM_INFO,
     MODAL_LOADER,
     TEAM_UPLOAD_SUCCESS,
-    ADMIN_ACTION_LOADING
+    ADMIN_ACTION_LOADING,
+    SET_STAFF_FIELD
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -79,6 +80,12 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 admin_loading: action.payload
+            }
+
+        case SET_STAFF_FIELD:
+            return {
+                ...state,
+                [action.payload.prop]: action.payload.value 
             }
          
         default:
