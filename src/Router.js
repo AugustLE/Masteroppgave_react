@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import Login from './screens/start/Login';
-import SelectRole from './screens/start/SelectRole';
 import SelectSubject from './screens/start/SelectSubject';
 import TeamStatus from './screens/student/TeamStatus';
 import Messages from './screens/student/Messages';
@@ -17,7 +16,6 @@ export const MainRouter = () => (
       <Router>
         <Switch>
           <Route exact path='/' component={Login}/>
-          <Route exact path='/selectrole' component={SelectRole} />
           <Route exact path='/selectsubject' component={SelectSubject} />
           
         </Switch>

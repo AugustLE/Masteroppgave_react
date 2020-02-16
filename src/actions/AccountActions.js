@@ -10,7 +10,6 @@ import {
 } from './types';
 import { URLS } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
-//import { getStaffSubjects } from './StaffActions';
 
 
 export const changeRole = (auth_token, role) => {
@@ -41,25 +40,6 @@ export const changeRole = (auth_token, role) => {
     }
 }
 
-export const getEnrolledSubjects = (auth_token) => {
-    const url = URLS.api_url + '/enrollment/';
-
-    return (dispatch) => {
-        dispatch({ type: ACCOUNT_LOADING, payload: true });
-
-        axios({
-            method: 'post',
-            url: url,
-            headers: {
-                Authorization: 'Token ' + auth_token
-            },
-        }).then(response => {
-            dispatch({ type: SUBJECT_LIST, payload: response.data });
-        }).catch(error => {
-            dispatch({ type: ACCOUNT_LOADING, payload: false });
-        });
-    }
-}
 
 export const selectSubject = (auth_token, subject_id) => {
 
@@ -121,23 +101,9 @@ export const getApiUser = (auth_token, start=false) => {
             },
         }).then(response => {
             dispatch({ type: GET_USER, payload: response.data });
-            // const { role } = response.data.api_user;
-            if(start){
-                
-
+            
+            if(start){    
                 dispatch(getSubjectList(auth_token));
-                /*if(role === 'SD') {
-                    dispatch(getEnrolledSubjects(auth_token));
-                    // har ikke noe rolle enda må registrere
-                    // Lag en ny funksjon for å hente fag, som kun krever at man er autentisert for å hente fagene
-                    // Hent fagene og display dem i en liste. 
-                    // Når faget velges, vil det sjekkes i preEnrollment og authorized om brukeren er der
-                    // deretter assignes fag og rolle
-                    // så sendes man videre
-                    //dispatch(fetchTeamList(auth_token, response.data.api_user.selected_subject_id));
-                } else if (role === 'IN' || role === 'TA') {
-                    dispatch(getStaffSubjects(auth_token));
-                }*/
             }
         }).catch(err => {
             console.log(err);

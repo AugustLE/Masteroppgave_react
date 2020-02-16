@@ -19,8 +19,15 @@ export const ListRow = (props) => {
             <Text style={{ width: '80px' }}>{props.team.name}</Text>
             
             <Row style={{ width: '100px', height: '30px', justifyContent: 'flex-start' }}>
-                <Text style={{ marginRight: '10px', width: '22px' }}>{props.team.last_average_score}</Text>
-                <ProgressBar score={props.team.last_average_score} />
+                {(props.team.number_of_scores > 3 && props.team.diverse_scores) ? (
+                    <Row>
+                        <Text style={{ marginRight: '10px', width: '22px' }}>{props.team.last_average_score}</Text>
+                        <ProgressBar score={props.team.last_average_score} />
+                    </Row>
+                ): (
+                    <Text>No/few scores</Text>
+                )}
+
             </Row>
             
             <Text style={{ width: '100px', marginLeft: '35px' }}>{responsibleString(props.team.responsible)}</Text>
