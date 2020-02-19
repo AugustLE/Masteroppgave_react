@@ -1,19 +1,49 @@
 import React from 'react';
 import { Text, Row } from '../common';
+import './teamlist.css';
 
 
-export const ListHeader = () => {
+export const ListHeader = (props) => {
 
  return ( 
         <div className='listRowHeader'>
             
-            <Text bold style={{ width: '80px' }}>Team</Text>
-            
-            <Row style={{ width: '100px', height: '30px', justifyContent: 'flex-start' }}>
-                <Text bold style={{ marginRight: '10px' }}>Status(1-5)</Text>
+            <Row>
+                {(props.nameSortVal === null) && (
+                    <Text onClick={props.onClickName} bold style={{ width: '80px' }}>Team</Text>
+                )}
+                {(props.nameSortVal === 1) && (
+                    <Row style={{ marginRight: '20px' }}>
+                        <Text onClick={props.onClickName} bold style={{ marginRight: '10px' }}>Team</Text>
+                        <img className="arrow_down" src={require('../../assets/arrow_down.png')} alt="descrtpt" />
+                    </Row>
+                )}
+                {(props.nameSortVal === 2) && (
+                    <Row style={{ marginRight: '20px' }}> 
+                        <Text onClick={props.onClickName} bold style={{ marginRight: '10px' }}>Team</Text>
+                        <img className="arrow_down" src={require('../../assets/arrow_up.png')} alt="descrtpt" />
+                    </Row>
+                )}
             </Row>
             
-            <Text bold style={{ width: '100px', marginLeft: '35px' }}>Responsible</Text>
+            <Row style={{ width: '100px', height: '30px', justifyContent: 'flex-start' }}>
+                <Text onClick={props.onClickStatus} bold style={{ marginRight: '10px' }}>Status</Text>
+                {(props.statusSortVal === 1) && (
+                    <img className="arrow_down" src={require('../../assets/arrow_down.png')} alt="description" />
+                )}
+                {(props.statusSortVal === 2) && (
+                    <img className="arrow_down" src={require('../../assets/arrow_up.png')} alt="description" />
+                )}
+            </Row>
+            <Row>
+                <Text onClick={props.onClickResp} bold style={{ marginLeft: '35px', marginRight: '10px' }}>Responsible</Text>
+                {(props.respSortVal === 1) && (
+                    <img className="arrow_down" src={require('../../assets/arrow_down.png')} alt="descrtpt" />
+                )}
+                {(props.respSortVal === 2) && (
+                    <img className="arrow_down" src={require('../../assets/arrow_up.png')} alt="description1" />
+                )}
+            </Row>
         </div>
     );
 }

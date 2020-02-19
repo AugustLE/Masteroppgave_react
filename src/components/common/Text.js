@@ -17,7 +17,7 @@ const Text = (props) => {
     }
     extraStyles = { ...extraStyles, ...props.style };
     return ( 
-        <p className='basicText' style={extraStyles}>{props.children}</p>
+        <p onClick={props.onClick} className='basicText' style={extraStyles}>{props.children}</p>
     )
 }
 

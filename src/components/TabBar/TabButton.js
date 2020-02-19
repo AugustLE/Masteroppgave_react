@@ -7,7 +7,7 @@ export const TabButton = (props) => {
     }
     return (
         <button onClick={props.onClick} className={activeStyle()}>
-            <img className='tabIcon' src={props.icon} />
+            <img className='tabIcon' src={props.icon} alt="description_tb" />
             <p className='tabText'>{props.children}</p>
         </button>
     );

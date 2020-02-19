@@ -6,39 +6,10 @@ import {
     ACCOUNT_LOADING,
     GET_USER,
     FETCH_LOADING,
-    ROLE_ERROR
 } from './types';
 import { URLS } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
 
-
-export const changeRole = (auth_token, role) => {
-    const url = URLS.api_url + '/user/changerole/';
-
-    return (dispatch) => {
-        dispatch({ type: ACCOUNT_LOADING, payload: true });
-
-        axios({
-            method: 'post',
-            url: url,
-            headers: {
-                Authorization: 'Token ' + auth_token,
-            },
-            data: {
-                role
-            }
-        }).then(response => {
-            if (response.data.error) {
-                dispatch({ type: ROLE_ERROR, payload: response.data.error });
-            } else {
-                dispatch({ type: CHANGE_ROLE, payload: response.data });
-            }
-        }).catch(error => {
-            console.log(error);
-            dispatch({ type: ACCOUNT_LOADING, payload: false });
-        })
-    }
-}
 
 
 export const selectSubject = (auth_token, subject_id) => {
