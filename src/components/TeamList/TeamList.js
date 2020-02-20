@@ -28,16 +28,16 @@ export const TeamList = (props) => {
         return baseSort(b.last_average_score, a.last_average_score);
     }
     function nameSort(a, b) {
-        return baseSort(a.name, b.name);
-    }
-    function nameSortReverse(a, b) {
         return baseSort(b.name, a.name);
     }
+    function nameSortReverse(a, b) {
+        return baseSort(a.name, b.name);
+    }
     function respSort(a, b) {
-        return baseSort(a.responsible, b.responsible);
+        return baseSort(b.responsible, a.responsible);
     }
     function respSortReverse(a, b) {
-        return baseSort(b.responsible, a.responsible);
+        return baseSort(a.responsible, b.responsible);
     }
 
     const onClickStatus = () => {
@@ -73,7 +73,7 @@ export const TeamList = (props) => {
         let teams = [].concat(props.teams);
         if (sortVal === 1) {
             teams = teams.sort(sortFunction);
-        } else if (statusSortVal === 2) {
+        } if (sortVal === 2) {
             teams = teams.sort(sortFunctionRev);
         }
         return teams;

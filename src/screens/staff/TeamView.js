@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import Modal from 'react-modal';
-import { VerticalContainer, Text, Row, Box, Button, Line } from '../../components/common';
+import { VerticalContainer, Text, Row, Box, Button, Line, Input } from '../../components/common';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getTeamList, getTeamInfo } from '../../actions/StaffActions';
@@ -30,6 +30,8 @@ const TeamView = (props) => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [teamId, setSelectedTeamId] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
+ 
 
     useEffect(() => {
 
@@ -51,6 +53,18 @@ const TeamView = (props) => {
         setSelectedTeamId(team_id);
         setModalOpen(true);
         props.getTeamInfo(props.access_token, team_id);
+    }
+
+    const searchList = () => {
+        if (props.staff_team_list && searchValue !== '') {
+            let team_list = [].concat(props.staff_team_list);
+            const searched_list = team_list.filter(
+                team => team.name.toLowerCase().includes(searchValue.toLowerCase())
+                || team.responsible.toLowerCase().includes(searchValue.toLowerCase())
+            );
+            return searched_list;
+        }
+        return props.staff_team_list;
     }
 
     const TeamMemberList = () => {
@@ -81,15 +95,25 @@ const TeamView = (props) => {
             </VerticalContainer>
         );
     }
-
     return (
         <VerticalContainer>
             <NavBar />
             {props.subject && (
                 <Text bold size='22px' style={{ margin: '15px' }}>{props.subject.code} - Overview</Text>
             )}
+             
             {(!props.loading_fetch && props.staff_team_list) ?  (
-                <TeamList onClick={(team_id) => onTeamClick(team_id)} teams={props.staff_team_list} />
+                <Box style={{ width: '100%' }}>
+                    <Input 
+                        placeholder="Search" 
+                        onChangeValue={e => setSearchValue(e.target.value)} 
+                        value={searchValue}
+                    />
+                    <TeamList 
+                        onClick={(team_id) => onTeamClick(team_id)} 
+                        teams={searchList()} 
+                    />
+                </Box>
             ): (
                 <Loader />
             )}
