@@ -11,7 +11,7 @@ import {
     FETCH_TEAM_STATUS,
     ROLE_ERROR,
     PRIVACY_CONSENT_RETURN,
-    PRIVACY_CONSENT_LOADING
+    PRIVACY_CONSENT_LOADING,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -22,7 +22,7 @@ const INITIAL_STATE = {
     subject: null,
     role_error: null,
     privacy_consent: null,
-    loading_privacy_consent: false
+    loading_privacy_consent: false,
 }
 
 export default (state = INITIAL_STATE, action) => {

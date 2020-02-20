@@ -10,6 +10,7 @@ import TeamView from './screens/staff/TeamView';
 import StaffMessages from './screens/staff/StaffMessages';
 import StaffProfile from './screens/staff/StaffProfile';
 import Uploader from './screens/admin/Uploader';
+import SelectTeam from './screens/start/SelectTeam';
 
 
 export const MainRouter = () => (
@@ -17,6 +18,7 @@ export const MainRouter = () => (
         <Switch>
           <Route exact path='/' component={Login}/>
           <Route exact path='/selectsubject' component={SelectSubject} />
+          <Route exact path='/selectteam' component={SelectTeam} />
           
         </Switch>
         <Switch>

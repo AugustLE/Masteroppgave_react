@@ -9,6 +9,7 @@ const Input = (props) => {
             className="input" 
             type="text" 
             value={props.value}
+            style={props.style}
         />
     )
 }

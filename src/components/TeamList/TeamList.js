@@ -28,10 +28,10 @@ export const TeamList = (props) => {
         return baseSort(b.last_average_score, a.last_average_score);
     }
     function nameSort(a, b) {
-        return baseSort(b.name, a.name);
+        return baseSort(b.team_number, a.team_number);
     }
     function nameSortReverse(a, b) {
-        return baseSort(a.name, b.name);
+        return baseSort(a.team_number, b.team_number);
     }
     function respSort(a, b) {
         return baseSort(b.responsible, a.responsible);

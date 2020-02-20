@@ -6,7 +6,8 @@ import {
     WRONG_PASSWORD,
     FETCH_TEAM_STATUS,
     REGISTER_SCORE,
-    GET_USER
+    GET_USER,
+    SELECT_SUBJECTS_WITH_TEAMS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -18,14 +19,14 @@ const INITIAL_STATE = {
     last_score: null,
     has_rated_this_week: false,
     team_responsible: null,
-    team_members: null
+    team_members: null,
 }
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         
         case FETCH_TEAM_LIST:
-            return { ...state, team_list: action.payload.teams, team: action.payload.team, loading_fetch: false };
+            return { ...state, team_list: action.payload, loading_fetch: false };
         
         case FETCH_LOADING:
             return { ...state, loading_fetch: action.payload };
@@ -67,6 +68,11 @@ export default (state = INITIAL_STATE, action) => {
                 loading_fetch: false
             }
 
+        case SELECT_SUBJECTS_WITH_TEAMS:
+            return {
+                ...state,
+                team_list: action.payload
+            }
         default:
             return state;
     }

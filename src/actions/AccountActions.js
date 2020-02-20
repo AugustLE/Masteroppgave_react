@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { 
-    CHANGE_ROLE,
     SUBJECT_LIST,
     CHANGE_SUBJECT,
     ACCOUNT_LOADING,

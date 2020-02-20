@@ -103,11 +103,12 @@ const TeamView = (props) => {
             )}
              
             {(!props.loading_fetch && props.staff_team_list) ?  (
-                <Box style={{ width: '100%' }}>
+                <Box style={{ width: '100%', alignItems: 'flex-start' }}>
                     <Input 
                         placeholder="Search" 
                         onChangeValue={e => setSearchValue(e.target.value)} 
                         value={searchValue}
+                        style={{ width: '90%', marginLeft: '10px' }}
                     />
                     <TeamList 
                         onClick={(team_id) => onTeamClick(team_id)} 

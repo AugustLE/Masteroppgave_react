@@ -6,7 +6,9 @@ import {
     SELECT_TEAM_OK,
     WRONG_PASSWORD,
     FETCH_TEAM_STATUS,
-    REGISTER_SCORE
+    REGISTER_SCORE,
+    CHANGE_SUBJECT,
+    SELECT_SUBJECTS_WITH_TEAMS
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -33,7 +35,7 @@ export const fetchTeamList = (access_token) => {
     }
 }
 
-export const selectTeam = (access_token, team_id, team_password) => {
+export const selectTeam = (access_token, team_id) => {
 
     const url = URLS.api_url + '/subject/selectteam/';
 
@@ -49,7 +51,6 @@ export const selectTeam = (access_token, team_id, team_password) => {
             },
             data: {
                 team_id,
-                team_password
             }
         }).then(response => {
             
@@ -110,6 +111,51 @@ export const registerScore = (access_token, team_id, score_value) => {
         }).catch(err => {
             console.log(err);
             dispatch({ type: STUDENT_ACTION_LOADING, payload: true });
+        })
+    }
+}
+
+export const selectSubjectWithTeams = (auth_token, subject_id) => {
+    const url = URLS.api_url + '/selectsubjectwithteams/';
+
+    return (dispatch) => {
+        dispatch({ type: STUDENT_ACTION_LOADING, payload: true });
+        axios({
+            method: 'post',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + auth_token
+            },
+            data: {
+                subject_id
+            }
+        }).then(response => {
+            dispatch({ type: CHANGE_SUBJECT, payload: response.data.user });
+            dispatch({ type: SELECT_SUBJECTS_WITH_TEAMS, payload: response.data.teams });
+        }).catch(error => {
+            console.log(error);
+            dispatch({ type: STUDENT_ACTION_LOADING, payload: false });
+        })
+    }
+}
+
+export const getTeamsForSubject = (auth_token) => {
+
+    const url = URLS.api_url + '/teamlist/';
+
+    return (dispatch) => {
+        dispatch({ type: FETCH_LOADING, payload: true });
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + auth_token
+            }
+        }).then(response => {
+            dispatch({ type: FETCH_TEAM_LIST, payload: response.data });
+        }).catch(error => {
+            console.log(error);
+            dispatch({ type: FETCH_LOADING, payload: false });
         })
     }
 }
