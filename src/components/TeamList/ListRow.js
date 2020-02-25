@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Text } from '../common';
+import { Row, Text, Image } from '../common';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
 import './teamlist.css';
 
@@ -31,6 +31,12 @@ export const ListRow = (props) => {
             </Row>
             
             <Text style={{ width: '100px', marginLeft: '35px' }}>{responsibleString(props.team.responsible)}</Text>
+            {props.team.pinned && (
+                <Image 
+                    src={require('../../images/student/pin.png')}
+                    style={{ width: '15px', height: '15px', position: 'absolute', top: '5px', right: '5px' }} 
+                />
+            )}
             
         </div>
     );

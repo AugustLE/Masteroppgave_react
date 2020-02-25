@@ -79,6 +79,7 @@ export const TeamList = (props) => {
             teams = getSortedList(nameSortVal, nameSort, nameSortReverse);
         if (respSortVal > 0)
             teams = getSortedList(respSortVal, respSort, respSortReverse);
+            
         const team_list = teams.map((team) => (
             <ListRow onClick={() => props.onClick(team.pk)} key={team.pk} team={team} />
         ));
