@@ -7,7 +7,9 @@ import {
     FETCH_TEAM_STATUS,
     REGISTER_SCORE,
     GET_USER,
-    SELECT_SUBJECTS_WITH_TEAMS
+    SELECT_SUBJECTS_WITH_TEAMS,
+    FETCH_TEAM,
+    CONTACT_INFO
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -20,6 +22,7 @@ const INITIAL_STATE = {
     has_rated_this_week: false,
     team_responsible: null,
     team_members: null,
+    contact_info_responsible: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -73,6 +76,20 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 team_list: action.payload
             }
+
+        case FETCH_TEAM:
+            return {
+                ...state,
+                team: action.payload
+            }
+
+        case CONTACT_INFO:
+            return {
+                ...state,
+                contact_info_responsible: action.payload,
+                loading_fetch: false
+            }
+
         default:
             return state;
     }

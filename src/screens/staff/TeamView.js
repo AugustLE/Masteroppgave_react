@@ -10,6 +10,7 @@ import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { getAccessToken } from '../../GlobalMethods';
 import { TeamList } from '../../components/TeamList/TeamList';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import { clientJSO } from '../../GlobalVars';
 
 const modalStyles = {
     content : {
@@ -34,7 +35,7 @@ const TeamView = (props) => {
  
 
     useEffect(() => {
-
+        clientJSO.getToken();
         getAccessToken().then(token => {
             if (!token) {
                 props.history.push('/')

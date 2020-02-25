@@ -5,10 +5,12 @@ import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getAccessToken } from '../../GlobalMethods';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
+import { clientJSO } from '../../GlobalVars';
  
 const StaffMessages = (props) => {
 
     useEffect(() => {
+        clientJSO.getToken();
         getAccessToken().then(token => {
             if (!token) {
                 props.history.push('/')

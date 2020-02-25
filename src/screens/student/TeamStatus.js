@@ -5,6 +5,8 @@ import Slider from 'rc-slider';
 import Modal from 'react-modal';
 import 'rc-slider/assets/index.css';
 import { setActiveTab, setAccessToken } from '../../actions/MainActions';
+import { getApiUser } from '../../actions/AccountActions';
+import { clientJSO } from '../../GlobalVars';
 import { getTeamStatus, registerScore } from '../../actions/StudentActions';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
@@ -12,6 +14,7 @@ import { VerticalContainer, Row, ImageButton, Line, Text, Button, Box } from '..
 import { ScoreView } from '../../components/ScoreView/ScoreView';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import { getAccessToken } from '../../GlobalMethods';
+import { Redirect } from 'react-router-dom';
 import './team_status.css';
 
 const modalStyles = {
@@ -35,12 +38,15 @@ const TeamStatus = (props) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
+        clientJSO.getToken();
         getAccessToken().then(token => {
             if (!token) {
                 props.history.push('/')
             } else {
                 props.setAccessToken(token);
                 props.getTeamStatus(token);
+                props.getApiUser(token);
+                
             }
         });
         if (props.active_tab !== 0) {
@@ -80,8 +86,8 @@ const TeamStatus = (props) => {
             <Modal 
                 isOpen={modalOpen}
                 style={modalStyles}
-                ariaHideApp={false}
-                >
+                ariaHideApp={false}>
+
                 {props.team && (
                     <VerticalContainer>
                         <Text bold size='20px'>{props.team.name}</Text>
@@ -195,13 +201,18 @@ const TeamStatus = (props) => {
         return <div />
       
     }
-
     return (
         <div>
             <NavBar />
             <ScorePage />
             <TeamInfoModal />
             <TabBarStudent history={props.history} />
+            {(props.api_user && (props.api_user.role === 'IN' || props.api_user.role === 'TA')) && (
+                <Redirect to={'/staff/overview/'} />
+            )}
+            {(props.api_user && props.team === null) && (
+                <Redirect to={'/selectteam/'} />
+            )}
         </div>
     );
 };
@@ -217,7 +228,7 @@ const mapStateToProps = (state) => {
         team_responsible,
         team_members
     } = state.student;
-    const { subject } = state.account;
+    const { subject, api_user } = state.account;
     return { 
         access_token, 
         active_tab,  
@@ -228,7 +239,8 @@ const mapStateToProps = (state) => {
         loading_fetch,
         loading_action,
         team_responsible,
-        team_members 
+        team_members,
+        api_user 
     };
 };
 
@@ -236,7 +248,8 @@ const mapDispatchToProps = {
     setActiveTab, 
     getTeamStatus, 
     registerScore, 
-    setAccessToken 
+    setAccessToken,
+    getApiUser 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamStatus);

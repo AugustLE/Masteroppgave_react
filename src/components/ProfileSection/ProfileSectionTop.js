@@ -16,7 +16,9 @@ export const ProfileSectionTop = (props) => {
             </VerticalContainer>
             <VerticalContainer style={{ flex: 7, alignItems: 'flex-start' }}>
                 <p className='nameText'>{props.api_user.name}</p>
-                <Button image={require('../../images/logout_white.png')} onClick={props.logOut}>Log out</Button>
+                <Row>
+                    <Button image={require('../../images/logout_white.png')} onClick={props.logOut}>Log out</Button>
+                </Row>
             </VerticalContainer>
         </Row>
     );

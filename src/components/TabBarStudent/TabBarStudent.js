@@ -21,7 +21,7 @@ const TabBarStudent = (props) => {
                 Team status
             </TabButton>
             <TabButton isActive={checkActive(1)} icon={require('./icons/mail.png')} onClick={() => tabClick(1, '/student/messages')}>
-                Messages
+                Contact
             </TabButton>
             <TabButton isActive={checkActive(2)} icon={require('./icons/avatar.png')} onClick={() => tabClick(2, '/student/profile')}>
                 Profile

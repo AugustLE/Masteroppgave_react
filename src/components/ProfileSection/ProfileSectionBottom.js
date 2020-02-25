@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, VerticalContainer, ImageButton, Line } from '../common';
+import { Row, VerticalContainer, ImageButton, Line, Button } from '../common';
 import './profilesection.css';
 
 export const ProfileSectionBottom = (props) => {
@@ -15,6 +15,9 @@ export const ProfileSectionBottom = (props) => {
                     <p className='profileInfoLabel'>Your team: </p>
                     <p className='profileInfoText'>{props.team.name}</p>
                 </Row>
+            )}
+            {props.student && (
+                <Button onClick={props.onChangeTeam} secondary style={{ marginLeft: '27px', marginTop: '10px' }}>Change team</Button>
             )}
             {/*
             <ImageButton 

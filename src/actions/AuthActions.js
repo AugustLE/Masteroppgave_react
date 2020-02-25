@@ -98,7 +98,8 @@ export const loginAndCreateUserIfNecessary = (user, token, with_subjects=false) 
                 userid: user.userid,
                 name: user.name,
                 auth_token: token,
-                username: username
+                username: username,
+                email: user.email
             }
         }).then(response => {
             dispatch({ type: LOGIN_SUCCESS, payload: response.data });

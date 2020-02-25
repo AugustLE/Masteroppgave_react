@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { VerticalContainer } from '../common';
 import { ListRow } from './ListRow';
 import { ListHeader } from './ListHeader';
+import { baseSort } from '../../GlobalMethods';
 import './teamlist.css';
 
 
@@ -11,15 +12,6 @@ export const TeamList = (props) => {
     const [nameSortVal, setNameSort] = useState(null);
     const [respSortVal, setRespSort] = useState(null);
 
-    function baseSort(a, b) {
-        let comparison = 0;
-        if (a < b) {
-            comparison = 1;
-        } else if (a > b) {
-            comparison = -1;
-        }
-        return comparison;
-    }
 
     function scoreSort(a, b) {
         return baseSort(a.last_average_score, b.last_average_score);

@@ -9,11 +9,12 @@ import { getApiUser } from '../../actions/AccountActions';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { logout } from '../../actions/AuthActions';
 import { getAccessToken } from '../../GlobalMethods';
-
+import { clientJSO } from '../../GlobalVars';
  
 const StaffProfile = (props) => {
-
+ 
     useEffect(() => {
+        clientJSO.getToken();
         getAccessToken().then(token => {
             if (!token) {
                 props.history.push('/')

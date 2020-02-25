@@ -89,7 +89,6 @@ const SelectSubject = (props) => {
         
 
         if (props.api_user) {
-            console.log(props.api_user);
             return (
                 <VerticalContainer style={{ width: '100%' }}>
                     <h2>Select subject</h2>

@@ -9,7 +9,6 @@ import { NavBar } from '../../components/NavBar/NavBar';
 import { getAccessToken } from '../../GlobalMethods';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
-import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
 import { clientJSO } from '../../GlobalVars';
  
