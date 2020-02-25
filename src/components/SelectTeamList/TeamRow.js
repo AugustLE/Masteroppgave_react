@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Text } from '../common';
+import { Text } from '../common';
 import './selectteamlist.css';
 
 export const TeamRow = (props) => {

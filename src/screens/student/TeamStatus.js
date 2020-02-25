@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import Slider from 'rc-slider';
 import Modal from 'react-modal';
+import { Chart } from 'react-charts';
 import 'rc-slider/assets/index.css';
 import { setActiveTab, setAccessToken } from '../../actions/MainActions';
 import { getApiUser } from '../../actions/AccountActions';
 import { clientJSO } from '../../GlobalVars';
-import { getTeamStatus, registerScore } from '../../actions/StudentActions';
+import { getTeamStatus, registerScore, getHistoryScores } from '../../actions/StudentActions';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { VerticalContainer, Row, ImageButton, Line, Text, Button, Box } from '../../components/common';
+import { VerticalContainer, Row, ImageButton, Line, Text, Button } from '../../components/common';
 import { ScoreView } from '../../components/ScoreView/ScoreView';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import { getAccessToken } from '../../GlobalMethods';
 import { Redirect } from 'react-router-dom';
+import { ScoreList } from '../../components/ScoreList/ScoreList';
 import './team_status.css';
+
 
 const modalStyles = {
     content : {
@@ -121,7 +124,7 @@ const TeamStatus = (props) => {
         if (props.subject && props.team) {
             if (props.has_rated_this_week) {
                 return (
-                    <VerticalContainer>
+                    <VerticalContainer style={{ marginBottom: '100px' }}>
                         <h2 style={{ marginBottom: '1px' }}>Team status</h2>
                         <p className='teamNameText'>{props.team.name}</p>
                         <div className='topSectionAfter'>
@@ -160,6 +163,13 @@ const TeamStatus = (props) => {
                                 score={props.last_score - 1} 
                             />
                         </VerticalContainer>
+                        {props.history_scores ? (
+                            <ScoreList history_scores={props.history_scores} />
+                        ): (
+                            <Button onClick={() => props.getHistoryScores(props.access_token)} style={{ marginTop: '25px' }}>
+                                View previous scores
+                            </Button>
+                        )}
                     </VerticalContainer>
                 )
             } else {
@@ -226,7 +236,8 @@ const mapStateToProps = (state) => {
         loading_action, 
         has_rated_this_week,
         team_responsible,
-        team_members
+        team_members,
+        history_scores
     } = state.student;
     const { subject, api_user } = state.account;
     return { 
@@ -240,7 +251,8 @@ const mapStateToProps = (state) => {
         loading_action,
         team_responsible,
         team_members,
-        api_user 
+        api_user,
+        history_scores
     };
 };
 
@@ -249,7 +261,8 @@ const mapDispatchToProps = {
     getTeamStatus, 
     registerScore, 
     setAccessToken,
-    getApiUser 
+    getApiUser,
+    getHistoryScores 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamStatus);

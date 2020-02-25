@@ -33,7 +33,7 @@ export const ScoreView = (props) => {
     
     return (
         <VerticalContainer>
-            <img className='scoreImage' style={extra_style} src={image} />
+            <img className='scoreImage' style={extra_style} src={image} alt='' />
             {renderText()}
         </VerticalContainer>
     )

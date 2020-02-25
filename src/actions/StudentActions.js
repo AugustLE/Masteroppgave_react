@@ -10,7 +10,8 @@ import {
     CHANGE_SUBJECT,
     SELECT_SUBJECTS_WITH_TEAMS,
     FETCH_TEAM,
-    CONTACT_INFO
+    CONTACT_INFO,
+    HISTORY_SCORES
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -199,6 +200,25 @@ export const getContactInfo = (auth_token) => {
         }).catch(err => {
             dispatch({ type: FETCH_LOADING, payload: false });
             console.log(err);
+        })
+    }
+}
+
+export const getHistoryScores = (auth_token) => {
+    const url = URLS.api_url + '/user/historyscores/';
+
+    return dispatch => {
+        dispatch({ type: FETCH_LOADING, payload: true });
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + auth_token
+            }
+        }).then(response => {
+            dispatch({ type: HISTORY_SCORES, payload: response.data });
+        }).catch(err => {
+            dispatch({ type: FETCH_LOADING, payload: false });
         })
     }
 }
