@@ -18,7 +18,7 @@ export const ScoreList = (props) => {
         <VerticalContainer style={{ width: '90%', marginTop: '20px' }}>
             <div className='teamListHeader'>
                 <Text bold style={{ paddingLeft: '8px', width: '100px' }}>Score</Text>
-                <Text bold style={{ paddingLeft: '43px' }}>Date registered</Text>
+                <Text bold style={{ paddingLeft: '25px' }}>Date registered</Text>
             </div>
             <List />
         </VerticalContainer>

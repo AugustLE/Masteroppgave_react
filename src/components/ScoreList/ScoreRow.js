@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text } from '../common';
+import { Text, Row } from '../common';
 import { formatDateTime } from '../../GlobalMethods';
+import { ProgressBar } from '../ProgressBar/ProgressBar';
 import '../SelectTeamList/selectteamlist.css';
 
 export const ScoreRow = (props) => {
@@ -9,8 +10,11 @@ export const ScoreRow = (props) => {
 
     return ( 
         <div onClick={props.onClickTeam} className='teamRow'>
-            <Text style={{ paddingLeft: '8px', width: '100px' }}>{props.score.score}</Text>
-            <Text style={{ paddingLeft: '45px' }}>{formatDateTime(props.score.date_registered)}</Text>
+            <Row>
+                <Text style={{ paddingLeft: '8px', width: '15px' }}>{props.score.score}</Text>
+                <ProgressBar style={{ marginTop: '2px' }} score={props.score.score}/>
+            </Row>
+            <Text style={{ paddingLeft: '62px' }}>{formatDateTime(props.score.date_registered)}</Text>
         </div>
     );
 }

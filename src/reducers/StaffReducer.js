@@ -7,7 +7,8 @@ import {
     MODAL_LOADER,
     TEAM_UPLOAD_SUCCESS,
     ADMIN_ACTION_LOADING,
-    SET_STAFF_FIELD
+    SET_STAFF_FIELD,
+    GET_AUTH
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -24,7 +25,8 @@ const INITIAL_STATE = {
     modal_team: null,
     modal_loading: false,
     team_upload_success: false,
-    admin_loading: false
+    admin_loading: false,
+    authorized_staff: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -88,6 +90,13 @@ export default (state = INITIAL_STATE, action) => {
                 [action.payload.prop]: action.payload.value 
             }
          
+        case GET_AUTH:
+            return {
+                ...state,
+                authorized_staff: action.payload,
+                loading_fetch: false
+            }
+
         default:
             return state;
     }

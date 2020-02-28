@@ -16,7 +16,7 @@ export const ProgressBar = (props) => {
     }
 
     return (
-        <div className={classNameContainer}>
+        <div className={classNameContainer} style={props.style}>
             <div className={classNameBar} style={{ width: bar_width }} />
         </div>
     );

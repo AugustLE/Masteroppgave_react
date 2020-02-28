@@ -39,6 +39,7 @@ export const STAFF_FETCH_TEAMS = 'STAFF_FETCH_TEAMS';
 export const GET_TEAM_INFO = 'GET_TEAM_INFO';
 export const MODAL_LOADER = 'MODAL_LOADER';
 export const SET_STAFF_FIELD = 'SET_STAFF_FIELD';
+export const GET_AUTH = 'GET_AUTH';
 
 // ADMIN ACTIONS // 
 export const ADMIN_ACTION_LOADING = 'ADMIN_ACTION_LOADING';

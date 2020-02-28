@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { 
-    FETCH_STAFF_SUBJECTS,
     STAFF_FETCH_LOADING,
     STAFF_OVERVIEW,
     STAFF_FETCH_TEAMS,
@@ -9,7 +8,8 @@ import {
     MODAL_LOADER,
     ADMIN_ACTION_LOADING,
     TEAM_UPLOAD_SUCCESS,
-    SET_STAFF_FIELD
+    SET_STAFF_FIELD,
+    GET_AUTH
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -100,10 +100,52 @@ export const uploadTeamList = (access_token, teamJson) => {
 }
 
 export const setStaffField = ({ prop, value }) => {
-    console.log(prop);
-    console.log(value);
     return {
         type: SET_STAFF_FIELD,
         payload: { prop, value }
     };
 };
+
+export const requestAuthority = (access_token) => {
+
+    const url = URLS.api_url + '/staff/requestauth/';
+
+    return dispatch => {
+        dispatch({ type: STAFF_FETCH_LOADING, payload: true });
+        
+        axios({
+            method: 'post',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            }
+        }).then(response => {
+            dispatch({ type: GET_AUTH, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: STAFF_FETCH_LOADING, payload: false });
+        });
+    }
+}
+
+export const getRequestedAuthority = (access_token) => {
+
+    const url = URLS.api_url + '/staff/getauth/';
+
+    return dispatch => {
+        dispatch({ type: STAFF_FETCH_LOADING, payload: true });
+
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            }
+        }).then(response => {
+            dispatch({ type: GET_AUTH, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: STAFF_FETCH_LOADING, payload: false });
+        });
+    }
+}
