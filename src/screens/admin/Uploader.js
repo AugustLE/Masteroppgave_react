@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { getAccessToken } from '../../GlobalMethods';
 import { setAccessToken } from '../../actions/MainActions';
-import { VerticalContainer, Text, Button, Line, Box } from '../../components/common';
+import { VerticalContainer, Text, Button, Line, Box, Form } from '../../components/common';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getApiUser } from '../../actions/AccountActions';
 import { uploadTeamList, setStaffField } from '../../actions/StaffActions';
@@ -77,10 +77,7 @@ const Uploader = (props) => {
         }
     }
 
-    const onSubmitTeamlist = (event) => {
-        event.preventDefault();
-        props.uploadTeamList(props.access_token, jsonTeams);
-    }
+  
 
     if (props.admin_loading) {
         return (
@@ -102,9 +99,9 @@ const Uploader = (props) => {
                 <TeamJsonList jsonTeams={jsonTeams} />
             )}
             {jsonTeams && (
-                <form onSubmit={onSubmitTeamlist}>
+                <Form onSubmit={() => props.uploadTeamList(props.access_token, jsonTeams)}>
                     <Button style={{ marginTop: '20px' }}>Submit teamlist</Button>
-                </form>
+                </Form>
             )}
             {props.team_upload_success && (
                 <Text style={{ margin: '10px', color: 'green' }} bold size='16px'>Success! Teams registered</Text>

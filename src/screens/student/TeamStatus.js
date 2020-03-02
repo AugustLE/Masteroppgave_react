@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import Slider from 'rc-slider';
 import Modal from 'react-modal';
-import { Chart } from 'react-charts';
 import 'rc-slider/assets/index.css';
 import { setActiveTab, setAccessToken } from '../../actions/MainActions';
 import { getApiUser } from '../../actions/AccountActions';
@@ -11,7 +10,7 @@ import { clientJSO } from '../../GlobalVars';
 import { getTeamStatus, registerScore, getHistoryScores } from '../../actions/StudentActions';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { VerticalContainer, Row, ImageButton, Line, Text, Button } from '../../components/common';
+import { VerticalContainer, Row, ImageButton, Line, Text, Button, Form } from '../../components/common';
 import { ScoreView } from '../../components/ScoreView/ScoreView';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import { getAccessToken } from '../../GlobalMethods';
@@ -59,11 +58,6 @@ const TeamStatus = (props) => {
 
     const onSliderChange = (value) => {
         setScore(value);
-    }
-
-    const onSubmitScore = (event) => {
-        event.preventDefault();
-        props.registerScore(props.access_token, props.team.pk, score + 1);
     }
 
     const TeamMemberList = () => {
@@ -201,9 +195,9 @@ const TeamStatus = (props) => {
                                 
                             />
 
-                            <form onSubmit={onSubmitScore}>
+                            <Form onSubmit={() => props.registerScore(props.access_token, props.team.pk, score + 1)}>
                                 <input className='submitScoreButton' type='submit' value='Submit' />
-                            </form>
+                            </Form>
                         </VerticalContainer>
                 );
             }

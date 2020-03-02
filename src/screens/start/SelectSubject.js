@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Redirect } from 'react-router-dom';
-import { Box, VerticalContainer, Text } from '../../components/common';
+import { Box, VerticalContainer, Text, Form } from '../../components/common';
 import { selectSubject, getApiUser } from '../../actions/AccountActions';
 import { updateToken } from '../../actions/AuthActions';
 import { fetchTeamList, selectSubjectWithTeams } from '../../actions/StudentActions';
@@ -52,12 +52,14 @@ const SelectSubject = (props) => {
         
         if (props.subject_list) {
             const subject_list = props.subject_list.map((subject) => (
-                <div 
-                    onClick={() => selectSubject(props.access_token, subject.pk)} 
-                    className='subjectListElement' 
-                    key={subject.code}>
-                    {subject.code} - {subject.name}
-                </div>
+                <Form key={subject.code} onSubmit={() => selectSubject(props.access_token, subject.pk)}>
+                    <button
+                        type='submit'
+                        className='subjectListElement' 
+                        key={subject.code}>
+                        {subject.code} - {subject.name}
+                    </button>
+                </Form>
             ));
             return (
                 <div className='subjectList'>{subject_list}</div>
