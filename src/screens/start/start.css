@@ -1,19 +1,20 @@
 .loginButton {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2px;
     align-items: center;
     border-width: 1px;
     border-style: solid;
-    height: 50px;
-    width: 180px;
     border-radius: 3px;
     text-align: center;
     border: none;
     text-decoration: none;
-    font-size: 20px;
     vertical-align: middle;
     align-self: center;
-    margin-top: 25px;
+    margin-top: 15px;
     outline: none;
-    background-color: #f5f9ff;
+    background-color: white;
     box-shadow: 0 4px 8px 0 rgba(247, 247, 247, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 

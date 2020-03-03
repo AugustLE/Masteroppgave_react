@@ -4,9 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { clientJSO } from '../../GlobalVars';
 import { setAccessToken } from '../../actions/MainActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
-import { Box } from '../../components/common';
+import { Box, Image, Text, Line } from '../../components/common';
 import { setAccessTokenPersistent } from '../../GlobalMethods';
-import { BasicModal } from '../../components/BasicModal/BasicModal';
 import './start.css';
 
 const Login = (props) => {
@@ -43,8 +42,12 @@ const Login = (props) => {
     return (
         <Box>
             <TopbarLogin />
+            <Text style={{ marginTop: '25px' }} bold size='20px'>Login with: </Text>
             <button className='loginButton' onClick={feideLogin}>
-                Login with feide
+                <Image 
+                    src={require('../../images/feide_logo.jpg')} 
+                    style={{ width: '200px' }}
+                />
             </button>
         </Box>
     );
