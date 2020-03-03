@@ -7,6 +7,16 @@ const Button = (props) => {
     if (props.secondary) {
         button_class = 'secondaryButton';
     }
+    let buttonStyle = {
+        ...props.style,
+    }
+    if (props.warning) {
+
+        buttonStyle = {
+            ...props.style,
+            backgroundColor: 'red'
+        }
+    }
     const renderImage = () => {
         if (props.image) {
             return (
@@ -16,7 +26,7 @@ const Button = (props) => {
     }
 
     return (
-        <button onClick={props.onClick} className={button_class} style={props.style}>
+        <button onClick={props.onClick} className={button_class} style={buttonStyle}>
             {renderImage()}
             {props.children}
         </button>

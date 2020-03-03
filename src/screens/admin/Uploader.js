@@ -8,6 +8,7 @@ import { NavBar } from '../../components/NavBar/NavBar';
 import { getApiUser } from '../../actions/AccountActions';
 import { uploadTeamList, setStaffField } from '../../actions/StaffActions';
 import { TeamJsonList } from './TeamJsonList/TeamJsonList';
+import { Redirect } from 'react-router';
 
 const Uploader = (props) => {
 
@@ -20,7 +21,7 @@ const Uploader = (props) => {
             if (!token) {
                 props.history.push('/')
             } else {
-                props.getApiUser(token, true);
+                props.getApiUser(token);
                 props.setAccessToken(token);
             }
         });
@@ -44,20 +45,25 @@ const Uploader = (props) => {
                     text_array.forEach(element => {
                         const one_team = element.trim().split('\n');
                         const teamName = one_team[0];
-                        let responsible = one_team[1];
                         let instructor = null;
-                        if (responsible.split(':')[0] === 'IN') {
-                            console.log('INSTRUCT');
-                            instructor = responsible.split(':')[1];
-                            responsible = null;
+                        let responsible = null;
+                        if (one_team.length > 1 && one_team[1].trim().length > 0) {
+                            responsible = one_team[1];
                         }
-                        one_team.shift();
-                        one_team.shift();
                         const team_list = [];
-                        one_team.forEach(member => {
-                            team_list.push(member);
-                            
-                        });
+                        if (responsible) {
+                            if (responsible.split(':')[0] === 'IN') {
+                                console.log('INSTRUCT');
+                                instructor = responsible.split(':')[1];
+                                responsible = null;
+                            }
+                            one_team.shift();
+                            one_team.shift();
+                            one_team.forEach(member => {
+                                team_list.push(member);
+                            });
+                        }
+
                         const team_object = {
                             name: teamName,
                             members: team_list,
@@ -87,7 +93,7 @@ const Uploader = (props) => {
             </Box>
         );
     }
-    
+    console.log(props.api_user);
     return (
         <VerticalContainer>
             <NavBar />
@@ -116,16 +122,19 @@ const Uploader = (props) => {
                 }}>
                 Back to overview
             </Button>
+            {(props.api_user && props.api_user.role !== 'IN') && (
+                <Redirect to='/staff/overview/' />
+            )}
         </VerticalContainer>
     );
 }
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { enrolled_subjects } = state.account;
+    const { enrolled_subjects, api_user } = state.account;
     const { admin_loading, team_upload_success } = state.staff;
 
-    return { access_token, enrolled_subjects, admin_loading, team_upload_success };
+    return { access_token, enrolled_subjects, admin_loading, team_upload_success, api_user };
 }
 
 export default connect(mapStateToProps, { 

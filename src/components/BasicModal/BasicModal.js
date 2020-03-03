@@ -38,14 +38,37 @@ const modalStyles = {
                     <Line style={{ width: '90%', marginTop: '10px' }} />
                 </VerticalContainer>
             )}
+
+            {props.warning && (
+                <VerticalContainer>
+                <Text bold size='20px'>Delete user</Text>
+                <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
+                    <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>
+                        {props.text}
+                    </Text>
+
+                </VerticalContainer>
+                <Line style={{ width: '90%', marginTop: '10px' }} />
+                </VerticalContainer>
+            )}
             
             <Row>
                 <Button style={{ marginTop: '25px' }} secondary onClick={() => props.setModalOpen(false)}>
                     Close
                 </Button>
-                <Button style={{ marginTop: '25px', marginLeft: '10px' }} onClick={props.onActionClick}>
-                    {props.buttonText}
-                </Button>
+                {props.warning ? (
+                     <Button 
+                        warning 
+                        style={{ marginTop: '25px', marginLeft: '10px' }} 
+                        onClick={props.onActionClick}
+                        >
+                        {props.buttonText}
+                    </Button>
+                ): (
+                    <Button style={{ marginTop: '25px', marginLeft: '10px' }} onClick={props.onActionClick}>
+                        {props.buttonText}
+                    </Button>
+                )}
             </Row>
             
         </Modal>

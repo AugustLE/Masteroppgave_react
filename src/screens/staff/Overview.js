@@ -33,13 +33,13 @@ const OverView = (props) => {
         }
     }, [])
 
-    const TeamList = () => {
+    const ResponsibleList = () => {
         if (props.responsible_teams) {
             const team_list = props.responsible_teams.map((team) => (
                 <Text key={team.pk}>{team.name}, </Text>  
             ));
             return (
-                <Row>{team_list}</Row>
+                <Row style={{ flexWrap: 'wrap' }}>{team_list}</Row>
             );
         }
         return <div />;
@@ -71,7 +71,7 @@ const OverView = (props) => {
                     </Box>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams you are responsible for</Text>
-                        <TeamList />
+                        <ResponsibleList />
                     </Box>
                 </VerticalContainer>
             );

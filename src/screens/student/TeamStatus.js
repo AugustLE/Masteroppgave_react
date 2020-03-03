@@ -38,6 +38,7 @@ const TeamStatus = (props) => {
 
     const [score, setScore] = useState(2);
     const [modalOpen, setModalOpen] = useState(false);
+    const [showHistory, setShowHistory] = useState(false);
 
     useEffect(() => {
         clientJSO.getToken();
@@ -90,10 +91,16 @@ const TeamStatus = (props) => {
                         <Text bold size='20px'>{props.team.name}</Text>
                         <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
                             <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
-                            <Row style={{ jusifyContent: 'flex-start' }}>
-                                <Text style={{ marginRight: '5px' }} bold>{props.team.last_average_score}</Text>
-                                <ProgressBar score={props.team.last_average_score} />
-                            </Row>
+                            {props.team.diverse_scores ? (
+                                <Row style={{ jusifyContent: 'flex-start' }}>
+                                    <Text style={{ marginRight: '5px' }} bold>{props.team.last_average_score}</Text>
+                                    <ProgressBar score={props.team.last_average_score} />
+                                </Row>
+                            ): (
+                                <Row style={{ jusifyContent: 'flex-start' }}>
+                                    <Text style={{ marginRight: '5px' }} bold>No/too few scores</Text>
+                                </Row>
+                            )}
                         </VerticalContainer>
                         <Line style={{ width: '90%', marginTop: '10px' }} />
                         <TeamMemberList />
@@ -124,13 +131,20 @@ const TeamStatus = (props) => {
                         <div className='topSectionAfter'>
                             <div className='topSectionPartAfter'>
                                 <p className='topSectionAfterHeader'>Average score</p>
-                                <Row style={{ marginTop: '10px' }}>
-                                    <p className='topSectionAfterText' style={{ marginRight: '5px' }}>
-                                        {props.team.last_average_score}
-                                    </p>
-                                    <ProgressBar score={props.team.last_average_score} />
-                                </Row>
-                                
+                                {props.team.diverse_scores ? (
+                                    <Row style={{ marginTop: '10px' }}>
+                                        <p className='topSectionAfterText' style={{ marginRight: '5px' }}>
+                                            {props.team.last_average_score}
+                                        </p>
+                                        <ProgressBar score={props.team.last_average_score} />
+                                    </Row>
+                                ): (
+                                    <Row style={{ marginTop: '10px' }}>
+                                        <p className='topSectionAfterText' style={{ marginRight: '5px' }}>
+                                            No/too few scores
+                                        </p>
+                                    </Row>
+                                )}
                             </div>
                             <div className='middleLineAfter' />
                             <div className='topSectionPartAfter'>
@@ -157,10 +171,23 @@ const TeamStatus = (props) => {
                                 score={props.last_score - 1} 
                             />
                         </VerticalContainer>
-                        {props.history_scores ? (
-                            <ScoreList history_scores={props.history_scores} />
+                        {(props.history_scores && showHistory) ? (  
+                            <VerticalContainer style={{ width: '100%' }}>
+                                <Line style={{ width: '90%', marginTop: '15px' }} />  
+                                <ScoreList history_scores={props.history_scores} />
+                                <Button 
+                                    style={{ marginTop: '10px' }} 
+                                    secondary
+                                    onClick={() => setShowHistory(false)}>
+                                        Hide
+                                </Button>
+                            </VerticalContainer> 
                         ): (
-                            <Button onClick={() => props.getHistoryScores(props.access_token)} style={{ marginTop: '25px' }}>
+                            <Button onClick={() => {
+                                    props.getHistoryScores(props.access_token);
+                                    setShowHistory(true);
+                                }} 
+                                style={{ marginTop: '25px' }}>
                                 View previous scores
                             </Button>
                         )}

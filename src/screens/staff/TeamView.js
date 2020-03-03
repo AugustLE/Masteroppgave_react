@@ -6,11 +6,13 @@ import { VerticalContainer, Text, Row, Box, Button, Line, Input } from '../../co
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getTeamList, getTeamInfo } from '../../actions/StaffActions';
+import { getApiUser } from '../../actions/AccountActions';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { getAccessToken } from '../../GlobalMethods';
 import { TeamList } from '../../components/TeamList/TeamList';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import { clientJSO } from '../../GlobalVars';
+import { Redirect } from 'react-router';
 
 const modalStyles = {
     content : {
@@ -40,6 +42,7 @@ const TeamView = (props) => {
             if (!token) {
                 props.history.push('/')
             } else {
+                props.getApiUser(token);
                 props.setAccessToken(token);
                 props.getTeamList(token);
             }
@@ -59,11 +62,14 @@ const TeamView = (props) => {
     const searchList = () => {
         if (props.staff_team_list && searchValue !== '') {
             let team_list = [].concat(props.staff_team_list);
-            const searched_list = team_list.filter(
-                team => team.name.toLowerCase().includes(searchValue.toLowerCase())
-                || team.responsible.toLowerCase().includes(searchValue.toLowerCase())
-            );
-            return searched_list;
+            try {
+                const searched_list = team_list.filter(
+                    team => team.name.toLowerCase().includes(searchValue.toLowerCase())
+                    || team.responsible.toLowerCase().includes(searchValue.toLowerCase())
+                );
+                return searched_list;
+            } catch {}
+            return [];
         }
         return props.staff_team_list;
     }
@@ -98,6 +104,9 @@ const TeamView = (props) => {
     }
     return (
         <VerticalContainer>
+            {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
+                <Redirect to='/student/status/' />
+            )}
             <NavBar />
             {props.subject && (
                 <Text bold size='22px' style={{ margin: '15px' }}>{props.subject.code} - Overview</Text>
@@ -164,6 +173,8 @@ const mapStateToProps = (state) => {
         modal_loading
     } = state.staff;
 
+    const { api_user } = state.account;
+
     return { 
         access_token, 
         staff_team_list, 
@@ -172,7 +183,8 @@ const mapStateToProps = (state) => {
         modal_responsible, 
         modal_team_members, 
         modal_team,
-        modal_loading
+        modal_loading,
+        api_user
     };
 }
 
@@ -180,7 +192,8 @@ const mapDispatchToProps = {
     getTeamList,
     setAccessToken,
     setActiveTab,
-    getTeamInfo
+    getTeamInfo,
+    getApiUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamView);

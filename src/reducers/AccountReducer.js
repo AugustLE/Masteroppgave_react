@@ -12,6 +12,7 @@ import {
     ROLE_ERROR,
     PRIVACY_CONSENT_RETURN,
     PRIVACY_CONSENT_LOADING,
+    DELETE_USER
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -23,6 +24,7 @@ const INITIAL_STATE = {
     role_error: null,
     privacy_consent: null,
     loading_privacy_consent: false,
+    user_deleted: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -86,6 +88,12 @@ export default (state = INITIAL_STATE, action) => {
                 loading_privacy_consent: action.payload
             }
               
+        case DELETE_USER:
+            return {
+                ...state,
+                user_deleted: action.payload
+            }
+
         default:
             return state;
     }

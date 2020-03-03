@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, VerticalContainer, ImageButton, Line, Button } from '../common';
+import { LIST_LOGIN } from '../../GlobalVars';
 import './profilesection.css';
 
 export const ProfileSectionBottom = (props) => {
@@ -16,7 +17,7 @@ export const ProfileSectionBottom = (props) => {
                     <p className='profileInfoText'>{props.team.name}</p>
                 </Row>
             )}
-            {props.student && (
+            {(props.student && !LIST_LOGIN) && (
                 <Button onClick={props.onChangeTeam} secondary style={{ marginLeft: '27px', marginTop: '10px' }}>Change team</Button>
             )}
             {/*

@@ -6,6 +6,7 @@ import { setAccessToken } from '../../actions/MainActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Box } from '../../components/common';
 import { setAccessTokenPersistent } from '../../GlobalMethods';
+import { BasicModal } from '../../components/BasicModal/BasicModal';
 import './start.css';
 
 const Login = (props) => {

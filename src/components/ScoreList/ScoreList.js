@@ -15,7 +15,10 @@ export const ScoreList = (props) => {
     }
 
     return (
-        <VerticalContainer style={{ width: '90%', marginTop: '20px' }}>
+        <VerticalContainer style={{ width: '95%', marginTop: '20px' }}>
+            <Text style={{ textAlign: 'left', width: '100%', paddingLeft: '10px' }} bold size='18px'>
+                Previous scores
+            </Text>
             <div className='teamListHeader'>
                 <Text bold style={{ paddingLeft: '8px', width: '100px' }}>Score</Text>
                 <Text bold style={{ paddingLeft: '25px' }}>Date registered</Text>

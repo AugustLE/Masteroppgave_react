@@ -13,10 +13,21 @@ export const ListRow = (props) => {
         return '--';
     }
 
+    const displayName = (name) => {
+        let new_name = name;
+        if (name.length > 10) {
+            let spl_name = name.split(' ');
+            if (spl_name.length >= 2) {
+                new_name = name[0] + name[1] + '.gr ' + spl_name[spl_name.length - 1];
+            }
+        }
+        return new_name;
+    }
+
     return ( 
         <div onClick={props.onClick} className='listRowContainer'>
             
-            <Text style={{ width: '80px' }}>{props.team.name}</Text>
+            <Text style={{ width: '80px' }}>{displayName(props.team.name)}</Text>
             
             <Row style={{ width: '100px', height: '30px', justifyContent: 'flex-start' }}>
                 {(props.team.number_of_scores > 3 && props.team.diverse_scores) ? (

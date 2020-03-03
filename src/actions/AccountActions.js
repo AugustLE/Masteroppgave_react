@@ -5,6 +5,7 @@ import {
     ACCOUNT_LOADING,
     GET_USER,
     FETCH_LOADING,
+    DELETE_USER
 } from './types';
 import { URLS } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
@@ -79,6 +80,28 @@ export const getApiUser = (auth_token, start=false) => {
             console.log(err);
             dispatch({ type: ACCOUNT_LOADING, payload: false });
             dispatch({ type: FETCH_LOADING, payload: false });
+        })
+    }
+}
+
+export const deleteApiUser = (auth_token) => {
+
+    const url = URLS.api_url + '/user/delete/';
+
+    return dispatch => {
+        dispatch({ type: ACCOUNT_LOADING, payload: true });
+
+        axios({
+            method: 'delete',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + auth_token
+            }
+        }).then(response => {
+            dispatch({ type: DELETE_USER, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: ACCOUNT_LOADING, payload: false });
         })
     }
 }

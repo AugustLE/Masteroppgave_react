@@ -9,7 +9,7 @@ export const TeamJsonRow = (props) => {
     return (
         <VerticalContainer style={{ width: '100%' }}>        
             <div onClick={() => setShowMembers(!showMembers)} className="teamJsonRowContainer">
-                <Text style={{ marginRight: '20px', width: '80px' }}>{props.team.name}</Text>
+                <Text style={{ marginRight: '20px', width: '120px' }}>{props.team.name}</Text>
                 {props.team.responsible && (
                     <Text>{props.team.responsible}</Text>
                 )}
