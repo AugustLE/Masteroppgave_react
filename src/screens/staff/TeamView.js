@@ -4,7 +4,7 @@ import Loader from 'react-loader';
 import { VerticalContainer, Text, Box, Input } from '../../components/common';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { getTeamList, getTeamInfo, pinTeam, unpinTeam } from '../../actions/StaffActions';
+import { getTeamList, getTeamInfo, pinTeam, unpinTeam, getTeamHistory, setStaffField } from '../../actions/StaffActions';
 import { getApiUser } from '../../actions/AccountActions';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { getAccessToken } from '../../GlobalMethods';
@@ -97,7 +97,10 @@ const TeamView = (props) => {
                 pinTeam={props.pinTeam}
                 unpinTeam={props.unpinTeam}
                 access_token={props.access_token}
-                api_user={props.api_user}            
+                api_user={props.api_user}   
+                getTeamHistory={() => props.getTeamHistory(props.access_token, props.modal_team.pk)} 
+                team_history={props.team_history}     
+                setStaffField={() => props.setStaffField({ prop: 'team_history', value: null })}
             />
             <TabBarStaff history={props.history}/>
         </VerticalContainer>
@@ -114,7 +117,8 @@ const mapStateToProps = (state) => {
         modal_team_members,
         modal_team,
         modal_loading,
-        loading_action
+        loading_action,
+        team_history
     } = state.staff;
 
     const { api_user } = state.account;
@@ -129,7 +133,8 @@ const mapStateToProps = (state) => {
         modal_team,
         modal_loading,
         api_user,
-        loading_action
+        loading_action,
+        team_history
     };
 }
 
@@ -140,7 +145,9 @@ const mapDispatchToProps = {
     getTeamInfo,
     getApiUser,
     pinTeam,
-    unpinTeam
+    unpinTeam,
+    getTeamHistory,
+    setStaffField
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamView);

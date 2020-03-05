@@ -43,6 +43,7 @@ export const SET_STAFF_FIELD = 'SET_STAFF_FIELD';
 export const GET_AUTH = 'GET_AUTH';
 export const STAFF_ACTION_LOADING = 'STAFF_ACTION_LOADING';
 export const PIN_TEAM = 'PIN_TEAM';
+export const TEAM_HISTORY = 'TEAM_HISTORY';
 
 // ADMIN ACTIONS // 
 export const ADMIN_ACTION_LOADING = 'ADMIN_ACTION_LOADING';

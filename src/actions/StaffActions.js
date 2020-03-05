@@ -12,8 +12,7 @@ import {
     GET_AUTH,
     STAFF_ACTION_LOADING,
     PIN_TEAM,
-    OVERVIEW_FETCH,
-    TEAMS_BELOW
+    TEAM_HISTORY
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -200,6 +199,28 @@ export const unpinTeam = (access_token, team_id) => {
         }).catch(err => {
             console.log(err);
             dispatch({ type: STAFF_ACTION_LOADING, payload: false });
+        })
+    }
+}
+
+export const getTeamHistory = (access_token, team_id) => {
+
+    const url = URLS.api_url + `/staff/teamhistory/${team_id}`;
+
+    return dispatch => {
+        dispatch({ type: STAFF_FETCH_LOADING, payload: true });
+
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            },
+        }).then(response => {
+            dispatch({ type: TEAM_HISTORY, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: STAFF_FETCH_LOADING, payload: false });
         })
     }
 }

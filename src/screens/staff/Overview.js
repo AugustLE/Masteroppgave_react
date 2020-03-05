@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import { VerticalContainer, Box, Text, Row, Button, Image } from '../../components/common';
-import { getOverviewStatistics, getTeamInfo, pinTeam, unpinTeam } from '../../actions/StaffActions';
+import { VerticalContainer, Box, Text, Row, Button, Image, Line } from '../../components/common';
+import { getOverviewStatistics, getTeamInfo, pinTeam, unpinTeam, getTeamHistory, setStaffField } from '../../actions/StaffActions';
 import { getApiUser } from '../../actions/AccountActions';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
@@ -60,11 +60,24 @@ const OverView = (props) => {
         if (props.loading_fetch) {
             return <Loader />;
         }
+        let other_opacity = 1.0;
+        let teams_below_opacity = 1.0;
+        let teams_resp_opacity = 1.0;
+        if (teamsBelow || teamsResponsible) {
+            other_opacity = 0.5;
+        }
+        if (teamsBelow && !teamsResponsible) {
+            teams_resp_opacity = 0.5;
+        }
+        if (!teamsBelow && teamsResponsible) {
+            teams_below_opacity = 0.5;
+        }
+        
         if (props.total_average && props.subject) {
             return (
                 <VerticalContainer style={{ width: '95%', maxWidth: '500px' }}>
                     <Text bold size='22px' style={{ margin: '20px' }}>{props.subject.code} - Overview</Text>
-                    <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%' }}>
+                    <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', opacity: other_opacity }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all teams</Text>
                         <ProgressBar big score={props.total_average} />
                         <Row style={{ marginTop: '15px', alignItems: 'flex-end' }}>
@@ -72,15 +85,15 @@ const OverView = (props) => {
                             <Text bold size='13px' style={{ marginBottom: '3px', marginLeft: '5px' }}>out of 5</Text>
                         </Row>
                     </Box>
-                    <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
+                    <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px', opacity: other_opacity }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Total number of teams</Text>
                         <Text bold size='20px'>{props.number_of_teams}</Text>
                     </Box>
-                    {console.log(props.teams_below)}
+                   
                     <Box 
                         shadow 
                         clickable
-                        style={{ padding: '10px', paddingBottom: '15px', marginTop: '10px', width: '92%' }}
+                        style={{ padding: '10px', paddingBottom: '15px', marginTop: '10px', width: '92%', opacity: teams_below_opacity }}
                         onClick={() => setTeamsBelow(!teamsBelow)}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams below score 2.5</Text>
                         <Text bold size='20px'>{props.number_teams_below}</Text>
@@ -96,13 +109,14 @@ const OverView = (props) => {
                                 teams={props.teams_below}
                                 style={{ marginBottom: '15px', marginTop: '10px' }} 
                             />
+                            <Line style={{ width: '100%', marginTop: '10px', marginBottom: '10px', backgroundColor: '#9e9e9e' }} />
                         </Box>  
                     )}
              
                     <Box 
                         shadow 
                         clickable
-                        style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}
+                        style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px', opacity: teams_resp_opacity }}
                         onClick={() => setTeamsResponsible(!teamsResponsible)}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams you are responsible for</Text>
                         <ResponsibleList />
@@ -151,7 +165,10 @@ const OverView = (props) => {
                 pinTeam={props.pinTeam}
                 unpinTeam={props.unpinTeam}
                 access_token={props.access_token}
-                api_user={props.api_user}            
+                api_user={props.api_user}  
+                getTeamHistory={() => props.getTeamHistory(props.access_token, props.modal_team.pk)} 
+                team_history={props.team_history}     
+                setStaffField={() => props.setStaffField({ prop: 'team_history', value: null })}          
             />
         </VerticalContainer>
     );
@@ -171,7 +188,8 @@ const mapStateToProps = (state) => {
         modal_team_members,
         modal_team,
         modal_loading,
-        loading_action 
+        loading_action,
+        team_history 
     } = state.staff;
     return { 
         access_token, 
@@ -187,7 +205,8 @@ const mapStateToProps = (state) => {
         modal_team_members,
         modal_team,
         modal_loading,
-        loading_action
+        loading_action,
+        team_history
     };
 }
 
@@ -199,5 +218,7 @@ export default connect(mapStateToProps,
         getApiUser,
         getTeamInfo,
         pinTeam, 
-        unpinTeam 
+        unpinTeam,
+        getTeamHistory,
+        setStaffField 
     })(OverView);

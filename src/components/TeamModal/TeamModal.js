@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import Loader from 'react-loader';
 import { VerticalContainer, Text, Row, Line, Box, Form, Button } from '../../components/common';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import { TeamHistoryList } from '../../components/TeamHistoryList/TeamHistoryList';
 
 
 const modalStyles = {
@@ -13,7 +14,7 @@ const modalStyles = {
       bottom                : 'auto',
       marginRight           : '-50%',
       transform             : 'translate(-50%, -50%)',
-      width: '80%',
+      width: '85%',
       border: 'none',
       boxShadow: '1px 1px 2px 2px #d5d5d5',
       maxWidth: '500px'
@@ -22,6 +23,8 @@ const modalStyles = {
   };
 
 export const TeamModal = (props) => {
+
+    const [showHistory, setShowHistory] = useState(false);
 
     const TeamMemberList = () => {
         const list = props.modal_team_members.map((member) => (
@@ -42,7 +45,7 @@ export const TeamModal = (props) => {
         ));
 
         return (
-            <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
+            <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
                 <Text style={{ marginTop: '10px' }} size='16px' bold>Team members</Text>
                 {list}
                 <Line style={{ width: '100%', marginTop: '10px' }} />
@@ -60,20 +63,26 @@ export const TeamModal = (props) => {
             >
 
             {(!props.modal_loading && props.modal_team && !props.loading_action) ? (
-                <VerticalContainer>
+                <VerticalContainer style={{ width: '100%' }}>
                     <Text bold size='20px'>{props.modal_team.name}</Text>
-                    <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
+                    <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
                         <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
                         <Row style={{ jusifyContent: 'flex-start' }}>
                             <Text style={{ marginRight: '5px' }} bold>{props.modal_team.last_average_score}</Text>
                             <ProgressBar score={props.modal_team.last_average_score} />
                         </Row>
                     </VerticalContainer>
-                    <Line style={{ width: '90%', marginTop: '10px' }} />
+                    <Line style={{ width: '100%', marginTop: '10px' }} />
                     <TeamMemberList />
                 </VerticalContainer>
             ): (
                 <Loader />
+            )}
+            {props.team_history && showHistory && (
+                <VerticalContainer style={{ width: '100%' }}>
+                    <Line style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }} />
+                    <TeamHistoryList onClickTeam={(id) => console.log(id)} team_history={props.team_history} />
+                </VerticalContainer>
             )}
             <VerticalContainer>
                 <Row style={{ marginTop: '25px' }}>
@@ -101,9 +110,32 @@ export const TeamModal = (props) => {
                             </Button>
                         </Form>
                     )}
+                    {props.modal_team && !props.loading_action && !showHistory && (
+                        <Button 
+                            style={{ height: '40px', marginLeft: '10px' }} 
+                            secondary
+                            onClick={() => {
+                                props.getTeamHistory();
+                                setShowHistory(true)
+                            }}>
+                            History
+                        </Button>
+                    )}
+                    {props.modal_team && !props.loading_action && showHistory && (
+                        <Button 
+                            style={{ height: '40px', marginLeft: '10px' }} 
+                            secondary
+                            onClick={() => setShowHistory(false)}>
+                            Hide history
+                        </Button>
+                    )}
                     <Button 
                         style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
-                        onClick={() => props.setModalOpen(false)}>
+                        onClick={() => {
+                            props.setModalOpen(false);
+                            setShowHistory(false);
+                            props.setStaffField();
+                        }}>
                         Close
                     </Button>
                 </Row>

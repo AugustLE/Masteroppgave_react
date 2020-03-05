@@ -11,6 +11,7 @@ import {
     GET_AUTH,
     PIN_TEAM,
     STAFF_ACTION_LOADING,
+    TEAM_HISTORY
 } from '../actions/types';
 
 import { boolSort } from '../GlobalMethods';
@@ -32,7 +33,8 @@ const INITIAL_STATE = {
     team_upload_success: false,
     admin_loading: false,
     authorized_staff: null,
-    teams_below: null
+    teams_below: null,
+    team_history: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -132,6 +134,14 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading_action: true
+            }
+        
+        case TEAM_HISTORY:
+
+            return {
+                ...state,
+                loading_fetch: false,
+                team_history: action.payload
             }
         
         default:
