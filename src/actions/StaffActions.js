@@ -9,7 +9,9 @@ import {
     ADMIN_ACTION_LOADING,
     TEAM_UPLOAD_SUCCESS,
     SET_STAFF_FIELD,
-    GET_AUTH
+    GET_AUTH,
+    STAFF_ACTION_LOADING,
+    PIN_TEAM
 } from './types';
 import { URLS } from '../GlobalVars';
 
@@ -147,5 +149,55 @@ export const getRequestedAuthority = (access_token) => {
             console.log(err);
             dispatch({ type: STAFF_FETCH_LOADING, payload: false });
         });
+    }
+}
+
+export const pinTeam = (access_token, team_id) => {
+
+    const url = URLS.api_url + '/staff/pinteam/';
+
+    return dispatch => {
+        dispatch({ type: STAFF_ACTION_LOADING, payload: true });
+
+        axios({
+            method: 'post',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            },
+            data: {
+                team_id
+            }
+        }).then(response => {
+            dispatch({ type: PIN_TEAM, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: STAFF_ACTION_LOADING, payload: false });
+        })
+    }
+}
+
+export const unpinTeam = (access_token, team_id) => {
+
+    const url = URLS.api_url + '/staff/unpinteam/';
+
+    return dispatch => {
+        dispatch({ type: STAFF_ACTION_LOADING, payload: true });
+
+        axios({
+            method: 'delete',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            },
+            data: {
+                team_id
+            }
+        }).then(response => {
+            dispatch({ type: PIN_TEAM, payload: response.data });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: STAFF_ACTION_LOADING, payload: false });
+        })
     }
 }

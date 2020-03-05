@@ -6,13 +6,13 @@ import './profilesection.css';
 export const ProfileSectionBottom = (props) => {
   
     return (
-        <VerticalContainer style={{ alignItems: 'flex-start' }}>
-            <Row style={{ marginLeft: '30px' }}>
+        <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
+            <Row style={{ marginLeft: '20px' }}>
                 <p className='profileInfoLabel'>Current subject: </p>
                 <p className='profileInfoText'>{props.subject.code} - {props.subject.name}</p>
             </Row>
             {props.team && (
-                <Row style={{ marginLeft: '30px' }}>
+                <Row style={{ marginLeft: '20px' }}>
                     <p className='profileInfoLabel'>Your team: </p>
                     <p className='profileInfoText'>{props.team.name}</p>
                 </Row>

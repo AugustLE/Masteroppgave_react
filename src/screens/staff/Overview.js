@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import { VerticalContainer, Box, Text, Row, Button } from '../../components/common';
+import { VerticalContainer, Box, Text, Row, Button, TouchableOpacity } from '../../components/common';
 import { getOverviewStatistics } from '../../actions/StaffActions';
 import { getApiUser } from '../../actions/AccountActions';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
@@ -51,7 +51,7 @@ const OverView = (props) => {
         }
         if (props.total_average && props.subject) {
             return (
-                <VerticalContainer style={{ width: '95%' }}>
+                <VerticalContainer style={{ width: '95%', maxWidth: '500px' }}>
                     <Text bold size='22px' style={{ margin: '20px' }}>{props.subject.code} - Overview</Text>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%' }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all teams</Text>
@@ -65,10 +65,16 @@ const OverView = (props) => {
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Total number of teams</Text>
                         <Text bold size='20px'>{props.number_of_teams}</Text>
                     </Box>
-                    <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
+                    
+                    <Box 
+                        shadow 
+                        style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}
+                        onClick={() => console.log('hej')}
+                        >
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Number of teams below score 2.5</Text>
                         <Text bold size='20px'>{props.number_teams_below}</Text>
                     </Box>
+             
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams you are responsible for</Text>
                         <ResponsibleList />
@@ -85,7 +91,7 @@ const OverView = (props) => {
             <OverviewSection />
             {props.api_user && props.api_user.role === 'IN' && (
                 <Button 
-                    style={{ 'marginTop': '30px' }}
+                    style={{ marginTop: '30px', marginBottom: '100px' }}
                     onClick={() => props.history.push('/admin/uploader')}>
                     Manage course
                 </Button>

@@ -21,6 +21,7 @@ const modalStyles = {
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.2,
         elevation: 2,
+        maxWidth: '400px'
     }
   };
 

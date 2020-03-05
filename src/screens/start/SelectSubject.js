@@ -1,21 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
 import { Redirect } from 'react-router-dom';
-import { Box, VerticalContainer, Text, Form } from '../../components/common';
-import { selectSubject, getApiUser } from '../../actions/AccountActions';
-import { updateToken } from '../../actions/AuthActions';
+import { Box, VerticalContainer, Text, Form, Line, Button } from '../../components/common';
+import { selectSubject, getApiUser, deleteApiUser } from '../../actions/AccountActions';
+import { updateToken, logout } from '../../actions/AuthActions';
 import { fetchTeamList, selectSubjectWithTeams } from '../../actions/StudentActions';
 import { setAccessToken } from '../../actions/MainActions';
 import Loader from 'react-loader';
 import { getAccessToken } from '../../GlobalMethods';
+import { URLS } from '../../GlobalVars';
 import { clientJSO, LIST_LOGIN } from '../../GlobalVars';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { setAccessTokenPersistent } from '../../GlobalMethods';
+import { ProfileSectionTop } from '../../components/ProfileSection';
+import { BasicModal } from '../../components/BasicModal/BasicModal';
+import { AppInfo } from '../../components/AppInfo/AppInfo';
 import './start.css';
 
 
 const SelectSubject = (props) => {
+
+    const [deleteModal, setDeleteModal] = useState(false);
 
     useEffect(() => {
 
@@ -92,8 +98,8 @@ const SelectSubject = (props) => {
 
         if (props.api_user) {
             return (
-                <VerticalContainer style={{ width: '100%' }}>
-                    <h2>Select subject</h2>
+                <VerticalContainer style={{ width: '100%', maxWidth: '500px' }}>
+                    <Text bold size='22px' style={{ marginTop: '15px', marginBottom: '5px' }}>Select subject</Text>
                     <SubjectList />
                 </VerticalContainer>
             );
@@ -107,8 +113,37 @@ const SelectSubject = (props) => {
             {props.api_user && props.api_user.error && (
                 <Text style={{ marginTop: '20px' }} error>{props.api_user.error}</Text>
             )}
+            {props.api_user && (
+                <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                    <ProfileSectionTop api_user={props.api_user} logOut={props.logout}/>
+                </Box>
+            )}  
+            <Line style={{ width: '100%', marginTop: '10px' }} />
             <BottomSection />
             <PrivacyModal />
+            <BasicModal
+                modalOpen={deleteModal} 
+                setModalOpen={() => setDeleteModal(!deleteModal)} 
+                buttonText={'Delete user'}
+                text={'Do you want to delete your user? (This is irreversible)'}
+                onActionClick={() => {
+                    props.deleteApiUser(props.access_token);
+                    props.logout();
+                }}
+                warning 
+            />
+            <Box style={{ width: '100%' }}>
+                <Line style={{ width: '100%', marginTop: '20px', marginBottom: '20px' }} />
+                <AppInfo />
+                <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                    <Button 
+                        style={{ marginTop: '20px', marginLeft: '15px' }} 
+                        warning
+                        onClick={() => setDeleteModal(true)}
+                    >Delete user
+                    </Button>
+                </Box>
+            </Box>
         </Box>
     )
 } 
@@ -139,5 +174,7 @@ export default connect(mapStateToProps, {
     setAccessToken,
     getApiUser,
     updateToken,
-    selectSubjectWithTeams
+    selectSubjectWithTeams,
+    logout,
+    deleteApiUser
 })(SelectSubject)

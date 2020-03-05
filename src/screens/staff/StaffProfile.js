@@ -12,6 +12,7 @@ import { getAccessToken } from '../../GlobalMethods';
 import { clientJSO } from '../../GlobalVars';
 import { BasicModal } from '../../components/BasicModal/BasicModal';
 import { Redirect } from 'react-router';
+import { AppInfo } from '../../components/AppInfo/AppInfo';
  
 const StaffProfile = (props) => {
 
@@ -43,18 +44,18 @@ const StaffProfile = (props) => {
         }
         if (props.api_user && props.subject) {
             return (
-                <div>
+                <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
                     <ProfileSectionTop 
                     api_user={props.api_user} 
                     logOut={() => logOut()}
                     instructor
                     />
-                    <Line style={{ marginTop: '10px', marginBottom: '10px' }}/>
+                    <Line style={{ marginTop: '10px', marginBottom: '10px', width: '100%' }}/>
                     <ProfileSectionBottom 
                         subject={props.subject}  
                         onChangeSubject={() => console.log('PRint subj')} 
                     />
-                </div>
+                </VerticalContainer>
             );
         }
         return <div />
@@ -63,48 +64,39 @@ const StaffProfile = (props) => {
 
     if (props.api_user && props.subject) {
         return (
-            <div>
-                {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
-                    <Redirect to='/student/profile/'/>
-                )}
+            <VerticalContainer>
                 <NavBar />
-                <Profile />
-               
-                <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
-                    <Button 
-                        style={{ margin: '15px' }} 
-                        warning
-                        onClick={() => setDeleteModal(true)}>
-                            Delete user
-                    </Button>
-                    <Line style={{ width: '100%', marginBottom: '10px' }} />
-                    <Text size='16px' style={{ marginLeft: '15px', marginBottom: '10px' }}>
-                            For more information about the application, bugs discovered or GDPR requests, please contact: 
-                    </Text>
-                    <Row>
-                        <Text style={{ marginLeft: '15px' }}>Developer: </Text>
-                        <Text bold style={{ marginLeft: '5px' }}>augustle.lund@gmail.com</Text>
-                    </Row>
-                    <Text bold style={{ marginLeft: '15px' }}>OR: </Text>
-                    <Row>
-                        <Text style={{ marginLeft: '15px' }}>Project supervisor: </Text>
-                        <Text bold style={{ marginLeft: '5px' }}>stoica@ntnu.no</Text>
-                    </Row>
+                <VerticalContainer style={{ maxWidth: '500px' }}>
+                    {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
+                        <Redirect to='/student/profile/'/>
+                    )}
+                    
+                    <Profile />
+                
+                    <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
+                        <Button 
+                            style={{ margin: '15px' }} 
+                            warning
+                            onClick={() => setDeleteModal(true)}>
+                                Delete user
+                        </Button>
+                        <Line style={{ width: '100%', marginBottom: '10px' }} />
+                        <AppInfo />
+                    </VerticalContainer>
+                    <BasicModal
+                        modalOpen={deleteModal} 
+                        setModalOpen={() => setDeleteModal(!deleteModal)} 
+                        buttonText={'Delete user'}
+                        text={'Do you want to delete your user? (This is irreversible)'}
+                        onActionClick={() => {
+                            props.deleteApiUser(props.access_token);
+                            props.logout();
+                        }}
+                        warning 
+                    />
+                    <TabBarStaff history={props.history}/>
                 </VerticalContainer>
-                <BasicModal
-                    modalOpen={deleteModal} 
-                    setModalOpen={() => setDeleteModal(!deleteModal)} 
-                    buttonText={'Delete user'}
-                    text={'Do you want to delete your user? (This is irreversible)'}
-                    onActionClick={() => {
-                        props.deleteApiUser(props.access_token);
-                        props.logout();
-                    }}
-                    warning 
-                />
-        
-                <TabBarStaff history={props.history}/>
-            </div>
+            </VerticalContainer>
         );
     }
     return <div />

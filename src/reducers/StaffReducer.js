@@ -8,12 +8,17 @@ import {
     TEAM_UPLOAD_SUCCESS,
     ADMIN_ACTION_LOADING,
     SET_STAFF_FIELD,
-    GET_AUTH
+    GET_AUTH,
+    PIN_TEAM,
+    STAFF_ACTION_LOADING
 } from '../actions/types';
+
+import { boolSort } from '../GlobalMethods';
 
 const INITIAL_STATE = {
     staff_subjects: null,
     loading_fetch: false,
+    loading_action: false,
     total_average: null,
     number_teams_below: null,
     responsible_teams: null,
@@ -95,6 +100,35 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 authorized_staff: action.payload,
                 loading_fetch: false
+            }
+
+        case PIN_TEAM:
+
+            const team = action.payload
+            let team_list = null;
+            function pinSort(a, b) {
+                return boolSort(b.pinned, a.pinned);
+            }
+            if (state.staff_team_list) {
+                const foundindex = state.staff_team_list.findIndex(team_old => team_old.pk === team.pk)
+                state.staff_team_list[foundindex] = team;
+                const team_list_copy = [].concat(state.staff_team_list);
+                team_list_copy[foundindex] = team
+                team_list = team_list_copy.sort(pinSort);
+            }
+            
+            return {
+                ...state,
+                loading_action: false,
+                staff_team_list: team_list,
+                modal_team: team
+            }
+        
+        case STAFF_ACTION_LOADING:
+
+            return {
+                ...state,
+                loading_action: true
             }
 
         default:

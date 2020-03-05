@@ -142,10 +142,11 @@ export const updateToken = (token, with_subjects=false) => {
 
 
 export const logout = () => {
+    
     clientJSO.wipeTokens();
     localStorage.clear();
     return {
         type: LOGOUT,
-        payload: null
+        payload: true
     }
 }

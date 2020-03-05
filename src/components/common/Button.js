@@ -14,7 +14,7 @@ const Button = (props) => {
 
         buttonStyle = {
             ...props.style,
-            backgroundColor: 'red'
+            backgroundColor: '#ff8d8d'
         }
     }
     const renderImage = () => {

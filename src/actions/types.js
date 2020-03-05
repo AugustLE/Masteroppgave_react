@@ -41,6 +41,8 @@ export const GET_TEAM_INFO = 'GET_TEAM_INFO';
 export const MODAL_LOADER = 'MODAL_LOADER';
 export const SET_STAFF_FIELD = 'SET_STAFF_FIELD';
 export const GET_AUTH = 'GET_AUTH';
+export const STAFF_ACTION_LOADING = 'STAFF_ACTION_LOADING';
+export const PIN_TEAM = 'PIN_TEAM';
 
 // ADMIN ACTIONS // 
 export const ADMIN_ACTION_LOADING = 'ADMIN_ACTION_LOADING';

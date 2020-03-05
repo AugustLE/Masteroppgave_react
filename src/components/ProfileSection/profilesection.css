@@ -21,3 +21,7 @@
     margin-left: 15px;
     margin-bottom: 5px;
 }
+
+.logoutLink {
+    text-decoration: none;
+}

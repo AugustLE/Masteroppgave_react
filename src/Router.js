@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Login from './screens/start/Login';
 import SelectSubject from './screens/start/SelectSubject';
 import TeamStatus from './screens/student/TeamStatus';

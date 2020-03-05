@@ -13,6 +13,8 @@ import { ProfileSectionTop, ProfileSectionBottom } from '../../components/Profil
 import { BasicModal } from '../../components/BasicModal/BasicModal';
 import { Redirect } from 'react-router-dom';
 import { clientJSO } from '../../GlobalVars';
+import { AppInfo } from '../../components/AppInfo/AppInfo';
+
 
 const Profile = (props) => {
 
@@ -37,7 +39,7 @@ const Profile = (props) => {
     }, []);
 
     const logOut = () => {
-        props.logout();
+        props.logout(props.access_token);
         props.history.push('/');
     }
 
@@ -83,18 +85,7 @@ const Profile = (props) => {
                     >Delete user
                     </Button>
                     <Line style={{ width: '100%', marginBottom: '10px' }} />
-                    <Text size='16px' style={{ marginLeft: '15px', marginBottom: '10px' }}>
-                        For more information about the application, bugs discovered or GDPR requests, please contact: 
-                    </Text>
-                    <Row>
-                        <Text style={{ marginLeft: '15px' }}>Developer: </Text>
-                        <Text bold style={{ marginLeft: '5px' }}>augustle.lund@gmail.com</Text>
-                    </Row>
-                    <Text bold style={{ marginLeft: '15px' }}>OR: </Text>
-                    <Row>
-                        <Text style={{ marginLeft: '15px' }}>Project supervisor: </Text>
-                        <Text bold style={{ marginLeft: '5px' }}>stoica@ntnu.no</Text>
-                    </Row>
+                    <AppInfo />
                     
                 </VerticalContainer>
             )}

@@ -16,6 +16,16 @@ export function baseSort(a, b) {
     return comparison;
 }
 
+export function boolSort(a, b) {
+    let comparison = 0;
+    if (a && !b) {
+        comparison = 1;
+    } else if (!a && b) {
+        comparison = -1;
+    }
+    return comparison;
+}
+
 export function formatDateTime(dateTime) {
     if (!dateTime) {
       return '';

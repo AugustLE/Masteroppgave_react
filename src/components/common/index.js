@@ -8,3 +8,4 @@ export * from './Text';
 export * from './Input';
 export * from './Image';
 export * from './Form';
+export * from './TouchableOpacity';

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { VerticalContainer } from '../common';
 import { ListRow } from './ListRow';
 import { ListHeader } from './ListHeader';
-import { baseSort } from '../../GlobalMethods';
+import { baseSort, boolSort } from '../../GlobalMethods';
 import './teamlist.css';
 
 
 export const TeamList = (props) => {
 
-    const [statusSortVal, setStatusSort] = useState(null);
+    const [statusSortVal, setStatusSort] = useState(1);
     const [nameSortVal, setNameSort] = useState(null);
     const [respSortVal, setRespSort] = useState(null);
 
@@ -61,6 +61,10 @@ export const TeamList = (props) => {
         }
     }
 
+    function pinSort(a, b) {
+        return boolSort(b.pinned, a.pinned);
+    }
+
     const getSortedList = (sortVal, sortFunction, sortFunctionRev) => {
         let teams = [].concat(props.teams);
         if (sortVal === 1) {
@@ -68,6 +72,7 @@ export const TeamList = (props) => {
         } if (sortVal === 2) {
             teams = teams.sort(sortFunctionRev);
         }
+        teams = teams.sort(pinSort);
         return teams;
     }
 

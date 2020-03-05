@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import Modal from 'react-modal';
-import { VerticalContainer, Text, Row, Box, Button, Line, Input } from '../../components/common';
+import { VerticalContainer, Text, Row, Box, Button, Line, Input, Form } from '../../components/common';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { getTeamList, getTeamInfo } from '../../actions/StaffActions';
+import { getTeamList, getTeamInfo, pinTeam, unpinTeam } from '../../actions/StaffActions';
 import { getApiUser } from '../../actions/AccountActions';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { getAccessToken } from '../../GlobalMethods';
@@ -24,7 +24,8 @@ const modalStyles = {
       transform             : 'translate(-50%, -50%)',
       width: '80%',
       border: 'none',
-      boxShadow: '1px 1px 2px 2px #d5d5d5'
+      boxShadow: '1px 1px 2px 2px #d5d5d5',
+      maxWidth: '500px'
 
     }
   };
@@ -62,14 +63,13 @@ const TeamView = (props) => {
     const searchList = () => {
         if (props.staff_team_list && searchValue !== '') {
             let team_list = [].concat(props.staff_team_list);
-            try {
-                const searched_list = team_list.filter(
-                    team => team.name.toLowerCase().includes(searchValue.toLowerCase())
-                    || team.responsible.toLowerCase().includes(searchValue.toLowerCase())
-                );
-                return searched_list;
-            } catch {}
-            return [];
+        
+            const searched_list = team_list.filter(
+                team => team.name && team.responsible && (team.name.toLowerCase().includes(searchValue.toLowerCase())
+                || team.responsible.toLowerCase().includes(searchValue.toLowerCase()))
+            );
+            return searched_list;
+    
         }
         return props.staff_team_list;
     }
@@ -113,12 +113,12 @@ const TeamView = (props) => {
             )}
              
             {(!props.loading_fetch && props.staff_team_list) ?  (
-                <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                <Box style={{ width: '100%' }}>
                     <Input 
                         placeholder="Search" 
                         onChangeValue={e => setSearchValue(e.target.value)} 
                         value={searchValue}
-                        style={{ width: '90%', marginLeft: '10px' }}
+                        style={{ width: '90%' }}
                     />
                     <TeamList 
                         onClick={(team_id) => onTeamClick(team_id)} 
@@ -133,7 +133,8 @@ const TeamView = (props) => {
                 style={modalStyles}
                 ariaHideApp={false}
                 >
-                {(!props.modal_loading && props.modal_team) ? (
+
+                {(!props.modal_loading && props.modal_team && !props.loading_action) ? (
                     <VerticalContainer>
                         <Text bold size='20px'>{props.modal_team.name}</Text>
                         <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
@@ -150,9 +151,37 @@ const TeamView = (props) => {
                     <Loader />
                 )}
                 <VerticalContainer>
-                    <Button style={{ marginTop: '25px' }} secondary onClick={() => setModalOpen(false)}>
-                        Close
-                    </Button>
+                    <Row style={{ marginTop: '25px' }}>
+                        {(props.modal_team && !props.modal_team.pinned && !props.loading_action) && (
+                            <Form onSubmit={() => props.pinTeam(props.access_token, props.modal_team.pk)}>
+                                {props.modal_team.responsible === props.api_user.name ? (
+                                    <div />
+                                ): (
+                                    <Button 
+                                        secondary 
+                                        image={require('../../images/student/pin.png')}
+                                        style={{ fontSize: '14px' }}>
+                                        Pin
+                                    </Button>
+                                )}
+                            </Form>
+                        )}
+                        {(props.modal_team && props.modal_team.pinned && !props.loading_action) && (
+                            <Form onSubmit={() => props.unpinTeam(props.access_token, props.modal_team.pk)}>
+                                <Button 
+                                    secondary 
+                                    image={require('../../images/cross.png')}
+                                    style={{ fontSize: '14px' }}>
+                                    Unpin
+                                </Button>
+                            </Form>
+                        )}
+                        <Button 
+                            style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
+                            onClick={() => setModalOpen(false)}>
+                            Close
+                        </Button>
+                    </Row>
                 </VerticalContainer>
                 
             </Modal>
@@ -170,7 +199,8 @@ const mapStateToProps = (state) => {
         modal_responsible, 
         modal_team_members,
         modal_team,
-        modal_loading
+        modal_loading,
+        loading_action
     } = state.staff;
 
     const { api_user } = state.account;
@@ -184,7 +214,8 @@ const mapStateToProps = (state) => {
         modal_team_members, 
         modal_team,
         modal_loading,
-        api_user
+        api_user,
+        loading_action
     };
 }
 
@@ -193,7 +224,9 @@ const mapDispatchToProps = {
     setAccessToken,
     setActiveTab,
     getTeamInfo,
-    getApiUser
+    getApiUser,
+    pinTeam,
+    unpinTeam
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamView);
