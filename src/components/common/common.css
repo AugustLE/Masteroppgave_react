@@ -12,7 +12,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 4px 0 rgba(247, 247, 247, 0.2), 0 2px 4px 3px rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 2px 0 rgba(247, 247, 247, 0.2), 0 2px 3px 2px rgba(0, 0, 0, 0.19);
+    position: relative;
 }
 
 .rowContainer {
@@ -125,4 +126,7 @@
 .touchableOpacity {
     border: none;
     text-decoration: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }

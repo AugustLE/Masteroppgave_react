@@ -10,7 +10,7 @@ import {
     SET_STAFF_FIELD,
     GET_AUTH,
     PIN_TEAM,
-    STAFF_ACTION_LOADING
+    STAFF_ACTION_LOADING,
 } from '../actions/types';
 
 import { boolSort } from '../GlobalMethods';
@@ -31,7 +31,8 @@ const INITIAL_STATE = {
     modal_loading: false,
     team_upload_success: false,
     admin_loading: false,
-    authorized_staff: null
+    authorized_staff: null,
+    teams_below: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -48,6 +49,7 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,  
                 total_average: action.payload.total_average,
                 number_teams_below: action.payload.number_teams_below,
+                teams_below: action.payload.teams_below,
                 responsible_teams: action.payload.responsible_teams,
                 subject: action.payload.subject,
                 number_of_teams: action.payload.number_of_teams,
@@ -104,7 +106,7 @@ export default (state = INITIAL_STATE, action) => {
 
         case PIN_TEAM:
 
-            const team = action.payload
+            const team = action.payload.team
             let team_list = null;
             function pinSort(a, b) {
                 return boolSort(b.pinned, a.pinned);
@@ -121,7 +123,8 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 loading_action: false,
                 staff_team_list: team_list,
-                modal_team: team
+                modal_team: team,
+                teams_below: action.payload.teams_below
             }
         
         case STAFF_ACTION_LOADING:
@@ -130,7 +133,7 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 loading_action: true
             }
-
+        
         default:
             return state;
     }

@@ -8,7 +8,7 @@ import './teamlist.css';
 
 export const TeamList = (props) => {
 
-    const [statusSortVal, setStatusSort] = useState(1);
+    const [statusSortVal, setStatusSort] = useState(props.sortVal);
     const [nameSortVal, setNameSort] = useState(null);
     const [respSortVal, setRespSort] = useState(null);
 
@@ -84,12 +84,11 @@ export const TeamList = (props) => {
             teams = getSortedList(nameSortVal, nameSort, nameSortReverse);
         if (respSortVal > 0)
             teams = getSortedList(respSortVal, respSort, respSortReverse);
-            
         const team_list = teams.map((team) => (
             <ListRow onClick={() => props.onClick(team.pk)} key={team.pk} team={team} />
         ));
         return (
-            <div className='listContainer'>
+            <div className='listContainer' style={props.style}>
                 <ListHeader 
                     statusSortVal={statusSortVal}
                     respSortVal={respSortVal}

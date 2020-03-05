@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import Modal from 'react-modal';
-import { VerticalContainer, Text, Row, Box, Button, Line, Input, Form } from '../../components/common';
+import { VerticalContainer, Text, Box, Input } from '../../components/common';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { getTeamList, getTeamInfo, pinTeam, unpinTeam } from '../../actions/StaffActions';
@@ -10,25 +9,10 @@ import { getApiUser } from '../../actions/AccountActions';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { getAccessToken } from '../../GlobalMethods';
 import { TeamList } from '../../components/TeamList/TeamList';
-import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import { TeamModal } from '../..//components/TeamModal/TeamModal';
 import { clientJSO } from '../../GlobalVars';
 import { Redirect } from 'react-router';
 
-const modalStyles = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)',
-      width: '80%',
-      border: 'none',
-      boxShadow: '1px 1px 2px 2px #d5d5d5',
-      maxWidth: '500px'
-
-    }
-  };
  
 const TeamView = (props) => {
 
@@ -74,34 +58,7 @@ const TeamView = (props) => {
         return props.staff_team_list;
     }
 
-    const TeamMemberList = () => {
-        const list = props.modal_team_members.map((member) => (
-            <Row style={{ width: '100%', marginTop: '5px' }} key={member.name}>
-                <Text style={{ flex: 3 }}>{member.name}</Text>
-                {member.average_score ? (
-                    <Row style={{ flex: 1 }}>
-                        <Text bold style={{ flex: 1 }}>{member.average_score}</Text>
-                        <Box style={{ flex: 1, marginLeft: '5px' }}>
-                            <ProgressBar score={member.average_score} />
-                        </Box>
-                    </Row>
-                ): (
-                    <Text size='12px' bold style={{ flex: 1 }}>No scores</Text>
-                )}
-                
-            </Row>
-        ));
 
-        return (
-            <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
-                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members</Text>
-                {list}
-                <Line style={{ width: '100%', marginTop: '10px' }} />
-                <Text style={{ marginTop: '10px', marginBottom: '5px' }} size='16px' bold>Responsible for this team</Text>
-                <Text>{props.modal_responsible}</Text>
-            </VerticalContainer>
-        );
-    }
     return (
         <VerticalContainer>
             {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
@@ -123,68 +80,25 @@ const TeamView = (props) => {
                     <TeamList 
                         onClick={(team_id) => onTeamClick(team_id)} 
                         teams={searchList()} 
+                        sortVal={1}
                     />
                 </Box>
             ): (
                 <Loader />
             )}
-            <Modal 
-                isOpen={modalOpen}
-                style={modalStyles}
-                ariaHideApp={false}
-                >
-
-                {(!props.modal_loading && props.modal_team && !props.loading_action) ? (
-                    <VerticalContainer>
-                        <Text bold size='20px'>{props.modal_team.name}</Text>
-                        <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
-                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
-                            <Row style={{ jusifyContent: 'flex-start' }}>
-                                <Text style={{ marginRight: '5px' }} bold>{props.modal_team.last_average_score}</Text>
-                                <ProgressBar score={props.modal_team.last_average_score} />
-                            </Row>
-                        </VerticalContainer>
-                        <Line style={{ width: '90%', marginTop: '10px' }} />
-                        <TeamMemberList />
-                    </VerticalContainer>
-                ): (
-                    <Loader />
-                )}
-                <VerticalContainer>
-                    <Row style={{ marginTop: '25px' }}>
-                        {(props.modal_team && !props.modal_team.pinned && !props.loading_action) && (
-                            <Form onSubmit={() => props.pinTeam(props.access_token, props.modal_team.pk)}>
-                                {props.modal_team.responsible === props.api_user.name ? (
-                                    <div />
-                                ): (
-                                    <Button 
-                                        secondary 
-                                        image={require('../../images/student/pin.png')}
-                                        style={{ fontSize: '14px' }}>
-                                        Pin
-                                    </Button>
-                                )}
-                            </Form>
-                        )}
-                        {(props.modal_team && props.modal_team.pinned && !props.loading_action) && (
-                            <Form onSubmit={() => props.unpinTeam(props.access_token, props.modal_team.pk)}>
-                                <Button 
-                                    secondary 
-                                    image={require('../../images/cross.png')}
-                                    style={{ fontSize: '14px' }}>
-                                    Unpin
-                                </Button>
-                            </Form>
-                        )}
-                        <Button 
-                            style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
-                            onClick={() => setModalOpen(false)}>
-                            Close
-                        </Button>
-                    </Row>
-                </VerticalContainer>
-                
-            </Modal>
+            <TeamModal 
+                modal_team_members={props.modal_team_members}
+                modal_responsible={props.modal_responsible}
+                modalOpen={modalOpen}
+                setModalOpen={setModalOpen}
+                modal_loading={props.modal_loading}
+                modal_team={props.modal_team}
+                loading_action={props.loading_action}
+                pinTeam={props.pinTeam}
+                unpinTeam={props.unpinTeam}
+                access_token={props.access_token}
+                api_user={props.api_user}            
+            />
             <TabBarStaff history={props.history}/>
         </VerticalContainer>
     );

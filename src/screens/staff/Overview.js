@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import { VerticalContainer, Box, Text, Row, Button, TouchableOpacity } from '../../components/common';
-import { getOverviewStatistics } from '../../actions/StaffActions';
+import { VerticalContainer, Box, Text, Row, Button, Image } from '../../components/common';
+import { getOverviewStatistics, getTeamInfo, pinTeam, unpinTeam } from '../../actions/StaffActions';
 import { getApiUser } from '../../actions/AccountActions';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
@@ -10,10 +10,16 @@ import { getAccessToken } from '../../GlobalMethods';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
+import { TeamList } from '../../components/TeamList/TeamList';
+import { TeamModal } from '../../components/TeamModal/TeamModal';
 import { clientJSO } from '../../GlobalVars';
  
 
 const OverView = (props) => {
+
+    const [teamsBelow, setTeamsBelow] = useState(false);
+    const [teamsResponsible, setTeamsResponsible] = useState(false);
+    const [teamModal, setTeamModal] = useState(false);
 
     useEffect(() => {
         ////
@@ -32,6 +38,11 @@ const OverView = (props) => {
             props.setActiveTab(0);
         }
     }, [])
+
+    const onTeamClick = (team_id) => {
+        setTeamModal(true);
+        props.getTeamInfo(props.access_token, team_id);
+    }
 
     const ResponsibleList = () => {
         if (props.responsible_teams) {
@@ -65,20 +76,49 @@ const OverView = (props) => {
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Total number of teams</Text>
                         <Text bold size='20px'>{props.number_of_teams}</Text>
                     </Box>
-                    
+                    {console.log(props.teams_below)}
                     <Box 
                         shadow 
-                        style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}
-                        onClick={() => console.log('hej')}
-                        >
-                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Number of teams below score 2.5</Text>
+                        clickable
+                        style={{ padding: '10px', paddingBottom: '15px', marginTop: '10px', width: '92%' }}
+                        onClick={() => setTeamsBelow(!teamsBelow)}>
+                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams below score 2.5</Text>
                         <Text bold size='20px'>{props.number_teams_below}</Text>
                     </Box>
+                    
+                    {teamsBelow && (
+                        <Box style={{ width: '100%' }}>
+                            <Image 
+                                style={{ width: '20px', marginTop: '20px', opacity: 0.5 }} 
+                                src={require('../../images/arrow_down.png')} />
+                            <TeamList 
+                                onClick={(team_id) => onTeamClick(team_id)} 
+                                teams={props.teams_below}
+                                style={{ marginBottom: '15px', marginTop: '10px' }} 
+                            />
+                        </Box>  
+                    )}
              
-                    <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}>
+                    <Box 
+                        shadow 
+                        clickable
+                        style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px' }}
+                        onClick={() => setTeamsResponsible(!teamsResponsible)}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams you are responsible for</Text>
                         <ResponsibleList />
                     </Box>
+                    {teamsResponsible && (
+                        <Box style={{ width: '100%' }}>
+                            <Image 
+                                style={{ width: '20px', marginTop: '20px', opacity: 0.5 }} 
+                                src={require('../../images/arrow_down.png')} />
+                            <TeamList 
+                                onClick={(team_id) => onTeamClick(team_id)} 
+                                teams={props.responsible_teams}
+                                style={{ marginBottom: '15px', marginTop: '10px' }} 
+                            />
+                        </Box>
+                    )}
                 </VerticalContainer>
             );
         }
@@ -100,6 +140,19 @@ const OverView = (props) => {
             {props.api_user && (
                 <PermissionCheck api_user={props.api_user} history={props.history}/>
             )}
+            <TeamModal 
+                modal_team_members={props.modal_team_members}
+                modal_responsible={props.modal_responsible}
+                modalOpen={teamModal}
+                setModalOpen={setTeamModal}
+                modal_loading={props.modal_loading}
+                modal_team={props.modal_team}
+                loading_action={props.loading_action}
+                pinTeam={props.pinTeam}
+                unpinTeam={props.unpinTeam}
+                access_token={props.access_token}
+                api_user={props.api_user}            
+            />
         </VerticalContainer>
     );
 }
@@ -112,7 +165,13 @@ const mapStateToProps = (state) => {
         number_teams_below, 
         responsible_teams, 
         loading_fetch, subject, 
-        number_of_teams 
+        number_of_teams,
+        teams_below,
+        modal_responsible, 
+        modal_team_members,
+        modal_team,
+        modal_loading,
+        loading_action 
     } = state.staff;
     return { 
         access_token, 
@@ -122,7 +181,13 @@ const mapStateToProps = (state) => {
         subject, 
         loading_fetch, 
         number_of_teams,
-        api_user 
+        api_user,
+        teams_below,
+        modal_responsible, 
+        modal_team_members,
+        modal_team,
+        modal_loading,
+        loading_action
     };
 }
 
@@ -131,5 +196,8 @@ export default connect(mapStateToProps,
         getOverviewStatistics, 
         setAccessToken, 
         setActiveTab,
-        getApiUser 
+        getApiUser,
+        getTeamInfo,
+        pinTeam, 
+        unpinTeam 
     })(OverView);
