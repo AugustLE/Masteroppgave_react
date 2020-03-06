@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 
 export const PermissionCheck = (props) => {
 
+    
     useEffect(() => {
-        if (props.api_user.role === null) {
+        console.log('CHECK');
+        if (props.api_user.role === null || props.api_user.selected_subject_id === null) {
             props.history.push('/selectsubject');
+            console.log('FITTE');
         }
         if (props.student && props.api_user && props.api_user.role === 'SD') {
             props.history.push('/');

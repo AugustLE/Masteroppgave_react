@@ -3,23 +3,25 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { setActiveTab, setAccessToken } from '../../actions/MainActions';
 import { logout } from '../../actions/AuthActions';
-import { getApiUser, deleteApiUser } from '../../actions/AccountActions';
+import { getApiUser, deleteApiUser, unselectSubject } from '../../actions/AccountActions';
 import { unregisterFromTeam } from '../../actions/StudentActions';
 import { getAccessToken } from '../../GlobalMethods';
 import TabBarStudent from '../../components/TabBarStudent/TabBarStudent';
 import { NavBar } from '../../components/NavBar/NavBar';
-import { Line, Button, VerticalContainer, Text, Row } from '../../components/common';
+import { Line, Button, VerticalContainer } from '../../components/common';
 import { ProfileSectionTop, ProfileSectionBottom } from '../../components/ProfileSection';
 import { BasicModal } from '../../components/BasicModal/BasicModal';
 import { Redirect } from 'react-router-dom';
 import { clientJSO } from '../../GlobalVars';
 import { AppInfo } from '../../components/AppInfo/AppInfo';
+import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
 
 
 const Profile = (props) => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [changeCourseModal, setChangeCourseModal] = useState(false);
 
     useEffect(() => {
         clientJSO.getToken();
@@ -49,71 +51,91 @@ const Profile = (props) => {
         props.history.push('/selectteam/');
     }
     
+    if (props.api_user && props.api_user.selected_subject_id === null) {
+        props.history.push('/selectsubject/');
+    }
 
     return (
-        <div>
-            {(props.api_user && (props.api_user.role === 'TA' || props.api_user.role === 'IN')) && (
-                <Redirect to='/staff/profile/'/>
-            )}
-            {(props.api_user && props.team === null) && (
-                <Redirect to={'/selectteam/'}/>
-            )}
-            <NavBar />
-            {(!props.account_loading && props.api_user) ? (
-                <ProfileSectionTop api_user={props.api_user} logOut={() => logOut()}/>
-            ): (
-                <Loader />
-            )}
-            <Line style={{ marginTop: '10px', marginBottom: '10px' }}/>
-            {(!props.loading_fetch && props.team && props.subject) ? (
-                <ProfileSectionBottom 
-                    subject={props.subject} 
-                    team={props.team} 
-                    student 
-                    onChangeSubject={() => console.log('PRint subj')} 
-                    onChangeTeam={() => setModalOpen(true)}
-                />
-            ): (
-                <Loader />
-            )}
+        <VerticalContainer style={{ alignItems: 'center', marginBottom: '100px' }}>
             {props.api_user && (
-                <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
-                    <Button 
-                        style={{ margin: '15px' }} 
-                        warning
-                        onClick={() => setDeleteModal(true)}
-                    >Delete user
-                    </Button>
-                    <Line style={{ width: '100%', marginBottom: '10px' }} />
-                    <AppInfo />
-                    
-                </VerticalContainer>
+                <PermissionCheck data_check api_user={props.api_user} history={props.history}/>
             )}
-            <BasicModal
-                modalOpen={deleteModal} 
-                setModalOpen={() => setDeleteModal(!deleteModal)} 
-                buttonText={'Delete user'}
-                title={'Delete user'}
-                text={'Do you want to delete your user? (This is irreversible)'}
-                onActionClick={() => {
-                    props.deleteApiUser(props.access_token);
-                    props.logout();
-                }}
-                warning 
-            />
-             <BasicModal 
-                modalOpen={modalOpen} 
-                setModalOpen={() => setModalOpen(!modalOpen)} 
-                buttonText={'Unregister'}
-                text={'Do you want to un-register from this team?'}
-                onActionClick={() => unregisterFromTeam()}
-                team={props.team}
-            />
-            <TabBarStudent history={props.history} />
-            {props.user_deleted && (
-                <Redirect to="/"></Redirect>
-            )}
-        </div>
+            <VerticalContainer style={{ maxWidth: '500px', width: '100%' }}>
+                {(props.api_user && (props.api_user.role === 'TA' || props.api_user.role === 'IN')) && (
+                    <Redirect to='/staff/profile/'/>
+                )}
+                {(props.api_user && props.team === null) && (
+                    <Redirect to={'/selectteam/'}/>
+                )}
+                <NavBar />
+                {(!props.account_loading && props.api_user) ? (
+                    <ProfileSectionTop api_user={props.api_user} logOut={() => logOut()}/>
+                ): (
+                    <Loader />
+                )}
+                <Line style={{ marginTop: '10px', marginBottom: '10px' }}/>
+                {(!props.loading_fetch && props.team && props.subject) ? (
+                    <ProfileSectionBottom 
+                        subject={props.subject} 
+                        team={props.team} 
+                        student 
+                        onChangeSubject={() => setChangeCourseModal(true)} 
+                        onChangeTeam={() => setModalOpen(true)}
+                    />
+                ): (
+                    <Loader />
+                )}
+                {props.api_user && (
+                    <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
+                        <Button 
+                            style={{ margin: '15px' }} 
+                            warning
+                            onClick={() => setDeleteModal(true)}
+                        >Delete user
+                        </Button>
+                        <Line style={{ width: '100%', marginBottom: '10px' }} />
+                        <AppInfo />
+                        
+                    </VerticalContainer>
+                )}
+                <BasicModal
+                    modalOpen={deleteModal} 
+                    setModalOpen={() => setDeleteModal(!deleteModal)} 
+                    buttonText={'Delete user'}
+                    title={'Delete user'}
+                    text={'Do you want to delete your user? (This is irreversible)'}
+                    onActionClick={() => {
+                        props.deleteApiUser(props.access_token);
+                        props.logout();
+                        props.history.push('/logout');
+                    }}
+                    warning 
+                />
+                <BasicModal 
+                    modalOpen={modalOpen} 
+                    setModalOpen={() => setModalOpen(!modalOpen)} 
+                    buttonText={'Unregister'}
+                    text={'Do you want to un-register from this team?'}
+                    onActionClick={() => unregisterFromTeam()}
+                    team={props.team}
+                />
+                <BasicModal
+                    modalOpen={changeCourseModal}
+                    setModalOpen={() => setChangeCourseModal(!changeCourseModal)}
+                    buttonText='Change course'
+                    title={'Change course'}
+                    text={'Sure you want to change to another course?'}
+                    onActionClick={(() => {
+                        props.unselectSubject(props.access_token);
+                    })} 
+                    loading={props.account_loading}
+                />
+                <TabBarStudent history={props.history} />
+                {props.user_deleted && (
+                    <Redirect to="/"></Redirect>
+                )}
+            </VerticalContainer>
+        </VerticalContainer>
     );
 }
 
@@ -130,5 +152,6 @@ export default connect(mapStateToProps, {
     getApiUser, 
     unregisterFromTeam,
     setAccessToken,
-    deleteApiUser 
+    deleteApiUser,
+    unselectSubject 
 })(Profile);

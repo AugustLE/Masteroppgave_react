@@ -73,7 +73,7 @@ const StaffProfile = (props) => {
                     <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
                 )}
                 <NavBar />
-                <VerticalContainer style={{ maxWidth: '500px' }}>
+                <VerticalContainer style={{ maxWidth: '500px', marginBottom: '100px' }}>
                     {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
                         <Redirect to='/student/profile/'/>
                     )}
@@ -99,6 +99,7 @@ const StaffProfile = (props) => {
                         onActionClick={() => {
                             props.deleteApiUser(props.access_token);
                             props.logout();
+                            props.history.push('/logout');
                         }}
                         warning 
                         loading={props.account_loading}
@@ -115,7 +116,6 @@ const StaffProfile = (props) => {
                         loading={props.account_loading}
                     />
 
-                    
                     <TabBarStaff history={props.history}/>
                 </VerticalContainer>
             </VerticalContainer>

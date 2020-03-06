@@ -31,35 +31,40 @@ const Messages = (props) => {
         return <Loader />;
     }
     return (
-        <div>
-            <NavBar />
-            <VerticalContainer style={{ alignItems: 'flex-start', width: '90%', paddingLeft: '15px' }}>
-                <Text bold size='22px' style={{ marginTop: '15px', marginBottom: '15px' }}>Your team responsible</Text>
-                <Line style={{ width: '90%', marginBottom: '10px' }} />
-                {props.contact_info_responsible && (
-                    <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
-                        <Row>
-                            <Text size='16px' bold>Email: </Text>
-                            <Text size='16px'>{props.contact_info_responsible.email}</Text>
-                        </Row>
-                        <Row>
-                            <Text size='16px' bold>Name: </Text>
-                            <Text size='16px'>{props.contact_info_responsible.name}</Text>
-                        </Row>
-                        <Line style={{ width: '90%', marginTop: '10px' }} />
-                        
-                        <Button style={{ marginTop: '15px' }}>
-                            <a 
-                            href={"mailto:" + props.contact_info_responsible.email}
-                            style={{ color: 'white', textDecoration: 'none' }}>
-                                Send Email
-                            </a>
-                        </Button>
-                    </VerticalContainer>
-                )}
+        <VerticalContainer style={{ alignItems: 'center' }}>
+            <VerticalContainer style={{ 
+                maxWidth: '500px', 
+                width: '100%', 
+            }}>
+                <NavBar />
+                <VerticalContainer style={{ alignItems: 'flex-start', width: '90%', paddingLeft: '15px' }}>
+                    <Text bold size='22px' style={{ marginTop: '15px', marginBottom: '15px' }}>Your team responsible</Text>
+                    <Line style={{ width: '90%', marginBottom: '10px' }} />
+                    {props.contact_info_responsible && (
+                        <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
+                            <Row>
+                                <Text size='16px' bold>Email: </Text>
+                                <Text size='16px'>{props.contact_info_responsible.email}</Text>
+                            </Row>
+                            <Row>
+                                <Text size='16px' bold>Name: </Text>
+                                <Text size='16px'>{props.contact_info_responsible.name}</Text>
+                            </Row>
+                            <Line style={{ width: '90%', marginTop: '10px' }} />
+                            
+                            <Button style={{ marginTop: '15px' }}>
+                                <a 
+                                href={"mailto:" + props.contact_info_responsible.email}
+                                style={{ color: 'white', textDecoration: 'none' }}>
+                                    Send Email
+                                </a>
+                            </Button>
+                        </VerticalContainer>
+                    )}
+                </VerticalContainer>
+                <TabBarStudent history={props.history} />
             </VerticalContainer>
-            <TabBarStudent history={props.history} />
-        </div>
+        </VerticalContainer>
     );
 }
 

@@ -108,44 +108,49 @@ const SelectSubject = (props) => {
         return <div />
     }
     return (
-        <Box>
-            <TopbarLogin />
-            {props.api_user && props.api_user.error && (
-                <Text style={{ marginTop: '20px' }} error>{props.api_user.error}</Text>
-            )}
-            {props.api_user && (
-                <Box style={{ width: '100%', alignItems: 'flex-start' }}>
-                    <ProfileSectionTop api_user={props.api_user} logOut={props.logout}/>
-                </Box>
-            )}  
-            <Line style={{ width: '100%', marginTop: '10px' }} />
-            <BottomSection />
-            <PrivacyModal />
-            <BasicModal
-                modalOpen={deleteModal} 
-                setModalOpen={() => setDeleteModal(!deleteModal)} 
-                buttonText={'Delete user'}
-                title={'Delete user'}
-                text={'Do you want to delete your user? (This is irreversible)'}
-                onActionClick={() => {
-                    props.deleteApiUser(props.access_token);
-                    props.logout();
-                }}
-                warning 
-            />
-            <Box style={{ width: '100%' }}>
-                <Line style={{ width: '100%', marginTop: '20px', marginBottom: '20px' }} />
-                <AppInfo />
-                <Box style={{ width: '100%', alignItems: 'flex-start' }}>
-                    <Button 
-                        style={{ marginTop: '20px', marginLeft: '15px' }} 
-                        warning
-                        onClick={() => setDeleteModal(true)}
-                    >Delete user
-                    </Button>
-                </Box>
-            </Box>
-        </Box>
+        <VerticalContainer style={{ alignItems: 'center' }}>
+            <VerticalContainer style={{ maxWidth: '500px', width: '100%' }}>
+                <TopbarLogin />
+                {props.api_user && props.api_user.error && (
+                    <Text style={{ marginTop: '20px' }} error>{props.api_user.error}</Text>
+                )}
+                {props.api_user && (
+                    <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                        <ProfileSectionTop api_user={props.api_user} logOut={props.logout}/>
+                    </Box>
+                )}  
+                <Line style={{ width: '100%', marginTop: '10px' }} />
+                <BottomSection />
+                <PrivacyModal />
+                <BasicModal
+                    modalOpen={deleteModal} 
+                    setModalOpen={() => setDeleteModal(!deleteModal)} 
+                    buttonText={'Delete user'}
+                    title={'Delete user'}
+                    text={'Do you want to delete your user? (This is irreversible)'}
+                    onActionClick={() => {
+                        props.deleteApiUser(props.access_token);
+                        props.logout();
+                        props.history.push('/logout');
+                    }}
+                    warning 
+                />
+                {props.api_user && (
+                    <Box style={{ width: '100%' }}>
+                        <Line style={{ width: '100%', marginTop: '20px', marginBottom: '20px' }} />
+                        <AppInfo />
+                        <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                            <Button 
+                                style={{ marginTop: '20px', marginLeft: '15px' }} 
+                                warning
+                                onClick={() => setDeleteModal(true)}
+                            >Delete user
+                            </Button>
+                        </Box>
+                    </Box>
+                )}
+            </VerticalContainer>
+        </VerticalContainer>
     )
 } 
 

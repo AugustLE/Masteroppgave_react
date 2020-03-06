@@ -29,7 +29,8 @@ const modalStyles = {
       transform             : 'translate(-50%, -50%)',
       width: '80%',
       border: 'none',
-      boxShadow: '1px 1px 2px 2px #d5d5d5'
+      boxShadow: '1px 1px 2px 2px #d5d5d5',
+      maxWidth: '500px'
 
     }
   };
@@ -195,7 +196,7 @@ const TeamStatus = (props) => {
                 )
             } else {
                 return (
-                    <VerticalContainer>
+                    <VerticalContainer style={{ marginBottom: '100px' }}>
                             <div className='topSection'>
                                 <div className='topSectionPart' style={{ flex: 2, marginLeft: '10px' }}>
                                     <p className='infoTextBold'>{props.team.name}</p>
@@ -233,18 +234,20 @@ const TeamStatus = (props) => {
       
     }
     return (
-        <div>
-            <NavBar />
-            <ScorePage />
-            <TeamInfoModal />
-            <TabBarStudent history={props.history} />
-            {(props.api_user && (props.api_user.role === 'IN' || props.api_user.role === 'TA')) && (
-                <Redirect to={'/staff/overview/'} />
-            )}
-            {(props.api_user && props.team === null) && (
-                <Redirect to={'/selectteam/'} />
-            )}
-        </div>
+        <VerticalContainer style={{ alignItems: 'center' }}>
+            <VerticalContainer style={{ maxWidth: '500px', width: '100%' }}>
+                <NavBar />
+                <ScorePage />
+                <TeamInfoModal />
+                <TabBarStudent history={props.history} />
+                {(props.api_user && (props.api_user.role === 'IN' || props.api_user.role === 'TA')) && (
+                    <Redirect to={'/staff/overview/'} />
+                )}
+                {(props.api_user && props.team === null) && (
+                    <Redirect to={'/selectteam/'} />
+                )}
+            </VerticalContainer>
+        </VerticalContainer>
     );
 };
 
