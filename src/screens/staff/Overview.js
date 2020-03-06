@@ -109,7 +109,7 @@ const OverView = (props) => {
                         <Text bold size='20px'>{props.number_teams_below}</Text>
                     </Box>
                     
-                    {teamsBelow && (
+                    {(teamsBelow && props.teams_below) && (
                         <Box style={{ width: '100%' }}>
                             <Image 
                                 style={{ width: '20px', marginTop: '20px', opacity: 0.5 }} 
@@ -131,7 +131,7 @@ const OverView = (props) => {
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams you are responsible for</Text>
                         <ResponsibleList />
                     </Box>
-                    {teamsResponsible && (
+                    {(teamsResponsible && props.responsible_teams) && (
                         <Box style={{ width: '100%' }}>
                             <Image 
                                 style={{ width: '20px', marginTop: '20px', opacity: 0.5 }} 
