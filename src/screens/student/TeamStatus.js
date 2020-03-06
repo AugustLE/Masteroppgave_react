@@ -126,7 +126,7 @@ const TeamStatus = (props) => {
         if (props.subject && props.team) {
             if (props.has_rated_this_week) {
                 return (
-                    <VerticalContainer style={{ marginBottom: '100px' }}>
+                    <VerticalContainer style={{ marginBottom: '100px', width: '95%' }}>
                         <h2 style={{ marginBottom: '1px' }}>Team status</h2>
                         <p className='teamNameText'>{props.team.name}</p>
                         <div className='topSectionAfter'>
@@ -196,7 +196,7 @@ const TeamStatus = (props) => {
                 )
             } else {
                 return (
-                    <VerticalContainer style={{ marginBottom: '100px' }}>
+                    <VerticalContainer style={{ marginBottom: '100px', width: '95%' }}>
                             <div className='topSection'>
                                 <div className='topSectionPart' style={{ flex: 2, marginLeft: '10px' }}>
                                     <p className='infoTextBold'>{props.team.name}</p>
