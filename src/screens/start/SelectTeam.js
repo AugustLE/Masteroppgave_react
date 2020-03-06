@@ -104,9 +104,9 @@ const SelectTeam = (props) => {
                 modalOpen={modalOpen} 
                 setModalOpen={() => setModalOpen(!modalOpen)} 
                 buttonText={'Select team'}
+                title={selectTeam.name}
                 text={'Do you want to register on this team? (Make sure it is the correct team)'}
                 onActionClick={() => registerOnTeam()}
-                team={selectedTeam}
             />
         </Box>
     )

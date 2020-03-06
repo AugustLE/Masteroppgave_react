@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
-import { Line, Button, Text, Row, VerticalContainer } from '../../components/common';
+import { Line, Button, VerticalContainer } from '../../components/common';
 import TabBarStaff from '../../components/TabBarStaff/TabBarStaff';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { ProfileSectionBottom, ProfileSectionTop } from '../../components/ProfileSection';
-import { getApiUser, deleteApiUser } from '../../actions/AccountActions';
+import { getApiUser, deleteApiUser, unselectSubject } from '../../actions/AccountActions';
 import { setAccessToken, setActiveTab } from '../../actions/MainActions';
 import { logout } from '../../actions/AuthActions';
 import { getAccessToken } from '../../GlobalMethods';
@@ -13,10 +13,13 @@ import { clientJSO } from '../../GlobalVars';
 import { BasicModal } from '../../components/BasicModal/BasicModal';
 import { Redirect } from 'react-router';
 import { AppInfo } from '../../components/AppInfo/AppInfo';
+import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
+
  
 const StaffProfile = (props) => {
 
     const [deleteModal, setDeleteModal] = useState(false);
+    const [changeCourseModal, setChangeCourseModal] = useState(false);
  
     useEffect(() => {
         clientJSO.getToken();
@@ -25,6 +28,7 @@ const StaffProfile = (props) => {
                 props.history.push('/')
             } else {
                 props.getApiUser(token);
+                props.setAccessToken(token);
             }
         });
 
@@ -53,7 +57,7 @@ const StaffProfile = (props) => {
                     <Line style={{ marginTop: '10px', marginBottom: '10px', width: '100%' }}/>
                     <ProfileSectionBottom 
                         subject={props.subject}  
-                        onChangeSubject={() => console.log('PRint subj')} 
+                        onChangeSubject={() => setChangeCourseModal(true)} 
                     />
                 </VerticalContainer>
             );
@@ -65,6 +69,9 @@ const StaffProfile = (props) => {
     if (props.api_user && props.subject) {
         return (
             <VerticalContainer>
+                {props.api_user && (
+                    <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
+                )}
                 <NavBar />
                 <VerticalContainer style={{ maxWidth: '500px' }}>
                     {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
@@ -87,19 +94,40 @@ const StaffProfile = (props) => {
                         modalOpen={deleteModal} 
                         setModalOpen={() => setDeleteModal(!deleteModal)} 
                         buttonText={'Delete user'}
+                        title={'Delete user'}
                         text={'Do you want to delete your user? (This is irreversible)'}
                         onActionClick={() => {
                             props.deleteApiUser(props.access_token);
                             props.logout();
                         }}
                         warning 
+                        loading={props.account_loading}
                     />
+                    <BasicModal
+                        modalOpen={changeCourseModal}
+                        setModalOpen={() => setChangeCourseModal(!changeCourseModal)}
+                        buttonText='Change course'
+                        title={'Change course'}
+                        text={'Sure you want to change to another course?'}
+                        onActionClick={(() => {
+                            props.unselectSubject(props.access_token);
+                        })} 
+                        loading={props.account_loading}
+                    />
+
+                    
                     <TabBarStaff history={props.history}/>
                 </VerticalContainer>
             </VerticalContainer>
         );
     }
-    return <div />
+    return (
+    <div>
+        {props.api_user && (
+            <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
+        )}
+    </div>
+    )
 }
 
 const mapStateToProps = (state) => {
@@ -113,5 +141,6 @@ export default connect(mapStateToProps, {
     setActiveTab, 
     setAccessToken, 
     logout,
-    deleteApiUser 
+    deleteApiUser,
+    unselectSubject 
 })(StaffProfile);

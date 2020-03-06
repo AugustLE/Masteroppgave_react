@@ -5,9 +5,10 @@ import {
     ACCOUNT_LOADING,
     GET_USER,
     FETCH_LOADING,
-    DELETE_USER
+    DELETE_USER,
+    UNSELECT_SUBJECT
 } from './types';
-import { URLS } from '../GlobalVars';
+import { URLS, LIST_LOGIN } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
 
 
@@ -28,7 +29,9 @@ export const selectSubject = (auth_token, subject_id) => {
             }
         }).then(response => {
             dispatch({ type: CHANGE_SUBJECT, payload: response.data });
-            dispatch(fetchTeamList(auth_token, response.data.selected_subject_id));
+            if (!LIST_LOGIN) {
+                dispatch(fetchTeamList(auth_token, response.data.selected_subject_id));
+            }
         }).catch(error => {
             console.log(error);
             dispatch({ type: ACCOUNT_LOADING, payload: false });
@@ -106,3 +109,21 @@ export const deleteApiUser = (auth_token) => {
     }
 }
 
+export const unselectSubject = (access_token) => {
+    const url = URLS.api_url + '/unselectsubject/';
+    return (dispatch) => {
+        dispatch({ type: ACCOUNT_LOADING, payload: true });
+        axios({
+            method: 'post',
+            url: url,
+            headers: {
+                Authorization: 'Token ' + access_token
+            }
+        }).then(response => {
+            dispatch({ type: UNSELECT_SUBJECT, payload: response.data });
+        }).catch(error => {
+            console.log(error);
+            dispatch({ type: ACCOUNT_LOADING, payload: false });
+        })
+    }
+}

@@ -112,7 +112,7 @@ export const TeamModal = (props) => {
                     )}
                     {props.modal_team && !props.loading_action && !showHistory && (
                         <Button 
-                            style={{ height: '40px', marginLeft: '10px' }} 
+                            style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
                             secondary
                             onClick={() => {
                                 props.getTeamHistory();
@@ -123,7 +123,7 @@ export const TeamModal = (props) => {
                     )}
                     {props.modal_team && !props.loading_action && showHistory && (
                         <Button 
-                            style={{ height: '40px', marginLeft: '10px' }} 
+                            style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
                             secondary
                             onClick={() => setShowHistory(false)}>
                             Hide history

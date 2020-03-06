@@ -12,7 +12,8 @@ import {
     ROLE_ERROR,
     PRIVACY_CONSENT_RETURN,
     PRIVACY_CONSENT_LOADING,
-    DELETE_USER
+    DELETE_USER,
+    UNSELECT_SUBJECT
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -92,6 +93,14 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 user_deleted: action.payload
+            }
+
+        case UNSELECT_SUBJECT:
+            return {
+                ...state,
+                api_user: action.payload, 
+                account_loading: false,
+                subject: null
             }
 
         default:

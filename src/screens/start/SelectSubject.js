@@ -125,6 +125,7 @@ const SelectSubject = (props) => {
                 modalOpen={deleteModal} 
                 setModalOpen={() => setDeleteModal(!deleteModal)} 
                 buttonText={'Delete user'}
+                title={'Delete user'}
                 text={'Do you want to delete your user? (This is irreversible)'}
                 onActionClick={() => {
                     props.deleteApiUser(props.access_token);

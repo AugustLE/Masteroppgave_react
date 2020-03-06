@@ -45,12 +45,20 @@ const OverView = (props) => {
     }
 
     const ResponsibleList = () => {
+        let responsible_string = '';
+        props.responsible_teams.forEach(team => {
+            responsible_string += team.name + ', ';
+        });
+        responsible_string = responsible_string.substring(0, responsible_string.length - 2);
+        
         if (props.responsible_teams) {
-            const team_list = props.responsible_teams.map((team) => (
+            /*const team_list = props.responsible_teams.map((team) => (
                 <Text key={team.pk}>{team.name}, </Text>  
-            ));
+            ));*/
             return (
-                <Row style={{ flexWrap: 'wrap' }}>{team_list}</Row>
+                <Row style={{ flexWrap: 'wrap' }}>
+                    <Text>{responsible_string}</Text>
+                </Row>
             );
         }
         return <div />;
@@ -152,7 +160,7 @@ const OverView = (props) => {
             )}
             <TabBarStaff history={props.history}/>
             {props.api_user && (
-                <PermissionCheck api_user={props.api_user} history={props.history}/>
+                <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
             )}
             <TeamModal 
                 modal_team_members={props.modal_team_members}

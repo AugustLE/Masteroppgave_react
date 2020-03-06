@@ -9,6 +9,7 @@ import { getApiUser } from '../../actions/AccountActions';
 import { uploadTeamList, setStaffField } from '../../actions/StaffActions';
 import { TeamJsonList } from './TeamJsonList/TeamJsonList';
 import { Redirect } from 'react-router';
+import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
 
 const Uploader = (props) => {
 
@@ -93,9 +94,12 @@ const Uploader = (props) => {
             </Box>
         );
     }
-    console.log(props.api_user);
+
     return (
         <VerticalContainer>
+            {props.api_user && (
+                <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
+            )}
             <NavBar />
             <Text bold size='24px' style={{ marginTop: '20px', marginBottom: '20px' }}>Register teams</Text>
             <Button secondary>

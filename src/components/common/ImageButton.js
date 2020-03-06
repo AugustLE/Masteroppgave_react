@@ -19,8 +19,8 @@ const ImageButton = (props) => {
 
     extra_styles = { flexDirection: flex_direction };
 
-    if (props.styles) {
-        extra_styles = { ...props.styles, flexDirection: flex_direction };
+    if (props.style) {
+        extra_styles = { ...props.style, flexDirection: flex_direction };
     }
 
     return (

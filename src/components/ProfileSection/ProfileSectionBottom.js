@@ -20,15 +20,14 @@ export const ProfileSectionBottom = (props) => {
             {(props.student && !LIST_LOGIN) && (
                 <Button onClick={props.onChangeTeam} secondary style={{ marginLeft: '27px', marginTop: '10px' }}>Change team</Button>
             )}
-            {/*
+            {
             <ImageButton 
                 onClick={props.onChangeSubject} 
                 image={require('../../images/book.png')}
-                styles={{ marginLeft: '30px', marginTop: '20px', paddingLeft: '20px', paddingRight: '20px' }}
-            >
+                style={{ marginLeft: '20px', marginTop: '20px', paddingLeft: '15px', paddingRight: '15px', fontSize: '14px' }}>
                 Change subject
             </ImageButton>
-            */}
+            }
 
             <Line style={{ width: '100%', marginTop: '20px' }} />
             

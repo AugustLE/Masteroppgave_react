@@ -12,6 +12,7 @@ import { TeamList } from '../../components/TeamList/TeamList';
 import { TeamModal } from '../..//components/TeamModal/TeamModal';
 import { clientJSO } from '../../GlobalVars';
 import { Redirect } from 'react-router';
+import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
 
  
 const TeamView = (props) => {
@@ -61,6 +62,9 @@ const TeamView = (props) => {
 
     return (
         <VerticalContainer>
+            {props.api_user && (
+                <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
+            )}
             {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
                 <Redirect to='/student/status/' />
             )}
