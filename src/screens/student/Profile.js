@@ -69,7 +69,9 @@ const Profile = (props) => {
                 )}
                 <NavBar />
                 {(!props.account_loading && props.api_user) ? (
-                    <ProfileSectionTop api_user={props.api_user} logOut={() => logOut()}/>
+                    <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
+                        <ProfileSectionTop api_user={props.api_user} logOut={() => logOut()}/>
+                    </VerticalContainer>
                 ): (
                     <Loader />
                 )}

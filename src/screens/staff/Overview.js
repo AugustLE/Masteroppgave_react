@@ -46,9 +46,11 @@ const OverView = (props) => {
 
     const ResponsibleList = () => {
         let responsible_string = '';
-        props.responsible_teams.forEach(team => {
-            responsible_string += team.name + ', ';
-        });
+        if (props.responsible_teams) {
+            props.responsible_teams.forEach(team => {
+                responsible_string += team.name + ', ';
+            });
+        }
         responsible_string = responsible_string.substring(0, responsible_string.length - 2);
         
         if (props.responsible_teams) {
