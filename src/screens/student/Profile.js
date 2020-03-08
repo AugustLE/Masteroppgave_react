@@ -87,7 +87,7 @@ const Profile = (props) => {
                 ): (
                     <Loader />
                 )}
-                {props.api_user && (
+                {(props.api_user && !props.account_loading) && (
                     <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
                         <Button 
                             style={{ margin: '15px' }} 

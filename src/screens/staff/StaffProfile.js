@@ -79,17 +79,18 @@ const StaffProfile = (props) => {
                     )}
                     
                     <Profile />
-                
-                    <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
-                        <Button 
-                            style={{ margin: '15px' }} 
-                            warning
-                            onClick={() => setDeleteModal(true)}>
-                                Delete user
-                        </Button>
-                        <Line style={{ width: '100%', marginBottom: '10px' }} />
-                        <AppInfo />
-                    </VerticalContainer>
+                    {(props.api_user && !props.account_loading) &&  (
+                        <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
+                            <Button 
+                                style={{ margin: '15px' }} 
+                                warning
+                                onClick={() => setDeleteModal(true)}>
+                                    Delete user
+                            </Button>
+                            <Line style={{ width: '100%', marginBottom: '10px' }} />
+                            <AppInfo />
+                        </VerticalContainer>
+                    )}
                     <BasicModal
                         modalOpen={deleteModal} 
                         setModalOpen={() => setDeleteModal(!deleteModal)} 

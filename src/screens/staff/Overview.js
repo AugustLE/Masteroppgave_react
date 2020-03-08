@@ -85,7 +85,7 @@ const OverView = (props) => {
         
         if (props.total_average && props.subject) {
             return (
-                <VerticalContainer style={{ width: '95%', maxWidth: '500px' }}>
+                <VerticalContainer style={{ width: '95%', maxWidth: '500px', marginBottom: '100px' }}>
                     <Text bold size='22px' style={{ margin: '20px' }}>{props.subject.code} - Overview</Text>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', opacity: other_opacity }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all teams</Text>
