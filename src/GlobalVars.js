@@ -15,7 +15,7 @@ export const clientJSO = new JSO({
 export const URLS = {
     feide_profile_info: 'https://auth.dataporten.no/userinfo',
     //api_url: 'http://127.0.0.1:8000',
-    api_url: 'https://teamaccelerator.herokuapp.com',
+    api_url: 'https://teamacceleratoreu.herokuapp.com',
     end_session: 'https://auth.dataporten.no/openid/endsession',
     logout: 'https://auth.dataporten.no/logout',
 }
