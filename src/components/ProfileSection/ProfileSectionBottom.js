@@ -25,7 +25,7 @@ export const ProfileSectionBottom = (props) => {
                 onClick={props.onChangeSubject} 
                 image={require('../../images/book.png')}
                 style={{ marginLeft: '20px', marginTop: '20px', paddingLeft: '15px', paddingRight: '15px', fontSize: '14px' }}>
-                Change subject
+                Change course
             </ImageButton>
             }
 

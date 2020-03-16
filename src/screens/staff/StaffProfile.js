@@ -14,6 +14,7 @@ import { BasicModal } from '../../components/BasicModal/BasicModal';
 import { Redirect } from 'react-router';
 import { AppInfo } from '../../components/AppInfo/AppInfo';
 import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
+import { DropdownMenu } from '../../components/DropdownMenu/DropdownMenu';
 
  
 const StaffProfile = (props) => {
@@ -68,29 +69,31 @@ const StaffProfile = (props) => {
 
     if (props.api_user && props.subject) {
         return (
-            <VerticalContainer>
+            <VerticalContainer style={{ width: '100%' }}>
                 {props.api_user && (
                     <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
                 )}
                 <NavBar />
-                <VerticalContainer style={{ maxWidth: '500px', marginBottom: '100px' }}>
+                <VerticalContainer style={{ maxWidth: '500px', marginBottom: '100px', width: '100%' }}>
                     {(props.api_user && (props.api_user.role !== 'TA' && props.api_user.role !== 'IN')) && (
                         <Redirect to='/student/profile/'/>
                     )}
                     
                     <Profile />
-                    {(props.api_user && !props.account_loading) &&  (
-                        <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
-                            <Button 
-                                style={{ margin: '15px' }} 
-                                warning
-                                onClick={() => setDeleteModal(true)}>
-                                    Delete user
-                            </Button>
-                            <Line style={{ width: '100%', marginBottom: '10px' }} />
-                            <AppInfo />
-                        </VerticalContainer>
-                    )}
+                    <DropdownMenu>
+                        {(props.api_user && !props.account_loading) &&  (
+                            <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
+                                <Button 
+                                    style={{ margin: '15px' }} 
+                                    warning
+                                    onClick={() => setDeleteModal(true)}>
+                                        Delete user
+                                </Button>
+                                <Line style={{ width: '100%', marginBottom: '10px' }} />
+                                <AppInfo />
+                            </VerticalContainer>
+                        )}
+                    </DropdownMenu>
                     <BasicModal
                         modalOpen={deleteModal} 
                         setModalOpen={() => setDeleteModal(!deleteModal)} 

@@ -192,6 +192,7 @@ const TeamStatus = (props) => {
                                 View previous scores
                             </Button>
                         )}
+                        <Text style={{ marginTop: '20px' }}>You can vote again next week</Text>
                     </VerticalContainer>
                 )
             } else {

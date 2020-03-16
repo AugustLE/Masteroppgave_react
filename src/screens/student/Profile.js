@@ -15,6 +15,7 @@ import { Redirect } from 'react-router-dom';
 import { clientJSO } from '../../GlobalVars';
 import { AppInfo } from '../../components/AppInfo/AppInfo';
 import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
+import { DropdownMenu } from '../../components/DropdownMenu/DropdownMenu';
 
 
 const Profile = (props) => {
@@ -75,7 +76,7 @@ const Profile = (props) => {
                 ): (
                     <Loader />
                 )}
-                <Line style={{ marginTop: '10px', marginBottom: '10px' }}/>
+                <Line style={{ marginTop: '10px', marginBottom: '10px', width: '100%' }}/>
                 {(!props.loading_fetch && props.team && props.subject) ? (
                     <ProfileSectionBottom 
                         subject={props.subject} 
@@ -87,19 +88,21 @@ const Profile = (props) => {
                 ): (
                     <Loader />
                 )}
-                {(props.api_user && !props.account_loading) && (
-                    <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
-                        <Button 
-                            style={{ margin: '15px' }} 
-                            warning
-                            onClick={() => setDeleteModal(true)}
-                        >Delete user
-                        </Button>
-                        <Line style={{ width: '100%', marginBottom: '10px' }} />
-                        <AppInfo />
-                        
-                    </VerticalContainer>
-                )}
+                <DropdownMenu>
+                    {(props.api_user && !props.account_loading) && (
+                        <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
+                            <Button 
+                                style={{ margin: '15px' }} 
+                                warning
+                                onClick={() => setDeleteModal(true)}
+                            >Delete user
+                            </Button>
+                            <Line style={{ width: '100%', marginBottom: '10px' }} />
+                            <AppInfo />
+                            
+                        </VerticalContainer>
+                    )}
+                </DropdownMenu>
                 <BasicModal
                     modalOpen={deleteModal} 
                     setModalOpen={() => setDeleteModal(!deleteModal)} 

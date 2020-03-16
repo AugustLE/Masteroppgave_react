@@ -40,13 +40,12 @@ export const TeamModal = (props) => {
                 ): (
                     <Text size='12px' bold style={{ flex: 1 }}>No scores</Text>
                 )}
-                
             </Row>
         ));
 
         return (
             <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
-                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members</Text>
+                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members average score</Text>
                 {list}
                 <Line style={{ width: '100%', marginTop: '10px' }} />
                 <Text style={{ marginTop: '10px', marginBottom: '5px' }} size='16px' bold>Responsible for this team</Text>

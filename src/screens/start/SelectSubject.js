@@ -16,6 +16,7 @@ import { setAccessTokenPersistent } from '../../GlobalMethods';
 import { ProfileSectionTop } from '../../components/ProfileSection';
 import { BasicModal } from '../../components/BasicModal/BasicModal';
 import { AppInfo } from '../../components/AppInfo/AppInfo';
+import { DropdownMenu } from '../../components/DropdownMenu/DropdownMenu';
 import './start.css';
 
 
@@ -114,12 +115,7 @@ const SelectSubject = (props) => {
                 {props.api_user && props.api_user.error && (
                     <Text style={{ marginTop: '20px' }} error>{props.api_user.error}</Text>
                 )}
-                {props.api_user && (
-                    <Box style={{ width: '100%', alignItems: 'flex-start' }}>
-                        <ProfileSectionTop api_user={props.api_user} logOut={props.logout}/>
-                    </Box>
-                )}  
-                <Line style={{ width: '100%', marginTop: '10px' }} />
+                
                 <BottomSection />
                 <PrivacyModal />
                 <BasicModal
@@ -135,20 +131,26 @@ const SelectSubject = (props) => {
                     }}
                     warning 
                 />
-                {props.api_user && (
-                    <Box style={{ width: '100%' }}>
-                        <Line style={{ width: '100%', marginTop: '20px', marginBottom: '20px' }} />
-                        <AppInfo />
-                        <Box style={{ width: '100%', alignItems: 'flex-start' }}>
-                            <Button 
-                                style={{ marginTop: '20px', marginLeft: '15px' }} 
-                                warning
-                                onClick={() => setDeleteModal(true)}
-                            >Delete user
-                            </Button>
+                <Line style={{ width: '100%', marginTop: '15px' }} />
+                <DropdownMenu>
+                    {props.api_user && (
+                        <Box style={{ width: '100%' }}>
+                            <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                                <ProfileSectionTop api_user={props.api_user} logOut={props.logout}/>
+                            </Box>
+                            <Line style={{ width: '100%', marginTop: '20px', marginBottom: '20px' }} />
+                            <AppInfo />
+                            <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                                <Button 
+                                    style={{ marginTop: '20px', marginLeft: '15px' }} 
+                                    warning
+                                    onClick={() => setDeleteModal(true)}
+                                >Delete user
+                                </Button>
+                            </Box>
                         </Box>
-                    </Box>
-                )}
+                    )}
+                </DropdownMenu>
             </VerticalContainer>
         </VerticalContainer>
     )
@@ -184,3 +186,13 @@ export default connect(mapStateToProps, {
     logout,
     deleteApiUser
 })(SelectSubject)
+
+
+/* 
+{props.api_user && (
+                    <Box style={{ width: '100%', alignItems: 'flex-start' }}>
+                        <ProfileSectionTop api_user={props.api_user} logOut={props.logout}/>
+                    </Box>
+                )}  
+
+*/ 
