@@ -3,8 +3,8 @@ import { JSO, Popup } from 'jso';
 export const clientJSO = new JSO({
             
     client_id: "d6bae5a0-6dd1-4df4-b572-653c16c71ec6",
-    //redirect_uri: "https://teamaccelerator.surge.sh/",
-    redirect_uri: "http://localhost:3000/",
+    redirect_uri: "https://teamaccelerator.surge.sh/",
+    //redirect_uri: "http://localhost:3000/",
     authorization: "https://auth.dataporten.no/oauth/authorization",
     scopes: { request: ["profile", "email", "userid", "userid-feide"]},
     response_type: 'code',
@@ -14,9 +14,9 @@ export const clientJSO = new JSO({
 
 export const URLS = {
     feide_profile_info: 'https://auth.dataporten.no/userinfo',
-    api_url: 'http://127.0.0.1:8000',
+    //api_url: 'http://127.0.0.1:8000',
     //api_url: 'https://teamacceleratoreu.herokuapp.com',
-    //api_url: 'https://teamaccelerator.idi.ntnu.no',
+    api_url: 'https://teamaccelerator.idi.ntnu.no',
     end_session: 'https://auth.dataporten.no/openid/endsession',
     logout: 'https://auth.dataporten.no/logout',
 }
