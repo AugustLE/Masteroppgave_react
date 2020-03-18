@@ -62,6 +62,9 @@ const TeamView = (props) => {
 
     return (
         <VerticalContainer>
+            {props.error_redirect && (
+                <Redirect to='/'/>
+            )}
             {props.api_user && (
                 <PermissionCheck data_check student api_user={props.api_user} history={props.history}/>
             )}
@@ -125,7 +128,7 @@ const mapStateToProps = (state) => {
         team_history
     } = state.staff;
 
-    const { api_user } = state.account;
+    const { api_user, error_redirect } = state.account;
 
     return { 
         access_token, 
@@ -138,7 +141,8 @@ const mapStateToProps = (state) => {
         modal_loading,
         api_user,
         loading_action,
-        team_history
+        team_history,
+        error_redirect
     };
 }
 

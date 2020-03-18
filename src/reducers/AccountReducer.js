@@ -13,7 +13,8 @@ import {
     PRIVACY_CONSENT_RETURN,
     PRIVACY_CONSENT_LOADING,
     DELETE_USER,
-    UNSELECT_SUBJECT
+    UNSELECT_SUBJECT,
+    ERROR_REDIRECT
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -25,7 +26,8 @@ const INITIAL_STATE = {
     role_error: null,
     privacy_consent: null,
     loading_privacy_consent: false,
-    user_deleted: false
+    user_deleted: false,
+    error_redirect: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -101,6 +103,12 @@ export default (state = INITIAL_STATE, action) => {
                 api_user: action.payload, 
                 account_loading: false,
                 subject: null
+            }
+
+        case ERROR_REDIRECT:
+            return {
+                ...state,
+                error_redirect: action.payload
             }
 
         default:

@@ -66,7 +66,9 @@ const StaffProfile = (props) => {
         return <div />
     }
 
-
+    if (props.error_redirect) {
+        props.history.push('/');
+    }
     if (props.api_user && props.subject) {
         return (
             <VerticalContainer style={{ width: '100%' }}>
@@ -136,8 +138,8 @@ const StaffProfile = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token, active_tab } = state.main;
-    const { api_user, account_loading, subject } = state.account;
-    return { access_token, active_tab, api_user, account_loading, subject };
+    const { api_user, account_loading, subject, error_redirect } = state.account;
+    return { access_token, active_tab, api_user, account_loading, subject, error_redirect };
 }
 
 export default connect(mapStateToProps, { 

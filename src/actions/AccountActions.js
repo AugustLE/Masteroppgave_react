@@ -6,7 +6,8 @@ import {
     GET_USER,
     FETCH_LOADING,
     DELETE_USER,
-    UNSELECT_SUBJECT
+    UNSELECT_SUBJECT,
+    ERROR_REDIRECT
 } from './types';
 import { URLS, LIST_LOGIN } from '../GlobalVars';
 import { fetchTeamList } from './StudentActions';
@@ -67,6 +68,7 @@ export const getApiUser = (auth_token, start=false) => {
     return (dispatch) => {
         dispatch({ type: ACCOUNT_LOADING, payload: true });
         dispatch({ type: FETCH_LOADING, payload: true });
+        dispatch({ type: ERROR_REDIRECT, payload: false });
         axios({
             method: 'get',
             url: url,
@@ -81,6 +83,7 @@ export const getApiUser = (auth_token, start=false) => {
             }
         }).catch(err => {
             console.log(err);
+            dispatch({ type: ERROR_REDIRECT, payload: true });
             dispatch({ type: ACCOUNT_LOADING, payload: false });
             dispatch({ type: FETCH_LOADING, payload: false });
         })

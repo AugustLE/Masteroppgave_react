@@ -13,6 +13,7 @@ import { PermissionCheck } from '../../components/PermissionCheck/PermissionChec
 import { TeamList } from '../../components/TeamList/TeamList';
 import { TeamModal } from '../../components/TeamModal/TeamModal';
 import { clientJSO } from '../../GlobalVars';
+import { Redirect } from 'react-router';
  
 
 const OverView = (props) => {
@@ -152,6 +153,9 @@ const OverView = (props) => {
     return (
         <VerticalContainer>
             <NavBar />
+            {props.error_redirect && (
+                <Redirect to='/' />
+            )}
             <OverviewSection />
             {props.api_user && props.api_user.role === 'IN' && (
                 <Button 
@@ -199,7 +203,8 @@ const mapStateToProps = (state) => {
         modal_team,
         modal_loading,
         loading_action,
-        team_history 
+        team_history,
+        error_redirect 
     } = state.staff;
     return { 
         access_token, 
@@ -216,7 +221,8 @@ const mapStateToProps = (state) => {
         modal_team,
         modal_loading,
         loading_action,
-        team_history
+        team_history,
+        error_redirect
     };
 }
 
