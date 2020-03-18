@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { clientJSO } from '../../GlobalVars';
 import { setAccessToken } from '../../actions/MainActions';
+import { setRedirectError } from '../../actions/AccountActions';
 import { TopbarLogin } from '../../components/TopbarLogin/TopbarLogin';
-import { Box, Image, Text, Line } from '../../components/common';
+import { Box, Image, Text } from '../../components/common';
 import { setAccessTokenPersistent } from '../../GlobalMethods';
 import './start.css';
 
@@ -13,6 +14,7 @@ const Login = (props) => {
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
+        props.setRedirectError(false);
         try {
             clientJSO.callback().then(response => {
                 props.setAccessToken(response.access_token);
@@ -58,4 +60,4 @@ const mapStateToProps = (state) => {
     return { access_token };
 };
 
-export default connect(mapStateToProps, { setAccessToken })(Login);
+export default connect(mapStateToProps, { setAccessToken, setRedirectError })(Login);

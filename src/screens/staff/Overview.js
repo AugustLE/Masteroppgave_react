@@ -190,7 +190,7 @@ const OverView = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token } = state.main;
-    const { api_user } = state.account;
+    const { api_user, error_redirect } = state.account;
     const { 
         total_average, 
         number_teams_below, 
@@ -203,8 +203,7 @@ const mapStateToProps = (state) => {
         modal_team,
         modal_loading,
         loading_action,
-        team_history,
-        error_redirect 
+        team_history, 
     } = state.staff;
     return { 
         access_token, 

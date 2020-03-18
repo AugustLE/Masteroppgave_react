@@ -9,7 +9,6 @@ import { fetchTeamList, selectSubjectWithTeams } from '../../actions/StudentActi
 import { setAccessToken } from '../../actions/MainActions';
 import Loader from 'react-loader';
 import { getAccessToken } from '../../GlobalMethods';
-import { URLS } from '../../GlobalVars';
 import { clientJSO, LIST_LOGIN } from '../../GlobalVars';
 import PrivacyModal from '../../components/PrivacyModal/PrivacyModal';
 import { setAccessTokenPersistent } from '../../GlobalMethods';

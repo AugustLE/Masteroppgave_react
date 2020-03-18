@@ -130,3 +130,10 @@ export const unselectSubject = (access_token) => {
         })
     }
 }
+
+export const setRedirectError = (value) => {
+    return {
+        type: ERROR_REDIRECT,
+        payload: value
+    };
+};
