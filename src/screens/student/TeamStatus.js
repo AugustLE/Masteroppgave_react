@@ -244,9 +244,15 @@ const TeamStatus = (props) => {
                 {(props.api_user && (props.api_user.role === 'IN' || props.api_user.role === 'TA')) && (
                     <Redirect to={'/staff/overview/'} />
                 )}
-                {(props.api_user && props.team === null) && (
-                    <Redirect to={'/selectteam/'} />
+
+                {(props.api_user && props.api_user.selected_subject_id === null) && (
+                    <Redirect to='/selectsubject'/>
                 )}
+                
+                {props.error_redirect && (
+                    <Redirect to='/' />
+                )}
+
             </VerticalContainer>
         </VerticalContainer>
     );
@@ -264,7 +270,7 @@ const mapStateToProps = (state) => {
         team_members,
         history_scores
     } = state.student;
-    const { subject, api_user } = state.account;
+    const { subject, api_user, error_redirect } = state.account;
     return { 
         access_token, 
         active_tab,  
@@ -277,7 +283,8 @@ const mapStateToProps = (state) => {
         team_responsible,
         team_members,
         api_user,
-        history_scores
+        history_scores,
+        error_redirect
     };
 };
 

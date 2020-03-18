@@ -88,7 +88,7 @@ const Profile = (props) => {
                 ): (
                     <Loader />
                 )}
-                <DropdownMenu>
+                <DropdownMenu initOpen={true}>
                     {(props.api_user && !props.account_loading) && (
                         <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
                             <Button 
@@ -137,7 +137,10 @@ const Profile = (props) => {
                 />
                 <TabBarStudent history={props.history} />
                 {props.user_deleted && (
-                    <Redirect to="/"></Redirect>
+                    <Redirect to='/' />
+                )}
+                {props.error_redirect && (
+                    <Redirect to='/' />
                 )}
             </VerticalContainer>
         </VerticalContainer>
@@ -146,9 +149,19 @@ const Profile = (props) => {
 
 const mapStateToProps = (state) => {
     const { access_token, active_tab } = state.main;
-    const { api_user, account_loading, subject, user_deleted } = state.account;
+    const { api_user, account_loading, subject, user_deleted, error_redirect } = state.account;
     const { team, loading_fetch } = state.student;
-    return { access_token, active_tab, api_user, account_loading, team, subject, loading_fetch, user_deleted };
+    return { 
+        access_token, 
+        active_tab, 
+        api_user, 
+        account_loading, 
+        team, 
+        subject, 
+        loading_fetch, 
+        user_deleted,
+        error_redirect 
+    };
 }
 
 export default connect(mapStateToProps, { 

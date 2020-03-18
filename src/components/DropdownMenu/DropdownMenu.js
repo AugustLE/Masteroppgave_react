@@ -11,7 +11,8 @@ const styles = {
 
 export const DropdownMenu = (props) => {
 
-    const [isOpen, setIsOpen] = useState(false);
+    const init_open = props.initOpen ? props.initOpen: false;
+    const [isOpen, setIsOpen] = useState(init_open);
 
     const image = () => {
         if (isOpen) {

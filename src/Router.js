@@ -10,7 +10,7 @@ import TeamView from './screens/staff/TeamView';
 import StaffMessages from './screens/staff/StaffMessages';
 import StaffProfile from './screens/staff/StaffProfile';
 import Uploader from './screens/admin/Uploader';
-import SelectTeam from './screens/start/SelectTeam';
+// import SelectTeam from './screens/start/SelectTeam';
 import { URLS } from './GlobalVars';
 
 
@@ -19,7 +19,7 @@ export const MainRouter = () => (
         <Switch>
           <Route exact path='/' component={Login}/>
           <Route exact path='/selectsubject' component={SelectSubject} />
-          <Route exact path='/selectteam' component={SelectTeam} />
+          {/*<Route exact path='/selectteam' component={SelectTeam} />*/}
           <Route path='/logout' component={() => { 
               window.location.href = URLS.end_session; 
               return null;

@@ -77,6 +77,7 @@ export const getApiUser = (auth_token, start=false) => {
             },
         }).then(response => {
             dispatch({ type: GET_USER, payload: response.data });
+            dispatch({ type: ERROR_REDIRECT, payload: false });
             
             if(start){    
                 dispatch(getSubjectList(auth_token));

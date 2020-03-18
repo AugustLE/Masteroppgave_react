@@ -26,7 +26,7 @@ const Login = (props) => {
     }, [])
     
     const feideLogin = () => {
-
+        props.setRedirectError(false);
         clientJSO.getToken().then((response) => { 
             if (response.access_token) {
                 props.setAccessToken(response.access_token);
