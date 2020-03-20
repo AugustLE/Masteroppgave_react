@@ -6,7 +6,9 @@ import './teamhistorylist.css';
 
 export const TeamHistoryRow = (props) => {
 
-    const [openRow, setOpenRow] = useState(false);
+    const init_state = props.isOpen ? props.isOpen : false;
+
+    const [openRow, setOpenRow] = useState(init_state);
 
     const arrow = () => {
         if (openRow) {
@@ -22,9 +24,14 @@ export const TeamHistoryRow = (props) => {
         return 'white';
     }
 
+    const onClickRow = () => {
+        setOpenRow(!openRow);
+        props.onClickRow(!openRow, props.history_obj);
+    }
+
     const TeamMemberRow = ({ member }) => {
         return (
-            <Row style={{ width: '100%', marginTop: '5px' }} key={member.user.name}>
+            <Row style={{ width: '100%', marginTop: '5px' }}>
                 <Text style={{ flex: 3 }}>{member.user.name}</Text>
                 {member.score ? (
                     <Row style={{ flex: 1 }}>
@@ -45,7 +52,7 @@ export const TeamHistoryRow = (props) => {
 
     const TeamMemberList = () => {
         const list = props.history_obj.users.map((member) => (
-            <TeamMemberRow member={member} />
+            <TeamMemberRow key={member.user.name} member={member} />
         ));
 
         return (
@@ -70,8 +77,9 @@ export const TeamHistoryRow = (props) => {
 
     return ( 
         <VerticalContainer style={{ width: '100%' }}>
-            <div onClick={() => setOpenRow(!openRow)} className='teamHistoryRow' style={{ backgroundColor: backgroundColor() }}>
-                <Text style={{ paddingLeft: '8px', width: '100px' }}>{props.history_obj.week}</Text>
+            <div onClick={() => onClickRow()} className='teamHistoryRow' style={{ backgroundColor: backgroundColor() }}>
+                <Text bold style={{ paddingLeft: '8px', width: '90px' }}>{props.history_obj.week_number}</Text>
+                <Text style={{ paddingLeft: '8px', width: '90px' }}>{props.history_obj.week}</Text>
                 <Row>
                     <Text style={{ paddingLeft: '65px', marginRight: '5px', width: '30px' }}>{props.history_obj.average}</Text>
                     <ProgressBar style={{ flex: 2 }} score={props.history_obj.average}/>

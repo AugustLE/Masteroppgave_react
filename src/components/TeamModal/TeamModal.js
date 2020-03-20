@@ -49,7 +49,8 @@ export const TeamModal = (props) => {
                 {list}
                 <Line style={{ width: '100%', marginTop: '10px' }} />
                 <Text style={{ marginTop: '10px', marginBottom: '5px' }} size='16px' bold>Responsible for this team</Text>
-                <Text>{props.modal_responsible}</Text>
+                <Text>{props.modal_responsible.name}</Text>
+                <Text>{props.modal_responsible.email}</Text>
             </VerticalContainer>
         );
     }
