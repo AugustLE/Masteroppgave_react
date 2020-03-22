@@ -34,7 +34,8 @@ const INITIAL_STATE = {
     admin_loading: false,
     authorized_staff: null,
     teams_below: null,
-    team_history: null
+    team_history: null,
+    back_path_details: null
 }
 
 export default (state = INITIAL_STATE, action) => {

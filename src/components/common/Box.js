@@ -10,10 +10,15 @@ const Box = (props) => {
     return (
         <div className={className} style={props.style} onClick={props.onClick}>
             {props.children}
-            {props.clickable && (
+            {props.clickable && props.isOpen && (
                 <Image 
                     style={{ width: '15px', position: 'absolute', right: 10, top: 10, opacity: 0.5 }} 
                     src={require('../../images/arrow_down.png')} />
+            )}
+             {props.clickable && !props.isOpen && (
+                <Image 
+                    style={{ width: '15px', position: 'absolute', right: 10, top: 10, opacity: 0.5 }} 
+                    src={require('../../images/arrow_up.png')} />
             )}
         </div>
     )

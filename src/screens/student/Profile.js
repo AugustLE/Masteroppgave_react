@@ -88,7 +88,7 @@ const Profile = (props) => {
                 ): (
                     <Loader />
                 )}
-                <DropdownMenu initOpen={true}>
+                <DropdownMenu>
                     {(props.api_user && !props.account_loading) && (
                         <VerticalContainer style={{ width: '100%', alignItems: 'flex-start' }}>
                             <Button 

@@ -87,7 +87,7 @@ const TeamView = (props) => {
                     <TeamList 
                         onClick={(team_id) => onTeamClick(team_id)} 
                         teams={searchList()} 
-                        sortVal={1}
+                        sortVal={0}
                     />
                 </Box>
             ): (
@@ -108,6 +108,9 @@ const TeamView = (props) => {
                 getTeamHistory={() => props.getTeamHistory(props.access_token, props.modal_team.pk)} 
                 team_history={props.team_history}     
                 setStaffField={() => props.setStaffField({ prop: 'team_history', value: null })}
+                history={props.history}
+                setStaffFieldBack={(path) => props.setStaffField({ prop: 'back_path_details', value: path })}
+                back_path={'/staff/teams'}
             />
             <TabBarStaff history={props.history}/>
         </VerticalContainer>

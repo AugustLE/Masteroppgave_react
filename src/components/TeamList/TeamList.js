@@ -67,12 +67,12 @@ export const TeamList = (props) => {
 
     const getSortedList = (sortVal, sortFunction, sortFunctionRev) => {
         let teams = [].concat(props.teams);
+        teams = teams.sort(pinSort);
         if (sortVal === 1) {
             teams = teams.sort(sortFunction);
         } if (sortVal === 2) {
             teams = teams.sort(sortFunctionRev);
         }
-        teams = teams.sort(pinSort);
         return teams;
     }
 

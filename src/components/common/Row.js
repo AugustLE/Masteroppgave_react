@@ -3,7 +3,7 @@ import './common.css';
 
 const Row = (props) => {
     return (
-        <div className='rowContainer' style={props.style}>
+        <div onClick={props.onClick} className='rowContainer' style={props.style}>
             {props.children}
         </div>
     );

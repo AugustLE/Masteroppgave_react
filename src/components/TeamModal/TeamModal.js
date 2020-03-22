@@ -60,6 +60,7 @@ export const TeamModal = (props) => {
             isOpen={props.modalOpen}
             style={modalStyles}
             ariaHideApp={false}
+            history={props.history}
             >
 
             {(!props.modal_loading && props.modal_team && !props.loading_action) ? (
@@ -110,15 +111,18 @@ export const TeamModal = (props) => {
                             </Button>
                         </Form>
                     )}
+                
                     {props.modal_team && !props.loading_action && !showHistory && (
                         <Button 
                             style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
                             secondary
                             onClick={() => {
-                                props.getTeamHistory();
-                                setShowHistory(true)
+                                props.setStaffFieldBack(props.back_path);
+                                props.history.push(`/staff/teamdetails/${props.modal_team.pk}`)
+                                //props.getTeamHistory();
+                                //setShowHistory(true)
                             }}>
-                            History
+                            More details
                         </Button>
                     )}
                     {props.modal_team && !props.loading_action && showHistory && (
@@ -146,63 +150,18 @@ export const TeamModal = (props) => {
 }
 
 
+/*
 
-/* 
-<Modal 
-                isOpen={modalOpen}
-                style={modalStyles}
-                ariaHideApp={false}>
-
-                {(!props.modal_loading && props.modal_team && !props.loading_action) ? (
-                    <VerticalContainer>
-                        <Text bold size='20px'>{props.modal_team.name}</Text>
-                        <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
-                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
-                            <Row style={{ jusifyContent: 'flex-start' }}>
-                                <Text style={{ marginRight: '5px' }} bold>{props.modal_team.last_average_score}</Text>
-                                <ProgressBar score={props.modal_team.last_average_score} />
-                            </Row>
-                        </VerticalContainer>
-                        <Line style={{ width: '90%', marginTop: '10px' }} />
-                        <TeamMemberList />
-                    </VerticalContainer>
-                ): (
-                    <Loader />
-                )}
-                <VerticalContainer>
-                    <Row style={{ marginTop: '25px' }}>
-                        {(props.modal_team && !props.modal_team.pinned && !props.loading_action) && (
-                            <Form onSubmit={() => props.pinTeam(props.access_token, props.modal_team.pk)}>
-                                {props.modal_team.responsible === props.api_user.name ? (
-                                    <div />
-                                ): (
-                                    <Button 
-                                        secondary 
-                                        image={require('../../images/student/pin.png')}
-                                        style={{ fontSize: '14px' }}>
-                                        Pin
-                                    </Button>
-                                )}
-                            </Form>
-                        )}
-                        {(props.modal_team && props.modal_team.pinned && !props.loading_action) && (
-                            <Form onSubmit={() => props.unpinTeam(props.access_token, props.modal_team.pk)}>
-                                <Button 
-                                    secondary 
-                                    image={require('../../images/cross.png')}
-                                    style={{ fontSize: '14px' }}>
-                                    Unpin
-                                </Button>
-                            </Form>
-                        )}
-                        <Button 
-                            style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
-                            onClick={() => setModalOpen(false)}>
-                            Close
-                        </Button>
-                    </Row>
-                </VerticalContainer>
-                
-            </Modal>
+{props.modal_team && !props.loading_action && !showHistory && (
+    <Button 
+        style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
+        secondary
+        onClick={() => {
+            props.getTeamHistory();
+            setShowHistory(true)
+        }}>
+        History 
+    </Button>
+)}
 
 */

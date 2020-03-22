@@ -21,7 +21,7 @@ const TabBarStaff = (props) => {
                 Overview
             </TabButton>
             <TabButton isActive={checkActive(1)} icon={require('./icons/list.png')} onClick={() => tabClick(1, '/staff/teams')}>
-                Teams
+                All teams
             </TabButton>
             {/*<TabButton isActive={checkActive(2)} icon={require('./icons/email.png')} onClick={() => tabClick(2, '/staff/messages')}>
                 Messages

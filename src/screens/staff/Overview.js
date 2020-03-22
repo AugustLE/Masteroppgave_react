@@ -86,7 +86,7 @@ const OverView = (props) => {
         
         if (props.total_average && props.subject) {
             return (
-                <VerticalContainer style={{ width: '95%', maxWidth: '500px', marginBottom: '100px' }}>
+                <VerticalContainer style={{ width: '95%', maxWidth: '500px', marginBottom: '20px' }}>
                     <Text bold size='22px' style={{ margin: '20px' }}>{props.subject.code} - Overview</Text>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', opacity: other_opacity }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all teams</Text>
@@ -104,6 +104,7 @@ const OverView = (props) => {
                     <Box 
                         shadow 
                         clickable
+                        isOpen={teamsBelow}
                         style={{ padding: '10px', paddingBottom: '15px', marginTop: '10px', width: '92%', opacity: teams_below_opacity }}
                         onClick={() => setTeamsBelow(!teamsBelow)}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams below score 2.5</Text>
@@ -112,9 +113,7 @@ const OverView = (props) => {
                     
                     {(teamsBelow && props.teams_below) && (
                         <Box style={{ width: '100%' }}>
-                            <Image 
-                                style={{ width: '20px', marginTop: '20px', opacity: 0.5 }} 
-                                src={require('../../images/arrow_down.png')} />
+                            
                             <TeamList 
                                 onClick={(team_id) => onTeamClick(team_id)} 
                                 teams={props.teams_below}
@@ -127,6 +126,7 @@ const OverView = (props) => {
                     <Box 
                         shadow 
                         clickable
+                        isOpen={teamsResponsible}
                         style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px', opacity: teams_resp_opacity }}
                         onClick={() => setTeamsResponsible(!teamsResponsible)}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams you are responsible for</Text>
@@ -134,9 +134,7 @@ const OverView = (props) => {
                     </Box>
                     {(teamsResponsible && props.responsible_teams) && (
                         <Box style={{ width: '100%' }}>
-                            <Image 
-                                style={{ width: '20px', marginTop: '20px', opacity: 0.5 }} 
-                                src={require('../../images/arrow_down.png')} />
+                        
                             <TeamList 
                                 onClick={(team_id) => onTeamClick(team_id)} 
                                 teams={props.responsible_teams}
@@ -182,7 +180,10 @@ const OverView = (props) => {
                 api_user={props.api_user}  
                 getTeamHistory={() => props.getTeamHistory(props.access_token, props.modal_team.pk)} 
                 team_history={props.team_history}     
-                setStaffField={() => props.setStaffField({ prop: 'team_history', value: null })}          
+                setStaffField={() => props.setStaffField({ prop: 'team_history', value: null })}  
+                history={props.history}
+                setStaffFieldBack={(path) => props.setStaffField({ prop: 'back_path_details', value: path })}
+                back_path={'/staff/overview'}
             />
         </VerticalContainer>
     );
