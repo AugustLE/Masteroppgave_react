@@ -205,8 +205,10 @@ export const unpinTeam = (access_token, team_id) => {
 
 export const getTeamHistory = (access_token, team_id) => {
 
-    const url = URLS.api_url + `/staff/teamhistory/${team_id}`;
-
+    const url = URLS.api_url + `/staff/teamhistory/${team_id}/`;
+    console.log(url);
+    console.log('TOKEN TOKEN TOKEN TOKEN');
+    console.log(access_token);
     return dispatch => {
         dispatch({ type: STAFF_FETCH_LOADING, payload: true });
 
@@ -217,10 +219,33 @@ export const getTeamHistory = (access_token, team_id) => {
                 Authorization: 'Token ' + access_token
             },
         }).then(response => {
+            console.log('RESPONSE RESPONSE');
+            console.log(response);
             dispatch({ type: TEAM_HISTORY, payload: response.data });
         }).catch(err => {
             console.log(err);
             dispatch({ type: STAFF_FETCH_LOADING, payload: false });
         })
     }
+
+    /*var obj = {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            Authorization: 'Token ' + access_token
+        }
+        
+    }
+
+    return dispatch => {
+        dispatch({ type: STAFF_FETCH_LOADING, payload: true });
+        fetch(url, obj).then(res => res.json()).then((result) => {
+            console.log('RESULT RESULT RESULT');
+            console.log(result);
+            dispatch({ type: TEAM_HISTORY, payload: result });
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: STAFF_FETCH_LOADING, payload: false });
+        })
+    }*/
 }

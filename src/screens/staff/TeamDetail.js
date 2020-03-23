@@ -34,10 +34,9 @@ const TeamDetail = (props) => {
         
     }, [])
 
-    
+    console.log(props.team_history);
     const getTeamData = () => {
         const team_data = [];
-
         props.team_history.forEach(obj => {
             const data_obj = {
                 'date': 'Week ' + obj.week_number,
@@ -135,6 +134,9 @@ const TeamDetail = (props) => {
                     </VerticalContainer>
                 ): (
                     <Loader />
+                )}
+                {props.team_history && (
+                    <Text>TEST</Text>
                 )}
                 {props.team_history && (
                     <VerticalContainer style={{ width: '100%' }}>
