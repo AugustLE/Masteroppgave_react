@@ -136,47 +136,51 @@ const TeamDetail = (props) => {
                     <Loader />
                 )}
                 {props.team_history && (
-                    <Text>TEST</Text>
-                )}
-                {props.team_history && (
                     <VerticalContainer style={{ width: '100%' }}>
                         <Line style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }} />
                         <TeamHistoryList onClickTeam={(id) => console.log(id)} team_history={props.team_history} />
                     </VerticalContainer>
                 )}
-                <VerticalContainer style={{ marginTop: '25px', width: '100%', alignItems: 'flex-start' }}>
-                    {props.team_history && (
-                        <BarChart 
-                            width={width - 30} 
-                            height={230} 
-                            data={getTeamData()} 
-                            maxBarSize={35}
-                            margin={{ left: -40 }}
-                        >   
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="date">
-                                {/*<Label value="Week number" offset={-10} position="insideBottomLeft" />*/}
-                            </XAxis>
-                            <YAxis type='number' domain={[0, 5]} />
-                            <Tooltip />
-                            <Legend />
-                            <Bar dataKey="Team average score" fill="#82ca9d" />
-                        </BarChart>
-                    )}
-                </VerticalContainer>
-                <VerticalContainer style={{ marginTop: '25px', width: '100%', alignItems: 'flex-start' }}>
-                    {props.team_history && (
-                        <LineChart width={width - 30} height={230} data={getTeamData()}
-                        margin={{ left: -40 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="date" />
-                            <YAxis domain={[0, 5]}/>
-                            <Tooltip />
-                            <Legend />
-                            <BarLine type="monotone" dataKey="Team average score" stroke="#8884d8" />
-                        </LineChart>
-                    )}
-                </VerticalContainer>
+                {props.loading_fetch ? (
+                    <Loader />
+                ): (
+                    <VerticalContainer>
+                        <VerticalContainer style={{ marginTop: '25px', width: '100%', alignItems: 'flex-start' }}>
+                            {props.team_history && (
+                                <BarChart 
+                                    width={width - 30} 
+                                    height={230} 
+                                    data={getTeamData()} 
+                                    maxBarSize={35}
+                                    margin={{ left: -40 }}
+                                >   
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date">
+                                        {/*<Label value="Week number" offset={-10} position="insideBottomLeft" />*/}
+                                    </XAxis>
+                                    <YAxis type='number' domain={[0, 5]} />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="Team average score" fill="#82ca9d" />
+                                </BarChart>
+                            )}
+                        </VerticalContainer>
+                        <VerticalContainer style={{ marginTop: '25px', width: '100%', alignItems: 'flex-start' }}>
+                            {props.team_history && (
+                                <LineChart width={width - 30} height={230} data={getTeamData()}
+                                margin={{ left: -40 }}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis domain={[0, 5]}/>
+                                    <Tooltip />
+                                    <Legend />
+                                    <BarLine type="monotone" dataKey="Team average score" stroke="#8884d8" />
+                                </LineChart>
+                            )}
+                        </VerticalContainer>
+                    </VerticalContainer>
+                )}
+                
             </VerticalContainer>
         </VerticalContainer>
     )

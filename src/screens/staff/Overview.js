@@ -66,6 +66,14 @@ const OverView = (props) => {
         }
         return <div />;
     }
+
+    const mBottom = () => {
+        let margin_bottom = '100px'
+        if (props.api_user && props.api_user.role === 'IN') {
+            margin_bottom = '20px';
+        }
+        return margin_bottom;
+    }
     
     const OverviewSection = () => {
         if (props.loading_fetch) {
@@ -86,7 +94,7 @@ const OverView = (props) => {
         
         if (props.total_average && props.subject) {
             return (
-                <VerticalContainer style={{ width: '95%', maxWidth: '500px', marginBottom: '20px' }}>
+                <VerticalContainer style={{ width: '95%', maxWidth: '500px', marginBottom: mBottom() }}>
                     <Text bold size='22px' style={{ margin: '20px' }}>{props.subject.code} - Overview</Text>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', opacity: other_opacity }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all teams</Text>

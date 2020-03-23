@@ -80,8 +80,8 @@ export const TeamHistoryRow = (props) => {
             <div onClick={() => onClickRow()} className='teamHistoryRow' style={{ backgroundColor: backgroundColor() }}>
                 <Text bold style={{ paddingLeft: '8px', width: '90px' }}>{props.history_obj.week_number}</Text>
                 <Text style={{ paddingLeft: '8px', width: '90px' }}>{props.history_obj.week}</Text>
-                <Row>
-                    <Text style={{ paddingLeft: '65px', marginRight: '5px', width: '30px' }}>{props.history_obj.average}</Text>
+                <Row style={{ marginRight: '25px' }}>
+                    <Text style={{ paddingLeft: '50px', marginRight: '5px', width: '30px' }}>{props.history_obj.average}</Text>
                     <ProgressBar style={{ flex: 2 }} score={props.history_obj.average}/>
                 </Row>
                 <Image 
