@@ -41,7 +41,7 @@ export const TeamHistoryRow = (props) => {
                         </Box>
                     </Row>
                 ): (
-                    <Text size='11px' bold style={{ flex: 1 }}>No scores</Text>
+                    <Text size='11px' bold style={{ flex: 1 }}>No ratings</Text>
                 )}
                 {member.score && (
                     <Text bold center style={{ flex: 1 }}>{member.score_date}</Text>
@@ -64,10 +64,10 @@ export const TeamHistoryRow = (props) => {
                     marginBottom: '10px',
                     padding: '5px' 
                 }}>
-                <Text style={{ marginTop: '10px' }} size='16px' bold>Scores from {props.history_obj.week}, {props.history_obj.year}</Text>
+                <Text style={{ marginTop: '10px' }} size='16px' bold>Ratings from {props.history_obj.week}, {props.history_obj.year}</Text>
                 <Row style={{ width: '100%', marginTop: '5px', backgroundColor: COLORS.theme, padding: '2px'}}>
                     <Text size='14px' bold style={{ flex: 3 }}>User</Text>
-                    <Text center style={{ flex: 1 }} bold>Score</Text>
+                    <Text center style={{ flex: 1 }} bold>Rating</Text>
                     <Text bold center style={{ flex: 1 }}>Date</Text>
                 </Row>
                 {list}

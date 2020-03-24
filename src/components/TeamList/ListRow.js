@@ -10,7 +10,7 @@ export const ListRow = (props) => {
         if (responsible) {
             return responsible.split(' ')[0];
         }
-        return '--';
+        return 'Not registered yet';
     }
 
     const displayName = (name) => {
@@ -36,12 +36,12 @@ export const ListRow = (props) => {
                         <ProgressBar score={props.team.last_average_score} />
                     </Row>
                 ): (
-                    <Text>No/few scores</Text>
+                    <Text>No/few ratings</Text>
                 )}
 
             </Row>
             
-            <Text style={{ width: '100px', marginLeft: '35px' }}>{responsibleString(props.team.responsible)}</Text>
+            <Text style={{ marginLeft: '35px' }}>{responsibleString(props.team.responsible)}</Text>
             {props.team.pinned && (
                 <Image 
                     src={require('../../images/student/pin.png')}

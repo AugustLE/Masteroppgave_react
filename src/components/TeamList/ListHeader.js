@@ -30,7 +30,7 @@ export const ListHeader = (props) => {
                 onClick={props.onClickStatus} 
                 style={{ width: '100px', height: '30px', justifyContent: 'flex-start', cursor: 'pointer' }}>
 
-                <Text bold style={{ marginRight: '10px' }}>Score</Text>
+                <Text bold style={{ marginRight: '10px' }}>Rating</Text>
                 {(props.statusSortVal === 1) && (
                     <img className="arrow_down" src={require('../../assets/arrow_down.png')} alt="description" />
                 )}

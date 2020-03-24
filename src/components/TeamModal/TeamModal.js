@@ -24,9 +24,10 @@ const modalStyles = {
 
 export const TeamModal = (props) => {
 
-    const [showHistory, setShowHistory] = useState(false);
+    // const [showHistory, setShowHistory] = useState(false);
 
     const TeamMemberList = () => {
+
         const list = props.modal_team_members.map((member) => (
             <Row style={{ width: '100%', marginTop: '5px' }} key={member.name}>
                 <Text style={{ flex: 3 }}>{member.name}</Text>
@@ -38,19 +39,28 @@ export const TeamModal = (props) => {
                         </Box>
                     </Row>
                 ): (
-                    <Text size='12px' bold style={{ flex: 1 }}>No scores</Text>
+                    <Text size='12px' bold style={{ flex: 1 }}>No ratings</Text>
                 )}
             </Row>
         ));
 
         return (
             <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
-                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members average score</Text>
+                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members average rating</Text>
+                {props.modal_team_members.length === 0 && (
+                    <Text>No members registered yet</Text>
+                )}
                 {list}
                 <Line style={{ width: '100%', marginTop: '10px' }} />
                 <Text style={{ marginTop: '10px', marginBottom: '5px' }} size='16px' bold>Responsible for this team</Text>
-                <Text>{props.modal_responsible.name}</Text>
-                <Text>{props.modal_responsible.email}</Text>
+                {(props.modal_responsible.name || props.modal_responsible.email) ? (
+                    <VerticalContainer style={{  width: '100%', alignItems: 'flex-start' }}>
+                        <Text>{props.modal_responsible.name}</Text>
+                        <Text>{props.modal_responsible.email}</Text>
+                    </VerticalContainer>
+                ): (
+                    <Text>Not registered yet</Text>
+                )}
             </VerticalContainer>
         );
     }
@@ -67,23 +77,21 @@ export const TeamModal = (props) => {
                 <VerticalContainer style={{ width: '100%' }}>
                     <Text bold size='20px'>{props.modal_team.name}</Text>
                     <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
-                        <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
-                        <Row style={{ jusifyContent: 'flex-start' }}>
-                            <Text style={{ marginRight: '5px' }} bold>{props.modal_team.last_average_score}</Text>
-                            <ProgressBar score={props.modal_team.last_average_score} />
-                        </Row>
+                        <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average rating</Text>
+                        {(props.modal_team.last_average_score === 0 || props.modal_team.last_average_score === null) ? (
+                            <Text>No rating to show yet</Text>
+                        ): (
+                            <Row style={{ jusifyContent: 'flex-start' }}>
+                                <Text style={{ marginRight: '5px' }} bold>{props.modal_team.last_average_score}</Text>
+                                <ProgressBar score={props.modal_team.last_average_score} />
+                            </Row>
+                        )}
                     </VerticalContainer>
                     <Line style={{ width: '100%', marginTop: '10px' }} />
                     <TeamMemberList />
                 </VerticalContainer>
             ): (
                 <Loader />
-            )}
-            {props.team_history && showHistory && (
-                <VerticalContainer style={{ width: '100%' }}>
-                    <Line style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }} />
-                    <TeamHistoryList onClickTeam={(id) => console.log(id)} team_history={props.team_history} />
-                </VerticalContainer>
             )}
             <VerticalContainer>
                 <Row style={{ marginTop: '25px' }}>
@@ -112,7 +120,7 @@ export const TeamModal = (props) => {
                         </Form>
                     )}
                 
-                    {props.modal_team && !props.loading_action && !showHistory && (
+                    {props.modal_team && !props.loading_action && (
                         <Button 
                             style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
                             secondary
@@ -125,19 +133,12 @@ export const TeamModal = (props) => {
                             More details
                         </Button>
                     )}
-                    {props.modal_team && !props.loading_action && showHistory && (
-                        <Button 
-                            style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
-                            secondary
-                            onClick={() => setShowHistory(false)}>
-                            Hide history
-                        </Button>
-                    )}
+                    
                     <Button 
                         style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
                         onClick={() => {
                             props.setModalOpen(false);
-                            setShowHistory(false);
+                            // setShowHistory(false);
                             props.setStaffField();
                         }}>
                         Close
@@ -152,6 +153,21 @@ export const TeamModal = (props) => {
 
 /*
 
+/*props.team_history && showHistory && (
+                <VerticalContainer style={{ width: '100%' }}>
+                    <Line style={{ width: '100%', marginTop: '10px', marginBottom: '10px' }} />
+                    <TeamHistoryList onClickTeam={(id) => console.log(id)} team_history={props.team_history} />
+                </VerticalContainer>
+            ) */
+
+/*props.modal_team && !props.loading_action && showHistory && (
+    <Button 
+        style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 
+        secondary
+        onClick={() => setShowHistory(false)}>
+        Hide history
+    </Button>
+)*
 {props.modal_team && !props.loading_action && !showHistory && (
     <Button 
         style={{ height: '40px', marginLeft: '10px', fontSize: '14px' }} 

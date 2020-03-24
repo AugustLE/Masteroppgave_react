@@ -17,7 +17,7 @@ export const ScoreList = (props) => {
     return (
         <VerticalContainer style={{ width: '95%', marginTop: '20px' }}>
             <Text style={{ textAlign: 'left', width: '100%', paddingLeft: '10px' }} bold size='18px'>
-                Previous scores
+                Previous ratings
             </Text>
             <div className='teamListHeader'>
                 <Text bold style={{ paddingLeft: '8px', width: '100px' }}>Score</Text>

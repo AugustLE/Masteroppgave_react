@@ -92,17 +92,23 @@ const OverView = (props) => {
             teams_below_opacity = 0.5;
         }
         
-        if (props.total_average && props.subject) {
+        if (props.subject) {
             return (
                 <VerticalContainer style={{ width: '95%', maxWidth: '500px', marginBottom: mBottom() }}>
                     <Text bold size='22px' style={{ margin: '20px' }}>{props.subject.code} - Overview</Text>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', opacity: other_opacity }}>
-                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall score of all teams</Text>
-                        <ProgressBar big score={props.total_average} />
-                        <Row style={{ marginTop: '15px', alignItems: 'flex-end' }}>
-                            <Text bold size='20px'>{props.total_average}</Text>
-                            <Text bold size='13px' style={{ marginBottom: '3px', marginLeft: '5px' }}>out of 5</Text>
-                        </Row>
+                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Overall rating of all teams</Text>
+                        {props.total_average ? (
+                            <VerticalContainer style={{ width: '100%' }}>
+                                <ProgressBar big score={props.total_average} />
+                                <Row style={{ marginTop: '15px', alignItems: 'flex-end' }}>
+                                    <Text bold size='20px'>{props.total_average}</Text>
+                                    <Text bold size='13px' style={{ marginBottom: '3px', marginLeft: '5px' }}>out of 5</Text>
+                                </Row>
+                            </VerticalContainer>
+                        ): (
+                            <Text bold>No data to show yet</Text>
+                        )}
                     </Box>
                     <Box shadow style={{ padding: '10px', paddingBottom: '15px', width: '92%', marginTop: '10px', opacity: other_opacity }}>
                         <Text size='16px' bold style={{ marginBottom: '15px' }}>Total number of teams</Text>
@@ -115,8 +121,12 @@ const OverView = (props) => {
                         isOpen={teamsBelow}
                         style={{ padding: '10px', paddingBottom: '15px', marginTop: '10px', width: '92%', opacity: teams_below_opacity }}
                         onClick={() => setTeamsBelow(!teamsBelow)}>
-                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams below score 2.5</Text>
-                        <Text bold size='20px'>{props.number_teams_below}</Text>
+                        <Text size='16px' bold style={{ marginBottom: '15px' }}>Teams below rating 2.5</Text>
+                        {props.number_teams_below ? (
+                            <Text bold size='20px'>{props.number_teams_below}</Text>
+                        ): (
+                            <Text bold>No data to show yet</Text>
+                        )}
                     </Box>
                     
                     {(teamsBelow && props.teams_below) && (

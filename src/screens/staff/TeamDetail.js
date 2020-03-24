@@ -69,14 +69,14 @@ const TeamDetail = (props) => {
                         </Box>
                     </Row>
                 ): (
-                    <Text size='12px' bold style={{ flex: 1 }}>No scores</Text>
+                    <Text size='12px' bold style={{ flex: 1 }}>No ratings</Text>
                 )}
             </Row>
         ));
 
         return (
             <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
-                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members average score</Text>
+                <Text style={{ marginTop: '10px' }} size='16px' bold>Team members average rating</Text>
                 {list}
                 <Line style={{ width: '100%', marginTop: '10px' }} />
                 <Text style={{ marginTop: '10px', marginBottom: '5px' }} size='16px' bold>Responsible for this team</Text>
@@ -123,7 +123,7 @@ const TeamDetail = (props) => {
                     <VerticalContainer style={{ width: '100%' }}>
                         <Text bold size='20px'>{props.modal_team.name}</Text>
                         <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
-                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
+                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average rating</Text>
                             <Row style={{ jusifyContent: 'flex-start' }}>
                                 <Text style={{ marginRight: '5px' }} bold>{props.modal_team.last_average_score}</Text>
                                 <ProgressBar score={props.modal_team.last_average_score} />
@@ -161,7 +161,7 @@ const TeamDetail = (props) => {
                                     <YAxis type='number' domain={[0, 5]} />
                                     <Tooltip />
                                     <Legend />
-                                    <Bar dataKey="Team average score" fill="#82ca9d" />
+                                    <Bar dataKey="Team average rating" fill="#82ca9d" />
                                 </BarChart>
                             )}
                         </VerticalContainer>
@@ -174,7 +174,7 @@ const TeamDetail = (props) => {
                                     <YAxis domain={[0, 5]}/>
                                     <Tooltip />
                                     <Legend />
-                                    <BarLine type="monotone" dataKey="Team average score" stroke="#8884d8" />
+                                    <BarLine type="monotone" dataKey="Team average rating" stroke="#8884d8" />
                                 </LineChart>
                             )}
                         </VerticalContainer>

@@ -33,7 +33,7 @@ export const TeamHistoryList = (props) => {
             <div className='teamHistoryListHeader'>
                 <Text bold style={{ paddingLeft: '8px', width: '90px' }}>Week nr</Text>
                 <Text bold style={{ paddingLeft: '3px', width: '90px' }}>Week date</Text>
-                <Text bold style={{ marginLeft: '50px' }}>Average score</Text>
+                <Text bold style={{ marginLeft: '50px' }}>Average rating</Text>
             </div>
             {selectedObj ? (
                 <TeamHistoryRow 

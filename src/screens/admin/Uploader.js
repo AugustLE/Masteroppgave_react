@@ -11,6 +11,8 @@ import { TeamJsonList } from './TeamJsonList/TeamJsonList';
 import { Redirect } from 'react-router';
 import { PermissionCheck } from '../../components/PermissionCheck/PermissionCheck';
 
+const USE_UPLOADER_2 = true;
+
 const Uploader = (props) => {
 
     ///const [textResult, setTextResult] = useState(null);
@@ -27,6 +29,46 @@ const Uploader = (props) => {
             }
         });
     }, []);
+
+
+    const showFile2 = () => {
+        if(window.File && window.FileReader && window.FileList && window.Blob) {
+            ///var preview = document.getElementById('show-text');
+            var file = document.querySelector('input[type=file]').files[0];
+            // setFileName(file.name);
+            var reader = new FileReader();
+
+            var textFile = /text.*/;
+            const json_teams = [];
+            if(file.type.match(textFile)) {
+                reader.onload = function (event) {
+                    let text_array = event.target.result.split('-');
+                    if (text_array[0].trim() === '') {
+                        text_array.shift();
+                    }
+                    text_array.forEach(element => {
+                        const one_row = element.trim().split(',');
+                        const team_split = one_row[0].split('_gc_');
+                        const team_name = team_split[0] + ' ' + team_split[1];
+                        const team_number = team_split[1];
+                        
+                        const team_object = {
+                            name: team_name,
+                            team_number: team_number,
+                            member: one_row[1],
+                        }
+                        json_teams.push(team_object);
+                    }) 
+                    // setTextResult(event.target.result);
+                    setJsonTeams(json_teams);
+                    console.log(json_teams);
+                }
+            } else {
+                //preview.innerHTML = "<span class='error'>The file is not a txt file</span>";
+            }
+            reader.readAsText(file);
+        }
+    }
 
     const showFile = () => {
         if(window.File && window.FileReader && window.FileList && window.Blob) {
@@ -103,9 +145,9 @@ const Uploader = (props) => {
             <NavBar />
             <Text bold size='24px' style={{ marginTop: '20px', marginBottom: '20px' }}>Register teams</Text>
             <Button secondary>
-                <input type="file" onChange={showFile} onClick={e => e.target.value = null} />
+                <input type="file" onChange={showFile2} onClick={e => e.target.value = null} />
             </Button>
-            {jsonTeams && (
+            {jsonTeams && !USE_UPLOADER_2 && (
                 <TeamJsonList jsonTeams={jsonTeams} />
             )}
             {jsonTeams && (

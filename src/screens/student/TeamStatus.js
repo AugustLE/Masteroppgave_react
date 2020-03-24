@@ -91,7 +91,7 @@ const TeamStatus = (props) => {
                     <VerticalContainer>
                         <Text bold size='20px'>{props.team.name}</Text>
                         <VerticalContainer style={{ alignItems: 'flex-start', width: '90%' }}>
-                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average score</Text>
+                            <Text style={{ marginTop: '10px', marginBottom: '5px' }} bold size='16px'>Average rating</Text>
                             {props.team.diverse_scores ? (
                                 <Row style={{ jusifyContent: 'flex-start' }}>
                                     <Text style={{ marginRight: '5px' }} bold>{props.team.last_average_score}</Text>
@@ -99,7 +99,7 @@ const TeamStatus = (props) => {
                                 </Row>
                             ): (
                                 <Row style={{ jusifyContent: 'flex-start' }}>
-                                    <Text style={{ marginRight: '5px' }} bold>No/too few scores</Text>
+                                    <Text style={{ marginRight: '5px' }} bold>No/too few ratings</Text>
                                 </Row>
                             )}
                         </VerticalContainer>
@@ -131,7 +131,7 @@ const TeamStatus = (props) => {
                         <p className='teamNameText'>{props.team.name}</p>
                         <div className='topSectionAfter'>
                             <div className='topSectionPartAfter'>
-                                <p className='topSectionAfterHeader'>Average score</p>
+                                <p className='topSectionAfterHeader'>Average rating</p>
                                 {props.team.diverse_scores ? (
                                     <Row style={{ marginTop: '10px' }}>
                                         <p className='topSectionAfterText' style={{ marginRight: '5px' }}>
@@ -142,7 +142,7 @@ const TeamStatus = (props) => {
                                 ): (
                                     <Row style={{ marginTop: '10px' }}>
                                         <p className='topSectionAfterText' style={{ marginRight: '5px' }}>
-                                            No/too few scores
+                                            No/too few ratings
                                         </p>
                                     </Row>
                                 )}
@@ -189,7 +189,7 @@ const TeamStatus = (props) => {
                                     setShowHistory(true);
                                 }} 
                                 style={{ marginTop: '25px' }}>
-                                View previous scores
+                                View previous ratings
                             </Button>
                         )}
                         <Text style={{ marginTop: '20px' }}>You can vote again next week</Text>
