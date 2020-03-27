@@ -59,8 +59,8 @@ const OverView = (props) => {
                 <Text key={team.pk}>{team.name}, </Text>  
             ));*/
             return (
-                <Row style={{ flexWrap: 'wrap' }}>
-                    <Text>{responsible_string}</Text>
+                <Row style={{ flexWrap: 'wrap', paddingRight: '10px', paddingLeft: '10px' }}>
+                    <Text center>{responsible_string}</Text>
                 </Row>
             );
         }

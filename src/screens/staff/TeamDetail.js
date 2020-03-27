@@ -40,7 +40,7 @@ const TeamDetail = (props) => {
         props.team_history.forEach(obj => {
             const data_obj = {
                 'date': 'Week ' + obj.week_number,
-                'Team average score': obj.average,
+                'Team average rating': obj.average,
             }
             team_data.push(data_obj);
         })

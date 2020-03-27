@@ -16,7 +16,7 @@ export const URLS = {
     feide_profile_info: 'https://auth.dataporten.no/userinfo',
     //api_url: 'http://127.0.0.1:8000',
     //api_url: 'https://teamacceleratoreu.herokuapp.com',
-    api_url: 'https://teamaccelerator.idi.ntnu.no',
+    api_url: 'https://backend-teamaccelerator.idi.ntnu.no',
     end_session: 'https://auth.dataporten.no/openid/endsession',
     logout: 'https://auth.dataporten.no/logout',
 }
