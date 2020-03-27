@@ -3,8 +3,9 @@ import { JSO, Popup } from 'jso';
 export const clientJSO = new JSO({
             
     client_id: "d6bae5a0-6dd1-4df4-b572-653c16c71ec6",
-    redirect_uri: "https://teamaccelerator.surge.sh/",
+    //redirect_uri: "https://teamaccelerator.surge.sh/",
     //redirect_uri: "http://localhost:3000/",
+    redirect_uri: "https://teamaccelerator.idi.ntnu.no/",
     authorization: "https://auth.dataporten.no/oauth/authorization",
     scopes: { request: ["profile", "email", "userid", "userid-feide"]},
     response_type: 'code',
