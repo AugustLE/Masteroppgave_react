@@ -30,7 +30,7 @@ export const ListRow = (props) => {
             <Text style={{ width: '80px' }}>{displayName(props.team.name)}</Text>
             
             <Row style={{ width: '100px', height: '30px', justifyContent: 'flex-start' }}>
-                {(props.team.number_of_scores > 3 && props.team.diverse_scores) ? (
+                {(props.team.number_of_scores > 0) ? (
                     <Row>
                         <Text style={{ marginRight: '10px', width: '22px' }}>{props.team.last_average_score}</Text>
                         <ProgressBar score={props.team.last_average_score} />
