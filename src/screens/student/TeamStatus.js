@@ -192,7 +192,7 @@ const TeamStatus = (props) => {
                                 View previous ratings
                             </Button>
                         )}
-                        <Text style={{ marginTop: '20px' }}>You can vote again next week</Text>
+                        <Text style={{ marginTop: '20px' }}>You can rate again next week</Text>
                     </VerticalContainer>
                 )
             } else {
@@ -204,8 +204,7 @@ const TeamStatus = (props) => {
                                 </div>
                                 <div className='middleLine' />
                                 <div className='topSectionPart' style={{ flex: 3, marginRight: '10px' }}>
-                                    <p className='infoTextBold'>{props.subject.code} -</p>
-                                    <p className='infoTextBold'>{props.subject.name}</p>
+                                    <Text center bold>{props.subject.code} - {props.subject.name}</Text>
                                 </div>
                             </div>
 
@@ -225,7 +224,8 @@ const TeamStatus = (props) => {
                             />
 
                             <Form onSubmit={() => props.registerScore(props.access_token, props.team.pk, score + 1)}>
-                                <input className='submitScoreButton' type='submit' value='Submit' />
+                                
+                                <Button style={{ height: '80px', width: '80px', borderRadius: '40px', marginTop: '40px' }}>Submit</Button>
                             </Form>
                         </VerticalContainer>
                 );
