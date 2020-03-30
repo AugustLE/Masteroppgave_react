@@ -36,7 +36,7 @@ export const ListRow = (props) => {
                         <ProgressBar score={props.team.last_average_score} />
                     </Row>
                 ): (
-                    <Text>No/few ratings</Text>
+                    <Text>No ratings</Text>
                 )}
 
             </Row>
