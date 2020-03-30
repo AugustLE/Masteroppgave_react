@@ -204,7 +204,9 @@ const TeamStatus = (props) => {
                                 </div>
                                 <div className='middleLine' />
                                 <div className='topSectionPart' style={{ flex: 3, marginRight: '10px' }}>
-                                    <Text center bold>{props.subject.code} - {props.subject.name}</Text>
+                                    <Text style={{ paddingLeft: '10px', paddingRight: '10px' }} center bold>
+                                        {props.subject.code} - {props.subject.name}
+                                    </Text>
                                 </div>
                             </div>
 
@@ -224,7 +226,6 @@ const TeamStatus = (props) => {
                             />
 
                             <Form onSubmit={() => props.registerScore(props.access_token, props.team.pk, score + 1)}>
-                                
                                 <Button style={{ height: '80px', width: '80px', borderRadius: '40px', marginTop: '40px' }}>Submit</Button>
                             </Form>
                         </VerticalContainer>
