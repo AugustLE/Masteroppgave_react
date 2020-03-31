@@ -149,7 +149,7 @@ const TeamStatus = (props) => {
                                 )}
                                 <Text style={{ marginTop: '15px' }} size='13px' bold center>Ratings this week</Text>
                                 <Row style={{ alignItems: 'flex-end' }}>
-                                    <Text bold size='16px'>{number_of_ratings}</Text>
+                                    <Text style={{ marginTop: '10px' }} bold size='16px'>{number_of_ratings}</Text>
                                     <Text style={{ marginTop: '10px' }} size='12px'>out of {team_members.length}</Text>
                                 </Row>
                             </div>
