@@ -35,7 +35,8 @@ const INITIAL_STATE = {
     authorized_staff: null,
     teams_below: null,
     team_history: null,
-    back_path_details: null
+    back_path_details: null,
+    number_of_teams_with_scores: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -56,6 +57,7 @@ export default (state = INITIAL_STATE, action) => {
                 responsible_teams: action.payload.responsible_teams,
                 subject: action.payload.subject,
                 number_of_teams: action.payload.number_of_teams,
+                number_of_teams_with_scores: action.payload.number_of_teams_with_scores,
                 loading_fetch: false
             }
         

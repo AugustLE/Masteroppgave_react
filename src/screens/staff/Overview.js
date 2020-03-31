@@ -105,6 +105,7 @@ const OverView = (props) => {
                                     <Text bold size='20px'>{props.total_average}</Text>
                                     <Text bold size='13px' style={{ marginBottom: '3px', marginLeft: '5px' }}>out of 5</Text>
                                 </Row>
+                                <Text style={{ marginTop: '10px' }}>(Based on scores from {props.number_of_teams_with_scores} teams)</Text>
                             </VerticalContainer>
                         ): (
                             <Text bold>No data to show yet</Text>
@@ -216,6 +217,7 @@ const mapStateToProps = (state) => {
         responsible_teams, 
         loading_fetch, subject, 
         number_of_teams,
+        number_of_teams_with_scores,
         teams_below,
         modal_responsible, 
         modal_team_members,
@@ -240,7 +242,8 @@ const mapStateToProps = (state) => {
         modal_loading,
         loading_action,
         team_history,
-        error_redirect
+        error_redirect,
+        number_of_teams_with_scores
     };
 }
 

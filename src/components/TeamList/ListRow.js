@@ -10,7 +10,15 @@ export const ListRow = (props) => {
         if (responsible) {
             return responsible.split(' ')[0];
         }
-        return 'Not registered yet';
+        return 'Not registered';
+    }
+
+    const respSize = (responsible) => {
+        if (!responsible) {
+            return '12px';
+        } else {
+            return '14px';
+        }
     }
 
     const displayName = (name) => {
@@ -41,7 +49,7 @@ export const ListRow = (props) => {
 
             </Row>
             
-            <Text style={{ marginLeft: '35px' }}>{responsibleString(props.team.responsible)}</Text>
+            <Text size={respSize(props.team.responsible)} style={{ marginLeft: '35px' }}>{responsibleString(props.team.responsible)}</Text>
             {props.team.pinned && (
                 <Image 
                     src={require('../../images/student/pin.png')}

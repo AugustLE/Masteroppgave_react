@@ -40,7 +40,8 @@ const Messages = (props) => {
                 <VerticalContainer style={{ alignItems: 'flex-start', width: '90%', paddingLeft: '15px' }}>
                     <Text bold size='22px' style={{ marginTop: '15px', marginBottom: '15px' }}>Your team responsible</Text>
                     <Line style={{ width: '90%', marginBottom: '10px' }} />
-                    {props.contact_info_responsible && (
+
+                    {props.contact_info_responsible && (      
                         <VerticalContainer style={{ alignItems: 'flex-start', width: '100%' }}>
                             <Row>
                                 <Text size='16px' bold>Email: </Text>
@@ -59,8 +60,13 @@ const Messages = (props) => {
                                     Send Email
                                 </a>
                             </Button>
+
+                            {!props.contact_info_responsible.registered && (
+                                <Text style={{ marginTop: '15px' }} bold>(Your teaching assistant has not registered in the application yet)</Text>
+                            )}
                         </VerticalContainer>
                     )}
+                  
                 </VerticalContainer>
                 <TabBarStudent history={props.history} />
             </VerticalContainer>

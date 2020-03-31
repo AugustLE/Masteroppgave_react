@@ -24,7 +24,9 @@ const INITIAL_STATE = {
     team_responsible: null,
     team_members: null,
     contact_info_responsible: null,
-    history_scores: null
+    history_scores: null,
+    number_of_ratings: null,
+    //status_object: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -53,8 +55,15 @@ export default (state = INITIAL_STATE, action) => {
                 has_rated_this_week: action.payload.has_rated_this_week,
                 team_responsible: action.payload.team_responsible,
                 team_members: action.payload.team_members,
+                number_of_ratings: action.payload.number_of_ratings,
                 loading_fetch: false  
             }
+        /*case FETCH_TEAM_STATUS:
+            return { 
+                ...state, 
+                status_object: action.payload, 
+                loading_fetch: false  
+            }*/
         
         case REGISTER_SCORE:
             
@@ -63,6 +72,7 @@ export default (state = INITIAL_STATE, action) => {
                 team: action.payload.team, 
                 last_score: action.payload.last_score, 
                 has_rated_this_week: action.payload.has_rated_this_week,
+                number_of_ratings: action.payload.number_of_ratings,
                 loading_action: false 
             };
 

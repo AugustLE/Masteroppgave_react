@@ -124,20 +124,21 @@ const TeamStatus = (props) => {
         }
 
         if (props.subject && props.team) {
-            if (props.has_rated_this_week) {
+            const { has_rated_this_week, team, team_members, number_of_ratings } = props;
+            if (has_rated_this_week) {
                 return (
                     <VerticalContainer style={{ marginBottom: '100px', width: '95%' }}>
                         <h2 style={{ marginBottom: '1px' }}>Team status</h2>
-                        <p className='teamNameText'>{props.team.name}</p>
+                        <p className='teamNameText'>{team.name}</p>
                         <div className='topSectionAfter'>
                             <div className='topSectionPartAfter'>
-                                <p className='topSectionAfterHeader'>Average rating</p>
-                                {props.team.diverse_scores ? (
+                                <p className='topSectionAfterHeader'>Total Average rating</p>
+                                {team.diverse_scores ? (
                                     <Row style={{ marginTop: '10px' }}>
-                                        <p className='topSectionAfterText' style={{ marginRight: '5px' }}>
-                                            {props.team.last_average_score}
-                                        </p>
-                                        <ProgressBar score={props.team.last_average_score} />
+                                        <Text bold style={{ marginRight: '6px', paddingBottom: '2px' }}>
+                                            {team.last_average_score}
+                                        </Text>
+                                        <ProgressBar score={team.last_average_score} />
                                     </Row>
                                 ): (
                                     <Row style={{ marginTop: '10px' }}>
@@ -146,6 +147,11 @@ const TeamStatus = (props) => {
                                         </p>
                                     </Row>
                                 )}
+                                <Text style={{ marginTop: '15px' }} size='13px' bold center>Ratings this week</Text>
+                                <Row style={{ alignItems: 'flex-end' }}>
+                                    <Text bold size='16px'>{number_of_ratings}</Text>
+                                    <Text size='12px'>out of {team_members.length}</Text>
+                                </Row>
                             </div>
                             <div className='middleLineAfter' />
                             <div className='topSectionPartAfter'>
@@ -196,6 +202,7 @@ const TeamStatus = (props) => {
                     </VerticalContainer>
                 )
             } else {
+                console.log('HELLO HELLO');
                 return (
                     <VerticalContainer style={{ marginBottom: '100px', width: '95%' }}>
                             <div className='topSection'>
@@ -269,7 +276,8 @@ const mapStateToProps = (state) => {
         has_rated_this_week,
         team_responsible,
         team_members,
-        history_scores
+        number_of_ratings,
+        history_scores,
     } = state.student;
     const { subject, api_user, error_redirect } = state.account;
     return { 
@@ -282,10 +290,11 @@ const mapStateToProps = (state) => {
         loading_fetch,
         loading_action,
         team_responsible,
+        number_of_ratings,
         team_members,
         api_user,
         history_scores,
-        error_redirect
+        error_redirect,
     };
 };
 
