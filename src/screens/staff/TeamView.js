@@ -45,14 +45,22 @@ const TeamView = (props) => {
         props.getTeamInfo(props.access_token, team_id);
     }
 
+    const searchFunction = (team) => {
+        if(team.name && !team.responsible) {
+            return team.name.toLowerCase().includes(searchValue.toLowerCase());
+        }
+        if (team.name && team.responsible) {
+            return (team.name.toLowerCase().includes(searchValue.toLowerCase())
+            || team.responsible.toLowerCase().includes(searchValue.toLowerCase()));
+        }
+    }
+
     const searchList = () => {
         if (props.staff_team_list && searchValue !== '') {
             let team_list = [].concat(props.staff_team_list);
         
-            const searched_list = team_list.filter(
-                team => team.name && team.responsible && (team.name.toLowerCase().includes(searchValue.toLowerCase())
-                || team.responsible.toLowerCase().includes(searchValue.toLowerCase()))
-            );
+            const searched_list = team_list.filter(searchFunction)
+            
             return searched_list;
     
         }
