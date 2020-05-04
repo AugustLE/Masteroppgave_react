@@ -34,7 +34,13 @@ const TeamDetail = (props) => {
         
     }, [])
 
-    console.log(props.team_history);
+    const roundedRating = (num) => {
+        if (num && num > 0) {
+            return Math.round(num * 10) / 10;
+        }
+        return 0;
+    }
+
     const getTeamData = () => {
         const team_data = [];
         props.team_history.forEach(obj => {
@@ -63,9 +69,9 @@ const TeamDetail = (props) => {
                 <Text style={{ flex: 3 }}>{member.name}</Text>
                 {member.average_score ? (
                     <Row style={{ flex: 1 }}>
-                        <Text bold style={{ flex: 1 }}>{member.average_score}</Text>
+                        <Text bold style={{ flex: 1 }}>{roundedRating(member.average_score)}</Text>
                         <Box style={{ flex: 1, marginLeft: '5px' }}>
-                            <ProgressBar score={member.average_score} />
+                            <ProgressBar score={roundedRating(member.average_score)} />
                         </Box>
                     </Row>
                 ): (

@@ -29,6 +29,13 @@ export const TeamHistoryRow = (props) => {
         props.onClickRow(!openRow, props.history_obj);
     }
 
+    const roundToOne = (num) => {
+        if (num && num > 0) {
+            return Math.round(num * 10) / 10;
+        }
+        return 0;
+    }
+
     const TeamMemberRow = ({ member }) => {
         return (
             <Row style={{ width: '100%', marginTop: '5px' }}>
@@ -81,8 +88,8 @@ export const TeamHistoryRow = (props) => {
                 <Text bold style={{ paddingLeft: '8px', width: '90px' }}>{props.history_obj.week_number}</Text>
                 <Text style={{ paddingLeft: '8px', width: '90px' }}>{props.history_obj.week}</Text>
                 <Row style={{ marginRight: '25px' }}>
-                    <Text style={{ paddingLeft: '50px', marginRight: '5px', width: '30px' }}>{props.history_obj.average}</Text>
-                    <ProgressBar style={{ flex: 2 }} score={props.history_obj.average}/>
+                    <Text style={{ paddingLeft: '50px', marginRight: '5px', width: '30px' }}>{roundToOne(props.history_obj.average)}</Text>
+                    <ProgressBar style={{ flex: 2 }} score={roundToOne(props.history_obj.average)}/>
                 </Row>
                 <Image 
                     style={{ width: '12px', position: 'absolute', right: '8px', top: '8px' }} 
